@@ -22,7 +22,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-50">
       <CreateModelDrawer open={open} onClose={onClose}/>
-      <Card className="max-w-lg w-full px-10 py-10 bg-white rounded-4xl shadow-lg shadow-indigo-50 overflow-hidden">
+      <div className="max-w-lg w-full px-10 py-10 bg-white rounded-4xl shadow-lg shadow-indigo-50 overflow-hidden">
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
           <div className='flex justify-between items-center'>
             <div className='flex gap-2'>
@@ -98,7 +98,7 @@ export default function Home() {
               </div>
           </div>
         </Space>
-      </Card>
+      </div>
     </div>
   );
 }

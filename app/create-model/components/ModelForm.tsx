@@ -53,10 +53,12 @@ export function ModelForm() {
         rules={[{ required: true, message: 'Please upload between 10 to 15 photos!' }]}
       >
         <Dragger {...uploadProps}>
-          <p className="ant-upload-drag-icon">
-            <UploadOutlined />
-          </p>
-          <Text type="secondary">Upload (10-15 photos)</Text>
+          <div className="p-6">
+            <p className="ant-upload-drag-icon">
+              <UploadOutlined size={48} />
+            </p>
+            <Text type="secondary">Upload (10-15 photos)</Text>
+          </div>
         </Dragger>
       </Form.Item>
       <Form.Item
@@ -71,7 +73,7 @@ export function ModelForm() {
           size='large'
         />
       </Form.Item>
-      <Space direction="vertical" size="middle" className='bg-indigo-50 border-2 border-indigo-400 rounded-xl p-6 mb-6'>
+      <Space direction="vertical" size="middle" className='bg-indigo-50 border-2 border-indigo-400 rounded-xl p-6 mb-6 w-full'>
         <Paragraph style={{ color: 'var(--ant-primary-color)' }}>
           To achieve maximum accuracy, it is recommended to <HighlightedText>upload 10-15 photos.</HighlightedText> The <HighlightedText>more</HighlightedText> pictures there are, the <HighlightedText>better</HighlightedText> the neural network will be able to understand your <HighlightedText>unique</HighlightedText> features.
         </Paragraph>

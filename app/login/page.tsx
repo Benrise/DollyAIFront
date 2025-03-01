@@ -3,10 +3,13 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Carousel, Input, Button, Card, Typography, Form } from 'antd';
+import { Input, Button, Typography, Form } from 'antd';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation } from 'swiper/modules';
 import { Spin } from "antd";
 
 const { Title, Paragraph } = Typography;
+
 
 export default function Login() {
   const [images, setImages] = useState<string[]>([]);
@@ -20,7 +23,7 @@ export default function Login() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-50">
-      <Card className="max-w-lg w-full px-10 py-10 bg-white rounded-4xl shadow-lg shadow-indigo-50 overflow-hidden">
+      <div className="max-w-lg w-full py-10 bg-white rounded-4xl shadow-lg shadow-indigo-50 overflow-hidden">
         <Title level={1} className="text-center mb-6">AI Love Photo</Title>
         <div className="mb-6">
           {!images.length ? (
@@ -28,23 +31,32 @@ export default function Login() {
             <Spin size='large'/>
           </div>
           ) : (
-            <Carousel autoplay dots={true} infinite>
-              {images.map((image) => (
-                <div key={image} className="flex justify-center items-center focus:outline-none focus:ring-0">
-                  <Image
-                    src={`/images/examples/${image}`}
-                    alt={image}
-                    width={1024}
-                    height={1024}
-                    className="rounded-2xl select-none"
-                  />
-                </div>
+            <Swiper
+              modules={[Autoplay, Navigation]}
+              spaceBetween={16}
+              slidesPerView={1.4}
+              centeredSlides={true} 
+              loop={true}
+              autoplay={{ delay: 3000, disableOnInteraction: false }}
+              pagination={{ clickable: true, dynamicBullets: true }}
+              className="w-full"
+            >
+              {images.map((image, index) => (
+                <SwiperSlide key={index} className="flex justify-center items-center">
+                    <Image
+                      src={`/images/examples/${image}`}
+                      alt={`Slide ${index}`}
+                      width={1024}
+                      height={1024}
+                      className="rounded-2xl select-none"
+                    />
+                </SwiperSlide>
               ))}
-            </Carousel>
+          </Swiper>
           )}
         </div>
 
-        <div className="mb-6">
+        <div className="mb-6 px-10">
           <Title level={4}>AI Love Photo - your personal photoclone</Title>
           <Paragraph>
             Forget about studios and photographers - create perfect shots with AI in minutes
@@ -55,7 +67,7 @@ export default function Login() {
           name="login"
           layout="vertical"
           initialValues={{ remember: true }}
-          className="space-y-4"
+          className="space-y-4 px-10!"
         >
           <Form.Item
             label="Логин"
@@ -81,7 +93,7 @@ export default function Login() {
             </Form.Item>
           </Link>
         </Form>
-      </Card>
+      </div>
     </div>
   );
 }
