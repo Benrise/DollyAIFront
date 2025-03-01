@@ -1,12 +1,14 @@
-import { redirect } from 'next/navigation';
+  'use client';
 
-export default function Home() {
+  import { redirect } from 'next/navigation';
 
-  if (true) {
-    redirect('/login');
+  export default function Home() {
+
+    if (true) {
+      redirect('/login');
+    }
+
+    return (
+      <h1>Home</h1>
+    );
   }
-
-  return (
-    <h1>Home</h1>
-  );
-}

@@ -18,9 +18,8 @@ export default function Login() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-50">
-      <div className="max-w-xl w-full px-10 py-10 bg-white rounded-4xl shadow-lg">
-        <Title level={2} className="text-center mb-6">AI Love Photo</Title>
-
+      <div className="max-w-lg w-full px-10 py-10 bg-white rounded-4xl shadow-lg shadow-indigo-50">
+        <Title level={1} className="text-center mb-6">AI Love Photo</Title>
         <div className="mb-6">
           <Carousel autoplay dots={true} infinite>
             {images.length > 0 ? (
