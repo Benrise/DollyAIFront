@@ -18,7 +18,7 @@ export default function Login() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-50">
-      <div className="max-w-md w-full px-4 py-6 bg-white rounded-lg shadow-lg">
+      <div className="max-w-xl w-full px-10 py-10 bg-white rounded-4xl shadow-lg">
         <Title level={2} className="text-center mb-6">AI Love Photo</Title>
 
         <div className="mb-6">
@@ -31,7 +31,7 @@ export default function Login() {
                     alt={image}
                     width={1024}
                     height={1024}
-                    className="rounded-lg select-none"
+                    className="rounded-2xl select-none"
                   />
                 </div>
               ))

@@ -1,4 +1,5 @@
 import '@/app/tailwind.css';
+import '@/app/style.scss';
 import { theme } from './theme.config';
 
 import { ConfigProvider } from 'antd';
