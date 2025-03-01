@@ -1,6 +1,6 @@
 import '@/app/tailwind.css';
 import '@/app/style.scss';
-import { theme } from './theme.config';
+import { theme } from '@/app/theme.config';
 
 import { ConfigProvider } from 'antd';
 import { AntdRegistry } from '@ant-design/nextjs-registry';

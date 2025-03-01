@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { Carousel, Input, Button, Typography, Form } from 'antd';
+import Link from 'next/link';
+import { Carousel, Input, Button, Card, Typography, Form } from 'antd';
+import { Spin } from "antd";
 
 const { Title, Paragraph } = Typography;
 
@@ -18,28 +20,28 @@ export default function Login() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-50">
-      <div className="max-w-lg w-full px-10 py-10 bg-white rounded-4xl shadow-lg shadow-indigo-50">
+      <Card className="max-w-lg w-full px-10 py-10 bg-white rounded-4xl shadow-lg shadow-indigo-50 overflow-hidden">
         <Title level={1} className="text-center mb-6">AI Love Photo</Title>
         <div className="mb-6">
-          <Carousel autoplay dots={true} infinite>
-            {images.length > 0 ? (
-              images.map((image) => (
+          {!images.length ? (
+          <div className='flex justify-center items-center w-full h-full'>
+            <Spin size='large'/>
+          </div>
+          ) : (
+            <Carousel autoplay dots={true} infinite>
+              {images.map((image) => (
                 <div key={image} className="flex justify-center items-center focus:outline-none focus:ring-0">
                   <Image
-                    src={`/examples/${image}`}
+                    src={`/images/examples/${image}`}
                     alt={image}
                     width={1024}
                     height={1024}
                     className="rounded-2xl select-none"
                   />
                 </div>
-              ))
-            ) : (
-              <div className="flex justify-center items-center">
-                <p>Loading images...</p>
-              </div>
-            )}
-          </Carousel>
+              ))}
+            </Carousel>
+          )}
         </div>
 
         <div className="mb-6">
@@ -71,13 +73,15 @@ export default function Login() {
             <Input.Password size="large" placeholder="Введите пароль" />
           </Form.Item>
 
-          <Form.Item>
-            <Button type="primary" size='large' htmlType="submit" block>
-              Войти
-            </Button>
-          </Form.Item>
+          <Link href="/">
+            <Form.Item>
+              <Button type="primary" size='large' htmlType="submit" block>
+                Войти
+              </Button>
+            </Form.Item>
+          </Link>
         </Form>
-      </div>
+      </Card>
     </div>
   );
 }

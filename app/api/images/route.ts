@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 export async function GET() {
-  const directoryPath = path.join(process.cwd(), 'public/examples');
+  const directoryPath = path.join(process.cwd(), 'public/images/examples');
 
   try {
     const files = await fs.promises.readdir(directoryPath);
