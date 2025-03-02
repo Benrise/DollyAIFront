@@ -7,8 +7,8 @@ import { Button, Card, Input, Typography, Space, Image } from 'antd';
 import { Sparkles, Plus } from 'lucide-react'
 import { DownloadOutlined } from '@ant-design/icons';
 
-import { CreateModelDrawer } from '@/app/create-model/CreateModelDrawer';
-import { type Model } from '@/app/types'
+import { CreateModelDrawer } from '@/app/features/model/create';
+import { type Model } from '@/app/entities/model';
 
 const { Text } = Typography;
 
