@@ -56,9 +56,8 @@ export default function Home() {
                 <Text className='align-middle w-fit text-[12px]!'>Создать</Text>
               </div>
               {_models.map((model) => (
-                <div className="flex flex-col gap-1 items-center">
+                <div key={model.id} className="flex flex-col gap-1 items-center">
                   <Image
-                    key={model.id}
                     src={model.previewPhoto}
                     width={64}
                     height={64}

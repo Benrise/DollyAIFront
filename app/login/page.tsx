@@ -8,18 +8,31 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import { Spin } from "antd";
 
+import { useAuth } from '@/app/context/AuthContext';
+
 const { Title, Paragraph } = Typography;
 
 
 export default function Login() {
   const [images, setImages] = useState<string[]>([]);
+  const { login } = useAuth();
+  const [form] = Form.useForm();
+
 
   useEffect(() => {
-    fetch('/api/images')
+    fetch('/api/example-images')
       .then((response) => response.json())
       .then((data) => setImages(data))
       .catch((error) => console.error('Error fetching images:', error));
   }, []);
+
+  const handleSubmit = async (values: { email: string, password: string }) => {
+    try {
+      await login(values.email, values.password);
+    } catch (error) {
+      console.error("Ошибка входа", error);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-50">
@@ -71,6 +84,7 @@ export default function Login() {
           layout="vertical"
           initialValues={{ remember: true }}
           className="space-y-4 px-10!"
+          onFinish={handleSubmit}
         >
           <Form.Item
             label="Login"
