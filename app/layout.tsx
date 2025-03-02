@@ -1,8 +1,10 @@
+import '@/app/tailwind.css';
+import '@/app/style.scss';
+
 import { ConfigProvider } from 'antd';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 
-import '@/app/tailwind.css';
-import '@/app/style.scss';
+import { Providers } from '@/app/providers';
 import { theme } from '@/app/theme.config';
  
 export default function RootLayout({
@@ -13,11 +15,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AntdRegistry>
-          <ConfigProvider theme={theme}>
-            {children}
-          </ConfigProvider>
-        </AntdRegistry>
+        <Providers>
+          <AntdRegistry>
+            <ConfigProvider theme={theme}>
+              {children}
+            </ConfigProvider>
+          </AntdRegistry>
+        </Providers>
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 import { LoginForm } from "@/app/features/auth/login";
 import { AuthWrapper } from "@/app/widgets/auth/wrapper";
-import { HighlightedText } from "@/app/shared/highlighted-text";
+import { HighlightedText } from "@/app/shared/ui/highlighted-text";
 
 export default async function LoginPage() {
   return (

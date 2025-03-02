@@ -2,13 +2,14 @@
 
 import { Input, Button, Form } from 'antd';
 
+import { signIn } from 'next-auth/react';
 import { Terms } from '@/app/entities/terms';
 
 export function LoginForm() {
 
     const handleLoginSubmit = async (values: { email: string, password: string }) => {
         try {
-          console.log(values)
+          await signIn("credentials", { email: values.email, password: values.password });
         } catch (error) {
           console.error("Ошибка входа", error);
         }

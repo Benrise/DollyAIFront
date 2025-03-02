@@ -1,5 +1,5 @@
 import { Typography } from "antd"
-import { HighlightedText } from "@/app/shared/highlighted-text";
+import { HighlightedText } from "@/app/shared/ui/highlighted-text";
 
 const { Paragraph } = Typography;
 

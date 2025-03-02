@@ -2,7 +2,7 @@ import { Drawer} from 'antd';
 import { useState } from 'react';
 import { Button, Input, Form, message, Upload, Typography, Space  } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { HighlightedText } from '@/app/shared/highlighted-text';
+import { HighlightedText } from '@/app/shared/ui/highlighted-text';
 
 const { Text, Paragraph } = Typography;
 const { Dragger } = Upload;
