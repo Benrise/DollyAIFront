@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { redirect } from 'next/navigation';
 import { Button, Card, Input, Typography, Space, Image } from 'antd';
 
@@ -19,7 +19,7 @@ export default function Home() {
   const openDrawer = () => setOpen(true);
   const onClose = () => setOpen(false);
 
-  const models: Model[] = [
+  const _models: Model[] = [
     { id: '1', name: 'На новый год', createdAt: '2022-01-01', previewPhoto: '/images/examples/1.jpg', gender: 'male', isReady: true },
     { id: '2', name: 'На работу', createdAt: '2022-01-01', previewPhoto: '/images/examples/2.jpg', gender: 'female', isReady: false },
     { id: '3', name: 'Космонавт', createdAt: '2022-01-01', previewPhoto: '/images/examples/3.jpg', gender: 'female', isReady: false },
@@ -33,6 +33,10 @@ export default function Home() {
     { id: '11', name: 'ТЕСТ', createdAt: '2022-01-01', previewPhoto: '/images/examples/3.jpg', gender: 'female', isReady: false },
     { id: '12', name: 'Наверное_123', createdAt: '2022-01-01', previewPhoto: '/images/examples/4.jpg', gender: 'male', isReady: true },
   ];
+
+  useEffect(() => {
+    setActiveModel(_models[0]);
+  }, [])
 
   if (false) {
     redirect('/login');
@@ -51,7 +55,7 @@ export default function Home() {
                 </Button>
                 <Text className='align-middle w-fit text-[12px]!'>Создать</Text>
               </div>
-              {models.map((model) => (
+              {_models.map((model) => (
                 <div className="flex flex-col gap-1 items-center">
                   <Image
                     key={model.id}
@@ -59,7 +63,10 @@ export default function Home() {
                     width={64}
                     height={64}
                     preview={false}
-                    className="rounded-full select-none min-w-[64px]"
+                    className={`rounded-full select-none min-w-[64px] border-3 ${
+                      activeModel?.id === model.id ? "border-fuchsia-500" : "border-white"
+                    }`}
+                    onClick={() => setActiveModel(model)}
                   />
                   <Text className='align-middle w-fit text-[12px]! whitespace-nowrap overflow-hidden text-ellipsis max-w-[64px]'>{model.name}</Text>
                 </div>
@@ -91,7 +98,7 @@ export default function Home() {
               Generate
             </Button>
           </div>
-          <div className="flex w-full gap-4 justify-around items-center">
+          <div className="flex w-full gap-4 justify-evenly items-center">
             <div className="min-w-[144px] max-h-[164px]">
               <Image
                     src={`/images/etc/robot.png`}
