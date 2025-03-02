@@ -13,6 +13,8 @@ export default auth((req: AuthenticatedRequest) => {
   const protectedRoutes = ["/"];
   const publicRoutes = ["/auth/login", "/auth/register"];
 
+  const knownRoutes = [...protectedRoutes, ...publicRoutes];
+
   if (session) {
     if (publicRoutes.includes(pathname)) {
       return NextResponse.redirect(new URL("/", req.url));
@@ -22,7 +24,7 @@ export default auth((req: AuthenticatedRequest) => {
 
   if (protectedRoutes.includes(pathname)) {
     return NextResponse.redirect(new URL("/auth/login", req.url));
-  } 
+  }
 
   return NextResponse.next();
 });
