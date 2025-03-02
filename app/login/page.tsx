@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Input, Button, Typography, Form } from 'antd';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation } from 'swiper/modules';
+import { Autoplay } from 'swiper/modules';
 import { Spin } from "antd";
 
 const { Title, Paragraph } = Typography;
@@ -32,13 +32,16 @@ export default function Login() {
           </div>
           ) : (
             <Swiper
-              modules={[Autoplay, Navigation]}
+              modules={[Autoplay]}
               spaceBetween={16}
+              navigation={false}
+              allowTouchMove={false}
+              noSwiping={true}
               slidesPerView={1.4}
+              speed={1000}
               centeredSlides={true} 
               loop={true}
               autoplay={{ delay: 3000, disableOnInteraction: false }}
-              pagination={{ clickable: true, dynamicBullets: true }}
               className="w-full"
             >
               {images.map((image, index) => (
@@ -70,19 +73,19 @@ export default function Login() {
           className="space-y-4 px-10!"
         >
           <Form.Item
-            label="Логин"
+            label="Login"
             name="username"
-            rules={[{ required: true, message: 'Пожалуйста, введите ваш логин!' }]}
+            rules={[{ required: true, message: 'Login is required!' }]}
           >
-            <Input size="large" placeholder="Введите логин" />
+            <Input size="large" placeholder="Enter login" />
           </Form.Item>
 
           <Form.Item
-            label="Пароль"
+            label="Password"
             name="password"
-            rules={[{ required: true, message: 'Пожалуйста, введите ваш пароль!' }]}
+            rules={[{ required: true, message: 'Password is required!' }]}
           >
-            <Input.Password size="large" placeholder="Введите пароль" />
+            <Input.Password size="large" placeholder="Enter password" />
           </Form.Item>
 
           <Link href="/">
