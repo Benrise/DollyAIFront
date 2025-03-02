@@ -1,23 +1,17 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { Input, Button, Typography, Form } from 'antd';
+import { Input, Button, Typography, Form, Spin } from 'antd';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
-import { Spin } from "antd";
-
-import { useAuth } from '@/app/context/AuthContext';
 
 const { Title, Paragraph } = Typography;
 
-
 export default function Login() {
   const [images, setImages] = useState<string[]>([]);
-  const { login } = useAuth();
-  const [form] = Form.useForm();
-
+  const router = useRouter();
 
   useEffect(() => {
     fetch('/api/example-images')
@@ -26,9 +20,9 @@ export default function Login() {
       .catch((error) => console.error('Error fetching images:', error));
   }, []);
 
-  const handleSubmit = async (values: { email: string, password: string }) => {
+  const handleLoginSubmit = async (values: { email: string, password: string }) => {
     try {
-      await login(values.email, values.password);
+      // TODO
     } catch (error) {
       console.error("Ошибка входа", error);
     }
@@ -84,31 +78,37 @@ export default function Login() {
           layout="vertical"
           initialValues={{ remember: true }}
           className="space-y-4 px-10!"
-          onFinish={handleSubmit}
+          onFinish={handleLoginSubmit}
         >
           <Form.Item
-            label="Login"
-            name="username"
-            rules={[{ required: true, message: 'Login is required!' }]}
+            label="Email"
+            name="email"
+            rules={[
+              { required: true, message: 'Email is required!' },
+              { type: 'email', message: 'Invalid email!' },
+              { min: 5, message: 'Email must be at least 5 characters long' },
+              { max: 128, message: 'Email must be less than 128 characters long' }
+            ]}
           >
-            <Input size="large" placeholder="Enter login" />
+            <Input size="large" placeholder="Enter your email" />
           </Form.Item>
 
           <Form.Item
             label="Password"
             name="password"
-            rules={[{ required: true, message: 'Password is required!' }]}
+            rules={[
+              { required: true, message: "Password is required!" },
+              { min: 8, message: "Password must be at least 8 characters!" },
+            ]}
           >
             <Input.Password size="large" placeholder="Enter password" />
           </Form.Item>
-
-          <Link href="/">
-            <Form.Item>
-              <Button type="primary" size='large' htmlType="submit" block>
-                Войти
-              </Button>
-            </Form.Item>
-          </Link>
+          <Form.Item>
+            <Button type="primary" size="large" htmlType="submit" block>Войти</Button>
+          </Form.Item>
+          <Form.Item>
+            <Button type="link" onClick={() => router.push('/auth/register')} block>Нет аккаунта? Зарегистрироваться</Button>
+          </Form.Item>
         </Form>
       </div>
     </div>

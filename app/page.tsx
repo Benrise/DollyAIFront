@@ -56,16 +56,17 @@ export default function Home() {
                 <Text className='align-middle w-fit text-[12px]!'>Создать</Text>
               </div>
               {_models.map((model) => (
-                <div key={model.id} className="flex flex-col gap-1 items-center">
+                <div key={model.id} className="flex flex-col gap-1 items-center" onClick={() => setActiveModel(model)}>
                   <Image
                     src={model.previewPhoto}
                     width={64}
                     height={64}
                     preview={false}
-                    className={`rounded-full select-none min-w-[64px] border-3 ${
-                      activeModel?.id === model.id ? "border-fuchsia-500" : "border-white"
+                    className={`rounded-full select-none min-w-[64px] border-3 transition-all duration-300 ${
+                      activeModel?.id === model.id
+                        ? "border-fuchsia-500"
+                        : "border-white hover:cursor-pointer hover:border-fuchsia-200"
                     }`}
-                    onClick={() => setActiveModel(model)}
                   />
                   <Text className='align-middle w-fit text-[12px]! whitespace-nowrap overflow-hidden text-ellipsis max-w-[64px]'>{model.name}</Text>
                 </div>
