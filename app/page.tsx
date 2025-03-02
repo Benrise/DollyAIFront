@@ -1,23 +1,18 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { redirect } from 'next/navigation';
 import { Button, Card, Input, Typography, Space, Image } from 'antd';
 
-import { Sparkles, Plus } from 'lucide-react'
+import { Sparkles } from 'lucide-react'
 import { DownloadOutlined } from '@ant-design/icons';
 
-import { CreateModelDrawer } from '@/app/features/model/create';
 import { type Model } from '@/app/entities/model';
+import { ModelsList } from '@/app/widgets/model/list';
 
 const { Text } = Typography;
 
 export default function Home() {
-  const [open, setOpen] = useState(false);
   const [activeModel, setActiveModel] = useState<Model | null>(null);
-
-  const openDrawer = () => setOpen(true);
-  const onClose = () => setOpen(false);
 
   const _models: Model[] = [
     { id: '1', name: 'На новый год', createdAt: '2022-01-01', previewPhoto: '/images/examples/1.jpg', gender: 'male', isReady: true },
@@ -38,40 +33,16 @@ export default function Home() {
     setActiveModel(_models[0]);
   }, [])
 
-  if (false) {
-    redirect('/login');
-  }
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-50">
-      <CreateModelDrawer open={open} onClose={onClose}/>
       <div className="max-w-lg w-full py-10 bg-white rounded-4xl shadow-lg shadow-indigo-50 overflow-hidden">
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
           <div className='flex flex-col gap-1 '>
-            <div className='flex gap-2 w-max-[80%] overflow-x-auto pb-2 pl-10'>
-              <div className="flex flex-col gap-1 items-center">
-                <Button onClick={openDrawer} type="primary" shape="circle" size="large" style={{width: 64, height: 64, minWidth: 64}} block>
-                  <Plus/>
-                </Button>
-                <Text className='align-middle w-fit text-[12px]!'>Создать</Text>
-              </div>
-              {_models.map((model) => (
-                <div key={model.id} className="flex flex-col gap-1 items-center" onClick={() => setActiveModel(model)}>
-                  <Image
-                    src={model.previewPhoto}
-                    width={64}
-                    height={64}
-                    preview={false}
-                    className={`rounded-full select-none min-w-[64px] border-3 transition-all duration-300 ${
-                      activeModel?.id === model.id
-                        ? "border-fuchsia-500"
-                        : "border-white hover:cursor-pointer hover:border-fuchsia-200"
-                    }`}
-                  />
-                  <Text className='align-middle w-fit text-[12px]! whitespace-nowrap overflow-hidden text-ellipsis max-w-[64px]'>{model.name}</Text>
-                </div>
-              ))}
-            </div>
+              <ModelsList
+                models={_models}
+                setActiveModel={setActiveModel}
+                activeModel={activeModel}
+              />
             <div className='flex gap-2 min-w-fit justify-between items-center w-full px-10'>
               <Text type="secondary">25 generations</Text>
               <Button type="primary" size="large">Buy more</Button>
