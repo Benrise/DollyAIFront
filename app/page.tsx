@@ -90,7 +90,7 @@ export default function Home() {
                 />
               </div>
               <div className='flex w-full justify-center'>
-                <Text className='align-middle w-fit text-[14px]!' type="secondary">You haven't generated any photos yet.</Text>
+                <Text className='align-middle w-fit text-[14px]!' type="secondary">You haven't generated any photos yet</Text>
               </div>
             </Card>
             <Input.TextArea placeholder="Imagine me as an astronaut in outer space" rows={4} autoSize={{ minRows: 3, maxRows: 5 }}/>

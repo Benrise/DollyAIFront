@@ -1,4 +1,4 @@
-interface HighlightedTextProps {
+export interface HighlightedTextProps {
     children: React.ReactNode;
   }
   
