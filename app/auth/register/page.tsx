@@ -1,3 +1,5 @@
+"use client";
+
 import { RegisterForm } from '@/app/features/auth/register';
 import { AuthWrapper } from '@/app/widgets/auth/wrapper';
 

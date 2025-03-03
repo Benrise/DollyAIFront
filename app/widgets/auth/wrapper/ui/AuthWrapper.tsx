@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
 import { Typography, Spin } from "antd";
-import { type PropsWithChildren, useEffect, useState } from "react";
+import { type PropsWithChildren, useState, useEffect } from "react";
 import { fetchImages } from '@/app/widgets/auth/wrapper/lib';
 
 import { ExampleGallery } from './ExampleGallery';

@@ -7,6 +7,7 @@ export const theme: ThemeConfig = {
     colorInfo: "#7559ff",
     borderRadiusLG: 12,
     fontSizeLG: 14,
+    lineWidth: 2,
     fontFamily: '"Rubik", sans-serif',
     colorBgSpotlight: '#7559ff',
   },

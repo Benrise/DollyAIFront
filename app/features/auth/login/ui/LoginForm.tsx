@@ -1,19 +1,9 @@
-'use client'
-
 import { Input, Button, Form } from 'antd';
-
-import { signIn } from 'next-auth/react';
 import { Terms } from '@/app/entities/terms';
+import { useLoginMutation } from '@/app/features/auth/login';
 
 export function LoginForm() {
-
-    const handleLoginSubmit = async (values: { email: string, password: string }) => {
-        try {
-          await signIn("credentials", { email: values.email, password: values.password });
-        } catch (error) {
-          console.error("Ошибка входа", error);
-        }
-      };
+    const { loginMutation, isLoadingLogin } = useLoginMutation();
 
     return (
         <Form
@@ -21,7 +11,7 @@ export function LoginForm() {
         layout="vertical"
         initialValues={{ remember: true }}
         className="space-y-4 px-10!"
-        onFinish={handleLoginSubmit}
+        onFinish={loginMutation}
       >
         <Form.Item
           label="Email"
@@ -47,7 +37,7 @@ export function LoginForm() {
           <Input.Password size="large" placeholder="Enter password" />
         </Form.Item>
         <Form.Item className='mb-2!'>
-          <Button type="primary" size="large" htmlType="submit" block>Login</Button>
+          <Button type="primary" size="large" htmlType="submit" loading={isLoadingLogin} block>Login</Button>
         </Form.Item>
         <Form.Item>
           <Button type="link" href='/auth/register' size="small" className='text-[14px]!' block>No account? Register</Button>

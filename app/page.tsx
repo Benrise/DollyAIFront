@@ -1,13 +1,12 @@
-'use client';
+"use client";
 
-import useSWR from "swr";
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Card, Input, Typography, Space, Image, Tooltip } from 'antd';
 
 import { Sparkles } from 'lucide-react'
 import { DownloadOutlined } from '@ant-design/icons';
 
-import { fetcher } from "@/app/shared/lib/fetcher";
+import { UserBadge } from './entities/user';
 import { type Model } from '@/app/entities/model';
 import { ModelsList } from '@/app/widgets/model/list';
 
@@ -16,20 +15,12 @@ const { Text } = Typography;
 export default function Home() {
   const [activeModel, setActiveModel] = useState<Model | undefined>(undefined);
   const [models, setModels] = useState<Model[]>([]);
-  const { data, error, isLoading } = useSWR<any>(`/api/models`, fetcher);
-
-  useEffect(() => {
-    if(data && !error)
-      {
-        setModels(data.result.models);
-        setActiveModel(data.result.models[0]);
-      }
-  }, [data, isLoading])
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-50">
       <div className="max-w-lg w-full py-10 bg-white rounded-4xl shadow-lg shadow-indigo-50 overflow-hidden">
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
+          <UserBadge/>
           <div className='flex flex-col gap-1 '>
               <ModelsList
                 models={models}
@@ -81,7 +72,7 @@ export default function Home() {
                 )}
               </div>
             </Card>
-            <Input.TextArea disabled={!!activeModel} placeholder="Imagine me as an astronaut in outer space" rows={4} autoSize={{ minRows: 3, maxRows: 5 }}/>
+            <Input.TextArea disabled={!!activeModel} placeholder="Imagine me as an astronaut in outer space" style={{ height: 80, resize: 'none' }} />
             {
               activeModel && !activeModel.is_ready ? (
                 <Tooltip trigger={"click"} title="Model is training. Please wait. Often it takes a while (up to 3 hours).">

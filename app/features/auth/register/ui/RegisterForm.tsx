@@ -1,31 +1,9 @@
-'use client'
-
-import { Input, Button, Form, Typography } from 'antd';
-
-import { Terms } from '@/app/entities/terms';
-import api from '@/app/shared/lib/axios';
-import { signIn } from 'next-auth/react';
+import { Button, Form, Input } from 'antd';
+import { Terms } from '@/app/entities/terms'
+import { useRegisterMutation } from '@/app/features/auth/register';
 
 export function RegisterForm() {
-  const handleRegisterSubmit = async (values: { email: string, password: string, password_confirm: string }) => {
-    try {
-        const response = await api.post("/auth/sign-up", {email: values.email, password: values.password, password_confirm: values.password_confirm}, {
-            headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                }
-            },
-        );
-
-        if (response.status === 201) {
-            alert()
-            console.log("User registered successfully");
-            await signIn("credentials", { email: values.email, password: values.password });
-        }
-    } catch (error) {
-        console.error("Error registering user", error);
-    }
-};
-
+    const { registerMutation, isLoadingRegister } = useRegisterMutation();
 
     return (
         <Form
@@ -33,7 +11,7 @@ export function RegisterForm() {
             layout="vertical"
             initialValues={{ remember: true }}
             className="space-y-4 px-10!"
-            onFinish={handleRegisterSubmit}
+            onFinish={registerMutation}
       >
         <Form.Item
           label="Email"
@@ -51,14 +29,6 @@ export function RegisterForm() {
         <Form.Item
           label="Password"
           name="password"
-          rules={[
-            { required: true, message: "Password is required!" },
-            { min: 8, message: "Password must be at least 8 characters!" },
-            { pattern: /[a-z]/, message: "Password must contain at least one lowercase letter." },
-            { pattern: /[A-Z]/, message: "Password must contain at least one uppercase letter." },
-            { pattern: /\d/, message: "Password must contain at least one digit." },
-            { pattern: /[#@$!%&*?]/, message: "Password must contain at least one special character (#$@!%&*?)." },
-          ]}
         >
           <Input.Password size="large" placeholder="Enter password" />
         </Form.Item>
@@ -84,7 +54,7 @@ export function RegisterForm() {
         </Form.Item>
 
         <Form.Item className='mb-2!'>
-          <Button type="primary" size="large" htmlType="submit" block>Register</Button>
+          <Button type="primary" size="large" htmlType="submit" loading={isLoadingRegister} block>Register</Button>
         </Form.Item>
 
         <Form.Item>
