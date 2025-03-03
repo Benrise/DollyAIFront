@@ -1,4 +1,5 @@
 import { IModel, IModelsResponse, modelsService } from '@/app/entities/model';
+import { FetchError } from '@/app/shared/lib';
 
 import { toastErrorHandler } from '@/app/shared/utils';
 
@@ -11,17 +12,19 @@ export function useGetModelsListMutation(setActiveModel: React.Dispatch<React.Se
     const { mutate: getModelsListMutation, isPending: isGettingModels } = useMutation({
         mutationKey: ['get models'],
         mutationFn: () => modelsService.list(),
-        onSuccess(data: any) {
-            if (data.message) {
+        onSuccess(data: FetchError | IModelsResponse) {
+            if ('detail' in data) {
                 toastErrorHandler(data);
-            }
-            setModels(data.models);
-
-            if (data.models.length > 0) {
-                setActiveModel(data.models[0]);
+            } 
+            else if ('models' in data) {
+                setModels(data.models);
+        
+                if (data.models.length > 0) {
+                    setActiveModel(data.models[0]);
+                }
             }
         },
-        onError(error) {
+        onError(error: Error) {
             toastErrorHandler(error);
         }
     });

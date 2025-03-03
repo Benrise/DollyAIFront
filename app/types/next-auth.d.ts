@@ -1,4 +1,4 @@
-import NextAuth from 'next-auth';
+import { DefaultUser } from 'next-auth';
 
 declare module 'next-auth' {
     interface User extends DefaultUser {
@@ -9,13 +9,13 @@ declare module 'next-auth' {
         user: {
             id: string;
             email: string;
-            access?: string;
+            access: string;
         };
     }
 
     interface JWT {
         id: string;
         email: string;
-        access?: string;
+        access: string;
     }
 }

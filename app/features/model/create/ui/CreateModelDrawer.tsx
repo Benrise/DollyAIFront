@@ -5,6 +5,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import { HighlightedText } from '@/app/shared/ui/highlighted-text';
 import { useCreateModelMutation } from '../hooks';
 import { toast } from 'sonner';
+import { UploadFile, UploadChangeParam  } from 'antd/lib/upload';
 
 const { Text, Paragraph } = Typography;
 const { Dragger } = Upload;
@@ -18,14 +19,16 @@ interface CreateModelDrawerProps {
 export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onClose }) => {
   const { createModelMutation, isCreatingModel } = useCreateModelMutation(onClose);
   const [modelName, setModelName] = useState('');
-  const [fileList, setFileList] = useState<any[]>([]);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [gender, setGender] = useState<'man' | 'female'>('man');
 
   const handleSubmit = async () => {
     const formData = new FormData();
     
     fileList.forEach((file) => {
-      formData.append('train_photos', file.originFileObj);
+      if (file.originFileObj) {
+        formData.append('train_photos', file.originFileObj);
+      }
     });
     formData.append('name', modelName);
     formData.append('gender', gender);
@@ -34,7 +37,7 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
   };
 
   const uploadProps = {
-    beforeUpload: (file: any) => {
+    beforeUpload: (file: File) => {
       const MAX_SIZE_MB = 5;
       const fileSizeInMB = file.size / 1024 / 1024;
   
@@ -45,7 +48,7 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
   
       return true
     },
-    onChange: (info: any) => {
+    onChange: (info: UploadChangeParam ) => {
       setFileList(info.fileList);
     },
     fileList,

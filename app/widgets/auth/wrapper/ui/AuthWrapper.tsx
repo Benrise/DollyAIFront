@@ -10,12 +10,11 @@ interface AuthWrapperProps {
     title: string | React.ReactNode,
     description?: string
     isShowExamples?: boolean
-    isShowSocials?: boolean
 }
 
 const { Title, Paragraph } = Typography;
 
-export function AuthWrapper({ children, title, description, isShowExamples = true, isShowSocials = false }: PropsWithChildren<AuthWrapperProps>) {
+export function AuthWrapper({ children, title, description, isShowExamples = true }: PropsWithChildren<AuthWrapperProps>) {
 
     const [images, setImages] = useState<string[]>([]);
 

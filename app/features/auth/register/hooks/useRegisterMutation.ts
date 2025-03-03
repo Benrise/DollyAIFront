@@ -1,4 +1,5 @@
-import { authService, type TypeRegisterSchema } from '@/app/entities/auth';
+import { authService, type IRegisterResponse, type TypeRegisterSchema } from '@/app/entities/auth';
+import { FetchError } from '@/app/shared/lib';
 
 import { toastErrorHandler } from '@/app/shared/utils';
 
@@ -12,11 +13,16 @@ export function useRegisterMutation() {
     const {mutate: registerMutation, isPending: isLoadingRegister} = useMutation({
         mutationKey: ['register user'],
         mutationFn: (values: TypeRegisterSchema) => authService.register(values),
-        onSuccess() {
-            toast.success('Success registration!')
-            router.push('/auth/login')
+        onSuccess(data: FetchError | IRegisterResponse) {
+            if ('detail' in data) {
+                toastErrorHandler(data);
+            } 
+            else {
+                toast.success('Success registration!')
+                router.push('/auth/login')
+            }
         },
-        onError(error) {
+        onError(error: Error) {
             toastErrorHandler(error)
         }
     })

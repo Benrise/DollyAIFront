@@ -4,6 +4,7 @@ export class FetchError extends Error {
         public statusCode: number,
         public message: string,
         public config: RequestInit,
+        public detail?: string
     ){
         super(message);
         

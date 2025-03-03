@@ -1,8 +1,6 @@
 import { FetchClient } from "@/app/shared/lib";
 import { signOut, getSession } from "next-auth/react";
-import { auth } from "@/auth";
 import { toast } from "sonner";
-import { authService } from "./entities/auth";
 
 export const api = new FetchClient({
     baseUrl: process.env.NEXT_PUBLIC_API_URL as string,

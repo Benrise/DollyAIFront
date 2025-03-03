@@ -27,7 +27,7 @@ export default function Home() {
       <div className="max-w-lg w-full py-10 bg-white rounded-4xl shadow-lg shadow-indigo-50 overflow-hidden">
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
           <UserBadge/>
-          <div className='flex flex-col gap-1 '>
+          <div className='flex flex-col gap-2 '>
               <ModelsList
                 models={models}
                 setActiveModel={setActiveModel}
@@ -48,7 +48,7 @@ export default function Home() {
           <div className="px-10 flex flex-col gap-4">
           <Card 
               title="Generation result" 
-              extra={<Button type='text' shape="circle" size="large" icon={<DownloadOutlined className='text-fuchsia-600' />} />}
+              extra={<Button type='text' shape="circle" size="large" icon={<DownloadOutlined className='text-fuchsia-600' />} disabled/>}
             >
               <div className='flex max-w-[512px] justify-center'>
                 {activeModel && !activeModel.is_ready ? (
@@ -70,19 +70,18 @@ export default function Home() {
                 )}
               </div>
               
-              <div className='flex w-full justify-center'>
+              <div className="flex w-full justify-center">
                 {activeModel && !activeModel.is_ready ? (
-                  <Text className='align-middle w-fit text-[14px]!' type="secondary">
-                    Модель обучается, это может занять некоторое время
+                  <Text className="align-middle w-fit text-[14px]!" type="secondary">
+                    Model is training, this may take some time
                   </Text>
                 ) : (
-                  <Text className='align-middle w-fit text-[14px]!' type="secondary">
-                    You haven't generated any photos yet
+                  <Text className="align-middle w-fit text-[14px]!" type="secondary">You haven`t generated any photos yet
                   </Text>
                 )}
               </div>
             </Card>
-            <Input.TextArea disabled={!!activeModel} placeholder="Imagine me as an astronaut in outer space" style={{ height: 80, resize: 'none' }} />
+            <Input.TextArea disabled={!!activeModel} placeholder="Imagine me as an astronaut in outer space" style={{ height: 80, resize: "none" }} />
             {
               activeModel && !activeModel.is_ready ? (
                 <Tooltip trigger={"click"} title="Model is training. Please wait. Often it takes a while (up to 3 hours).">

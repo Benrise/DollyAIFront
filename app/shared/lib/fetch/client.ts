@@ -3,12 +3,12 @@ import { RequestOptions, TypeSearchParams } from "./types";
 
 type RequestInterceptor = {
   fulfilled: (config: RequestInit) => RequestInit | Promise<RequestInit>;
-  rejected?: (error: FetchError) => any;
+  rejected?: (error: FetchError) => FetchError | unknown;
 };
 
 type ResponseInterceptor = {
   fulfilled: (response: Response) => Response | Promise<Response>;
-  rejected?: (error: FetchError) => any;
+  rejected?: (error: FetchError) => FetchError | unknown;
 };
 
 export class FetchClient {
@@ -44,14 +44,15 @@ export class FetchClient {
     this.options = init.options;
   }
 
-  private formatBody(body: any) {
+  private formatBody(body?: Record<string, string>) {
+    if (body === null || body === undefined) return '';
     const formBody = body
-    ? Object.keys(body)
-        .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(body[key]))
-        .join('&')
-    : '';
-
-    return formBody
+      ? Object.keys(body)
+          .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(String(body[key as keyof typeof body])))
+          .join('&')
+      : '';
+  
+    return formBody;
   }
 
   private createSearchParams(params?: TypeSearchParams): string {
@@ -125,13 +126,18 @@ export class FetchClient {
         }
       }
     } else {
-      let errorObj: any = new FetchError(response.status, response.statusText, config);
+      let errorObj: FetchError = new FetchError(response.status, response.statusText, config);
+      const errorBody = await response.json();
+      errorObj = {
+          ...errorObj,
+          detail: errorBody?.detail || "Unknown error",
+      };
       for (const interceptor of this.interceptors.response.handlers) {
         if (interceptor.rejected) {
           try {
-            errorObj = await interceptor.rejected(errorObj);
-          } catch (e) {
-            errorObj = e;
+            errorObj = await interceptor.rejected(errorObj) as FetchError;
+          } catch (error) {
+            errorObj = error as FetchError;
           }
         }
       }
@@ -152,7 +158,7 @@ export class FetchClient {
 
   public post<T>(
     endpoint: string,
-    body?: Record<string, any> | FormData,
+    body?: Record<string, string> | FormData,
     options: RequestOptions = {}
   ) {
     const isFormData = body instanceof FormData;
@@ -166,7 +172,7 @@ export class FetchClient {
     });
   }
 
-  public put<T>(endpoint: string, body: Record<string, any>, options: RequestOptions = {}) {
+  public put<T>(endpoint: string, body: Record<string, string>, options: RequestOptions = {}) {
     return this.request<T>(endpoint, "PUT", {
       ...options,
       headers: {
@@ -181,7 +187,7 @@ export class FetchClient {
     return this.request<T>(endpoint, "DELETE", options);
   }
 
-  public patch<T>(endpoint: string, body: Record<string, any>, options: RequestOptions = {}) {
+  public patch<T>(endpoint: string, body: Record<string, string>, options: RequestOptions = {}) {
     return this.request<T>(endpoint, "PATCH", {
       ...options,
       headers: {

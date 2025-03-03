@@ -1,5 +1,5 @@
-import { modelsService } from '@/app/entities/model/model';
-
+import { type IModelsResponse, modelsService } from '@/app/entities/model/model';
+import { FetchError } from '@/app/shared/lib';
 
 import { toastErrorHandler } from '@/app/shared/utils';
 
@@ -10,15 +10,16 @@ export function useCreateModelMutation(callback?: () => void) {
     const { mutate: createModelMutation, isPending: isCreatingModel } = useMutation({
         mutationKey: ['create model'],
         mutationFn: (data: FormData) => modelsService.create(data),
-        onSuccess(data: any) {
-            if (data.message) {
+        onSuccess(data: FetchError | IModelsResponse) {
+            if ('detail' in data) {
                 toastErrorHandler(data);
-            } else {
+            } 
+            else {
                 callback?.();
                 toast.success('Model created successfully!');
             }
         },
-        onError(error) {
+        onError(error: Error) {
             toastErrorHandler(error);
         }
     });

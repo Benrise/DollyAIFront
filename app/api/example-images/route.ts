@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-export async function GET() {
+export async function GET(): Promise<Response> {
   const directoryPath = path.join(process.cwd(), 'public/images/examples');
 
   try {
@@ -13,6 +13,7 @@ export async function GET() {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
-    return new Response('Error reading directory', { status: 500 });
+    console.error('Error reading directory:', error);
+    return new Response('Error reading directory');
   }
 }

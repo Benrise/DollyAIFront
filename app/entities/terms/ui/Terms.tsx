@@ -1,10 +1,12 @@
-import { Typography } from "antd"
-import { HighlightedText } from "@/app/shared/ui/highlighted-text";
+import { Typography, Button } from "antd"
 
 const { Paragraph } = Typography;
 
 export function Terms() {
+
+    const terms_link = process.env.NEXT_TERMS_LINK
+
     return (
-        <Paragraph type='secondary' className='text-[12px]! mb-0! text-center!'>By continuing, you agree to the <HighlightedText>AI Love Photo Terms</HighlightedText> of Use and Privacy Policy</Paragraph>
+        <Paragraph type='secondary' className='text-[12px]! mb-0! text-center!'>By continuing, you agree to the <Button type='link' className="text-[12px]!" href={terms_link}>AI Love Photo Terms</Button> of Use and Privacy Policy</Paragraph>
     )
 }

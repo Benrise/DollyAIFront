@@ -9,7 +9,7 @@ class ModelsService {
     }
 
     public async create(body: FormData) {
-        const response = await api.post('/models', body)
+        const response = await api.post<IModelsResponse>('/models', body)
         return response;
     }
 }
