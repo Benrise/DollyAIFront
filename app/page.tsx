@@ -15,28 +15,14 @@ const { Text } = Typography;
 
 export default function Home() {
   const [activeModel, setActiveModel] = useState<Model | null>(null);
+  const [models, setModels] = useState<Model[]>([]);
   const { data, error, isLoading } = useSWR<any>(`/api/models`, fetcher);
 
-  const _models: Model[] = [
-    { id: '1', name: 'На новый год', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/1.jpg', gender: 'male', is_ready: true },
-    { id: '2', name: 'На работу', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/2.jpg', gender: 'female', is_ready: false },
-    { id: '3', name: 'Космонавт', created_at: '2022-01-01', updated_at: '2022-01-01',  cover: '/images/examples/3.jpg', gender: 'female', is_ready: false },
-    { id: '4', name: 'Школа', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/4.jpg', gender: 'male', is_ready: true },
-    { id: '5', name: 'Энергия', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/1.jpg', gender: 'male', is_ready: true },
-    { id: '6', name: 'Тест', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/2.jpg', gender: 'female', is_ready: false },
-    { id: '7', name: '12391278497838974', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/3.jpg', gender: 'female', is_ready: false },
-    { id: '8', name: '_', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/4.jpg', gender: 'male', is_ready: true },
-    { id: '9', name: '1', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/1.jpg', gender: 'male', is_ready: true },
-    { id: '10', name: 'Класс', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/2.jpg', gender: 'female', is_ready: false },
-    { id: '11', name: 'ТЕСТ', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/3.jpg', gender: 'female', is_ready: false },
-    { id: '12', name: 'Наверное_123', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/4.jpg', gender: 'male', is_ready: true },
-  ];
-
   useEffect(() => {
-    if(data && data.result.data)
+    if(data && data.result.models.length > 0)
       {
-        console.log(data.result.data);
-        setActiveModel(_models[0]);
+        setModels(data.result.models);
+        setActiveModel(data.result.models[0]);
       }
   }, [data, isLoading])
 
@@ -46,7 +32,7 @@ export default function Home() {
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
           <div className='flex flex-col gap-1 '>
               <ModelsList
-                models={_models}
+                models={models}
                 setActiveModel={setActiveModel}
                 activeModel={activeModel}
               />
