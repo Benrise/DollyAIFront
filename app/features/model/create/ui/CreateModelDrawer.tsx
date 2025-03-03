@@ -1,6 +1,6 @@
 import { Drawer} from 'antd';
 import { useState } from 'react';
-import { Button, Input, Form, message, Upload, Typography, Space  } from 'antd';
+import { Button, Input, Form, Upload, Typography, Space  } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { HighlightedText } from '@/app/shared/ui/highlighted-text';
 
@@ -24,24 +24,17 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
       formData.append('images', file.originFileObj);
     });
     formData.append('name', modelName);
-
-    const res = await fetch('/api/create-model', {
-      method: 'POST',
-      body: formData,
-    });
-    const data = await res.json();
-    
-    if (data?.message) {
-      message.success(data.message);
-    } else {
-      message.error('Error creating model');
-    }
+    // TODO
   };
 
   const uploadProps = {
     beforeUpload: (file: any) => {
       if (fileList.length >= 15) {
-        message.error('You can only upload up to 15 files.');
+        console.error('You can only upload up to 15 files.');
+        return false;
+      }
+      else if (fileList.length < 10) {
+        console.error('You must upload at least 10 files.');
         return false;
       }
       return true;

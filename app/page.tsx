@@ -2,24 +2,24 @@
 
 import useSWR from "swr";
 import { useState, useEffect } from 'react';
-import { Button, Card, Input, Typography, Space, Image } from 'antd';
+import { Button, Card, Input, Typography, Space, Image, Tooltip } from 'antd';
 
 import { Sparkles } from 'lucide-react'
 import { DownloadOutlined } from '@ant-design/icons';
 
-import { fetcher } from "@/app/libs";
+import { fetcher } from "@/app/shared/lib/fetcher";
 import { type Model } from '@/app/entities/model';
 import { ModelsList } from '@/app/widgets/model/list';
 
 const { Text } = Typography;
 
 export default function Home() {
-  const [activeModel, setActiveModel] = useState<Model | null>(null);
+  const [activeModel, setActiveModel] = useState<Model | undefined>(undefined);
   const [models, setModels] = useState<Model[]>([]);
   const { data, error, isLoading } = useSWR<any>(`/api/models`, fetcher);
 
   useEffect(() => {
-    if(data && data.result.models.length > 0)
+    if(data && !error)
       {
         setModels(data.result.models);
         setActiveModel(data.result.models[0]);
@@ -36,31 +36,65 @@ export default function Home() {
                 setActiveModel={setActiveModel}
                 activeModel={activeModel}
               />
-            <div className='flex gap-2 min-w-fit justify-between items-center w-full px-10'>
-              <Text type="secondary">25 generations</Text>
-              <Button type="primary" size="large">Buy more</Button>
-            </div>
+            {models.length > 0 && (
+                <div className='flex gap-2 min-w-fit justify-between items-center w-full px-10'>
+                  <Text type="secondary">25 generations</Text>
+                  <Button type="primary" size="large">Buy more</Button>
+                </div>
+            )}      
           </div>
 
           <div className="px-10 flex flex-col gap-4">
-            <Card title="Generation result" extra={<Button type='text' shape="circle" size="large" icon={<DownloadOutlined className='text-fuchsia-600'/>}/>}>
+          <Card 
+              title="Generation result" 
+              extra={<Button type='text' shape="circle" size="large" icon={<DownloadOutlined className='text-fuchsia-600' />} />}
+            >
               <div className='flex max-w-[512px] justify-center'>
-                <Image
-                  src={`/images/etc/magnify.png`}
-                  alt="Empty State Image"
-                  width={192}
-                  className="rounded-2xl select-none"
-                  preview={false}
-                />
+                {activeModel && !activeModel.is_ready ? (
+                  <Image
+                    src={`/images/etc/silky-waves.png`}
+                    alt="Model is training"
+                    width={192}
+                    className="rounded-2xl select-none"
+                    preview={false}
+                  />
+                ) : (
+                  <Image
+                    src={`/images/etc/magnify.png`}
+                    alt="Empty State Image"
+                    width={192}
+                    className="rounded-2xl select-none"
+                    preview={false}
+                  />
+                )}
               </div>
+              
               <div className='flex w-full justify-center'>
-                <Text className='align-middle w-fit text-[14px]!' type="secondary">You haven't generated any photos yet</Text>
+                {activeModel && !activeModel.is_ready ? (
+                  <Text className='align-middle w-fit text-[14px]!' type="secondary">
+                    Модель обучается, это может занять некоторое время
+                  </Text>
+                ) : (
+                  <Text className='align-middle w-fit text-[14px]!' type="secondary">
+                    You haven't generated any photos yet
+                  </Text>
+                )}
               </div>
             </Card>
-            <Input.TextArea placeholder="Imagine me as an astronaut in outer space" rows={4} autoSize={{ minRows: 3, maxRows: 5 }}/>
-            <Button type="primary" size="large" htmlType="submit" block>
-              Generate
-            </Button>
+            <Input.TextArea disabled={!!activeModel} placeholder="Imagine me as an astronaut in outer space" rows={4} autoSize={{ minRows: 3, maxRows: 5 }}/>
+            {
+              activeModel && !activeModel.is_ready ? (
+                <Tooltip trigger={"click"} title="Model is training. Please wait. Often it takes a while (up to 3 hours).">
+                  <Button type="primary" size="large" htmlType="submit" ghost block>
+                    Generate
+                  </Button>
+                </Tooltip>
+              ) : (
+                <Button disabled={!activeModel} type="primary" size="large" htmlType="submit" block>
+                  Generate
+                </Button>
+              )
+            }
           </div>
           <div className="flex w-full gap-4 justify-evenly items-center">
             <div className="min-w-[144px] max-h-[164px]">

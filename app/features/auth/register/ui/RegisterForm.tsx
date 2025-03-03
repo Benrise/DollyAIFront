@@ -3,15 +3,28 @@
 import { Input, Button, Form, Typography } from 'antd';
 
 import { Terms } from '@/app/entities/terms';
+import api from '@/app/shared/lib/axios';
+import { signIn } from 'next-auth/react';
 
 export function RegisterForm() {
-    const handleRegisterSubmit = async (values: { email: string, password: string, password_confirm: string }) => {
-        try {
-          console.log(values)
-        } catch (error) {
-          console.error("Ошибка входа", error);
+  const handleRegisterSubmit = async (values: { email: string, password: string, password_confirm: string }) => {
+    try {
+        const response = await api.post("/auth/sign-up", {email: values.email, password: values.password, password_confirm: values.password_confirm}, {
+            headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                }
+            },
+        );
+
+        if (response.status === 201) {
+            alert()
+            console.log("User registered successfully");
+            await signIn("credentials", { email: values.email, password: values.password });
         }
-      };
+    } catch (error) {
+        console.error("Error registering user", error);
+    }
+};
 
 
     return (

@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Image, Typography, Spin } from 'antd';
+import { Button, Image, Typography } from 'antd';
 import { useState } from 'react';
 
 import { Plus } from 'lucide-react'
@@ -14,7 +14,7 @@ const { Text } = Typography;
 interface ModelsListProps {
     models: Model[];
     setActiveModel: (model: Model) => void; 
-    activeModel: Model | null;
+    activeModel: Model | undefined;
   }
 
   export function ModelsList({ models, setActiveModel, activeModel }: ModelsListProps) {
