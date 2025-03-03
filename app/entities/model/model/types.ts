@@ -1,4 +1,4 @@
-export interface Model {
+export interface IModel {
     id: string;
     name: string;
     cover: string;
@@ -8,6 +8,6 @@ export interface Model {
     is_ready: boolean;
   }
 
-export interface ModelsResponse {
-    models: Model[];
+export interface IModelsResponse {
+    models: IModel[];
 }

@@ -93,18 +93,20 @@ export class FetchClient {
         return this.request<T>(endpoint, 'GET', options);
     }
 
-    public post<T>(endpoint: string, body?: Record<string,string>, options: RequestOptions = {}) {
+    public post<T>(endpoint: string, body?: Record<string, string> | FormData, options: RequestOptions = {}) {
+        const isFormData = body instanceof FormData;
+    
         return this.request<T>(endpoint, 'POST', {
             ...options,
             headers: {
-                'Content-Type': 'application/json',
+                ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
                 ...(options?.headers || {})
             },
-            body: this.formatBody(body)
-        })
+            body: isFormData ? body : this.formatBody(body)
+        });
     }
 
-    public put<T>(endpoint: string, body: any, options: RequestOptions = {}) {
+    public put<T>(endpoint: string, body: Record<string, string>, options: RequestOptions = {}) {
         return this.request<T>(endpoint, 'PUT', {
             ...options,
             headers: {
@@ -119,7 +121,7 @@ export class FetchClient {
         return this.request<T>(endpoint, 'DELETE', options);
     }
     
-    public patch<T>(endpoint: string, body: any, options: RequestOptions = {}) {
+    public patch<T>(endpoint: string, body: Record<string, string>, options: RequestOptions = {}) {
         return this.request<T>(endpoint, 'PATCH', {
             ...options,
             headers: {

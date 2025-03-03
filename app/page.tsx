@@ -7,14 +7,14 @@ import { Sparkles } from 'lucide-react'
 import { DownloadOutlined } from '@ant-design/icons';
 
 import { UserBadge } from './entities/user';
-import { type Model } from '@/app/entities/model';
+import { type IModel } from '@/app/entities/model';
 import { ModelsList } from '@/app/widgets/model/list';
 
 const { Text } = Typography;
 
 export default function Home() {
-  const [activeModel, setActiveModel] = useState<Model | undefined>(undefined);
-  const [models, setModels] = useState<Model[]>([]);
+  const [activeModel, setActiveModel] = useState<IModel | undefined>(undefined);
+  const [models, setModels] = useState<IModel[]>([]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-50">

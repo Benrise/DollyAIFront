@@ -7,14 +7,14 @@ import { Plus } from 'lucide-react'
 import { LoadingOutlined } from '@ant-design/icons';
 
 import { CreateModelDrawer } from '@/app/features/model/create';
-import { type Model } from '@/app/entities/model';
+import { type IModel } from '@/app/entities/model';
 
 const { Text } = Typography;
 
 interface ModelsListProps {
-    models: Model[];
-    setActiveModel: (model: Model) => void; 
-    activeModel: Model | undefined;
+    models: IModel[];
+    setActiveModel: (model: IModel) => void; 
+    activeModel: IModel | undefined;
   }
 
   export function ModelsList({ models, setActiveModel, activeModel }: ModelsListProps) {

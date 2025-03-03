@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { Button, Input, Form, Upload, Typography, Space  } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { HighlightedText } from '@/app/shared/ui/highlighted-text';
+import { useCreateModelMutation } from '../hooks';
+import { toast } from 'sonner';
 
 const { Text, Paragraph } = Typography;
 const { Dragger } = Upload;
@@ -14,6 +16,7 @@ interface CreateModelDrawerProps {
 }
 
 export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onClose }) => {
+  const { createModelMutation, isCreatingModel } = useCreateModelMutation();
   const [modelName, setModelName] = useState('');
   const [fileList, setFileList] = useState<any[]>([]);
 
@@ -24,17 +27,18 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
       formData.append('images', file.originFileObj);
     });
     formData.append('name', modelName);
-    // TODO
+
+    createModelMutation(formData);
   };
 
   const uploadProps = {
     beforeUpload: (file: any) => {
       if (fileList.length >= 15) {
-        console.error('You can only upload up to 15 files.');
+        toast.error('You can only upload up to 15 files.');
         return false;
       }
-      else if (fileList.length < 10) {
-        console.error('You must upload at least 10 files.');
+      else if (fileList.length < 11) {
+        toast.error('You must upload at least 10 files.');
         return false;
       }
       return true;
@@ -104,7 +108,7 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
             <Button block type="default" htmlType="button" size='large' onClick={onClose}>
               Cancel
             </Button>
-            <Button block type="primary" htmlType="submit" size='large'>
+            <Button block type="primary" htmlType="submit" size='large' loading={isCreatingModel}>
               Create Model
             </Button>
           </div>
