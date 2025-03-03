@@ -1,10 +1,11 @@
 export interface Model {
     id: string;
-    createdAt: string;
-    previewPhoto: string;
     name: string;
+    cover: string;
+    created_at: string;
+    updated_at: string;
     gender: string;
-    isReady: boolean;
+    is_ready: boolean;
   }
 
 export interface ModelsResponse {

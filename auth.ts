@@ -32,7 +32,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 return {
                     id: data.id.toString(),
                     email: data.email,
-                    accessToken: data.access,
+                    access_token: data.access,
                 };
             } 
             catch (error: any) {
@@ -61,6 +61,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         token.id = user.id;
         token.email = user.email;
+        token.access_token = user.access_token;
       }
       return token;
     },
@@ -68,6 +69,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (token) {
         session.user.id = token.id as string;
         session.user.email = token.email as string;
+        session.user.access_token = token.access_token as string;
       }
       return session;
     },

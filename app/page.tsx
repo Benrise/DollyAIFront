@@ -1,11 +1,13 @@
 'use client';
 
+import useSWR from "swr";
 import { useState, useEffect } from 'react';
 import { Button, Card, Input, Typography, Space, Image } from 'antd';
 
 import { Sparkles } from 'lucide-react'
 import { DownloadOutlined } from '@ant-design/icons';
 
+import { fetcher } from "@/app/libs";
 import { type Model } from '@/app/entities/model';
 import { ModelsList } from '@/app/widgets/model/list';
 
@@ -13,25 +15,30 @@ const { Text } = Typography;
 
 export default function Home() {
   const [activeModel, setActiveModel] = useState<Model | null>(null);
+  const { data, error, isLoading } = useSWR<any>(`/api/models`, fetcher);
 
   const _models: Model[] = [
-    { id: '1', name: 'На новый год', createdAt: '2022-01-01', previewPhoto: '/images/examples/1.jpg', gender: 'male', isReady: true },
-    { id: '2', name: 'На работу', createdAt: '2022-01-01', previewPhoto: '/images/examples/2.jpg', gender: 'female', isReady: false },
-    { id: '3', name: 'Космонавт', createdAt: '2022-01-01', previewPhoto: '/images/examples/3.jpg', gender: 'female', isReady: false },
-    { id: '4', name: 'Школа', createdAt: '2022-01-01', previewPhoto: '/images/examples/4.jpg', gender: 'male', isReady: true },
-    { id: '5', name: 'Энергия', createdAt: '2022-01-01', previewPhoto: '/images/examples/1.jpg', gender: 'male', isReady: true },
-    { id: '6', name: 'Тест', createdAt: '2022-01-01', previewPhoto: '/images/examples/2.jpg', gender: 'female', isReady: false },
-    { id: '7', name: '12391278497838974', createdAt: '2022-01-01', previewPhoto: '/images/examples/3.jpg', gender: 'female', isReady: false },
-    { id: '8', name: '_', createdAt: '2022-01-01', previewPhoto: '/images/examples/4.jpg', gender: 'male', isReady: true },
-    { id: '9', name: '1', createdAt: '2022-01-01', previewPhoto: '/images/examples/1.jpg', gender: 'male', isReady: true },
-    { id: '10', name: 'Класс', createdAt: '2022-01-01', previewPhoto: '/images/examples/2.jpg', gender: 'female', isReady: false },
-    { id: '11', name: 'ТЕСТ', createdAt: '2022-01-01', previewPhoto: '/images/examples/3.jpg', gender: 'female', isReady: false },
-    { id: '12', name: 'Наверное_123', createdAt: '2022-01-01', previewPhoto: '/images/examples/4.jpg', gender: 'male', isReady: true },
+    { id: '1', name: 'На новый год', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/1.jpg', gender: 'male', is_ready: true },
+    { id: '2', name: 'На работу', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/2.jpg', gender: 'female', is_ready: false },
+    { id: '3', name: 'Космонавт', created_at: '2022-01-01', updated_at: '2022-01-01',  cover: '/images/examples/3.jpg', gender: 'female', is_ready: false },
+    { id: '4', name: 'Школа', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/4.jpg', gender: 'male', is_ready: true },
+    { id: '5', name: 'Энергия', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/1.jpg', gender: 'male', is_ready: true },
+    { id: '6', name: 'Тест', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/2.jpg', gender: 'female', is_ready: false },
+    { id: '7', name: '12391278497838974', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/3.jpg', gender: 'female', is_ready: false },
+    { id: '8', name: '_', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/4.jpg', gender: 'male', is_ready: true },
+    { id: '9', name: '1', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/1.jpg', gender: 'male', is_ready: true },
+    { id: '10', name: 'Класс', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/2.jpg', gender: 'female', is_ready: false },
+    { id: '11', name: 'ТЕСТ', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/3.jpg', gender: 'female', is_ready: false },
+    { id: '12', name: 'Наверное_123', created_at: '2022-01-01', updated_at: '2022-01-01', cover: '/images/examples/4.jpg', gender: 'male', is_ready: true },
   ];
 
   useEffect(() => {
-    setActiveModel(_models[0]);
-  }, [])
+    if(data && data.result.data)
+      {
+        console.log(data.result.data);
+        setActiveModel(_models[0]);
+      }
+  }, [data, isLoading])
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-50">

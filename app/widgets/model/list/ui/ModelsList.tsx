@@ -32,10 +32,10 @@ interface ModelsListProps {
             {models.map((model) => (
                 <div
                     key={model.id}
-                    className="flex flex-col gap-1 items-center active:scale-95"
+                    className="flex flex-col gap-1 items-center"
                     onClick={() => setActiveModel(model)}
                 >
-                    <Image src={model.previewPhoto} width={64} height={64} preview={false} alt={model.name} className={`
+                    <Image src={model.cover} width={64} height={64} preview={false} alt={model.name} className={`
                         rounded-full select-none min-w-[64px] border-3 transition-all duration-300
                         ${activeModel?.id === model.id? "border-fuchsia-500": "border-white hover:cursor-pointer hover:border-fuchsia-200"}
                     `}/>
