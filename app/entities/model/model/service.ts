@@ -4,7 +4,7 @@ import { IModelsResponse } from "./types";
 
 class ModelsService {
     public async list() {
-        return await api.get<IModelsResponse>('/model');
+        return await api.get<IModelsResponse>('/models');
     }
 
     public async create(body: FormData) {

@@ -8,13 +8,17 @@ import { DownloadOutlined } from '@ant-design/icons';
 
 import { UserBadge } from './entities/user';
 import { type IModel } from '@/app/entities/model';
-import { ModelsList } from '@/app/widgets/model/list';
+import { ModelsList, useGetModelsListMutation } from '@/app/widgets/model/list';
 
 const { Text } = Typography;
 
 export default function Home() {
   const [activeModel, setActiveModel] = useState<IModel | undefined>(undefined);
-  const [models, setModels] = useState<IModel[]>([]);
+  const { models, getModelsListMutation } = useGetModelsListMutation()
+
+  useEffect(() => {
+    getModelsListMutation();
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-50">
