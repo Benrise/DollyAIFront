@@ -1,24 +1,26 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Button, Card, Input, Typography, Space, Image, Tooltip } from 'antd';
 
 import { Sparkles } from 'lucide-react'
 import { DownloadOutlined } from '@ant-design/icons';
 
-import { UserBadge } from './entities/user';
+import { UserBadge } from '@/app/entities/user';
 import { type IModel } from '@/app/entities/model';
 import { ModelsList, useGetModelsListMutation } from '@/app/widgets/model/list';
 
 const { Text } = Typography;
 
 export default function Home() {
+  const [parent] = useAutoAnimate();
   const [activeModel, setActiveModel] = useState<IModel | undefined>(undefined);
-  const { models, getModelsListMutation } = useGetModelsListMutation()
+  const {models, getModelsListMutation} = useGetModelsListMutation(setActiveModel);
 
   useEffect(() => {
     getModelsListMutation();
-  }, []);
+  }, [getModelsListMutation]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-50">
@@ -31,12 +33,16 @@ export default function Home() {
                 setActiveModel={setActiveModel}
                 activeModel={activeModel}
               />
-            {models.length > 0 && (
-                <div className='flex gap-2 min-w-fit justify-between items-center w-full px-10'>
-                  <Text type="secondary">25 generations</Text>
-                  <Button type="primary" size="large">Buy more</Button>
+            <div ref={parent}>
+              {models.length > 0 && (
+                <div className="flex gap-2 min-w-fit justify-between items-center w-full px-10">
+                  <Text type="secondary">∞ generations</Text>
+                  <Button type="primary" size="large" disabled>
+                    Buy more
+                  </Button>
                 </div>
-            )}      
+              )}
+            </div>     
           </div>
 
           <div className="px-10 flex flex-col gap-4">

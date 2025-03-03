@@ -1,134 +1,194 @@
 import { FetchError } from "./err";
 import { RequestOptions, TypeSearchParams } from "./types";
 
+type RequestInterceptor = {
+  fulfilled: (config: RequestInit) => RequestInit | Promise<RequestInit>;
+  rejected?: (error: FetchError) => any;
+};
+
+type ResponseInterceptor = {
+  fulfilled: (response: Response) => Response | Promise<Response>;
+  rejected?: (error: FetchError) => any;
+};
+
 export class FetchClient {
-    private baseUrl: string;
-    public headers?: Record<string, string>;
-    public params?: TypeSearchParams;
-    public options?: RequestOptions;
+  private baseUrl: string;
+  public headers?: Record<string, string>;
+  public params?: TypeSearchParams;
+  public options?: RequestOptions;
 
-    public constructor(init: {
-        baseUrl: string;
-        headers?: Record<string, string>;
-        params?: TypeSearchParams;
-        options?: RequestOptions;
-    }) {
-        this.baseUrl = init.baseUrl;
-        this.headers = init.headers;
-        this.params = init.params;
-        this.options = init.options;
-    }
+  public interceptors = {
+    request: {
+      handlers: [] as RequestInterceptor[],
+      use: (fulfilled: RequestInterceptor["fulfilled"],rejected?: RequestInterceptor["rejected"]) => {
+        this.interceptors.request.handlers.push({ fulfilled, rejected });
+      },
+    },
+    response: {
+      handlers: [] as ResponseInterceptor[],
+      use: (fulfilled: ResponseInterceptor["fulfilled"], rejected?: ResponseInterceptor["rejected"]) => {
+        this.interceptors.response.handlers.push({ fulfilled, rejected });
+      },
+    },
+  };
 
-    private formatBody(body: any) {
-        const formBody = body
-        ? Object.keys(body)
-            .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(body[key]))
-            .join('&')
-        : '';
+  public constructor(init: {
+    baseUrl: string;
+    headers?: Record<string, string>;
+    params?: TypeSearchParams;
+    options?: RequestOptions;
+  }) {
+    this.baseUrl = init.baseUrl;
+    this.headers = init.headers;
+    this.params = init.params;
+    this.options = init.options;
+  }
 
-        return formBody
-    }
+  private formatBody(body: any) {
+    const formBody = body
+    ? Object.keys(body)
+        .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(body[key]))
+        .join('&')
+    : '';
 
-    private createSearchParams(params?: TypeSearchParams) {
-        const searchParams = new URLSearchParams();
+    return formBody
+  }
 
-        for (const key in {...this.params, ...params}) {
-            if (Object.prototype.hasOwnProperty.call(params, key)) {
-                const value = params && params[key];
-
-                if (Array.isArray(value)) {
-                    value.forEach(currentValue => {
-                        if (currentValue) {
-                            searchParams.append(key, currentValue.toString());
-                        }
-                    })
-                } else if (value) {
-                    searchParams.set(key, value.toString());
-                }
+  private createSearchParams(params?: TypeSearchParams): string {
+    const mergedParams = { ...this.params, ...params };
+    const searchParams = new URLSearchParams();
+    for (const key in mergedParams) {
+      if (Object.prototype.hasOwnProperty.call(mergedParams, key)) {
+        const value = mergedParams[key];
+        if (Array.isArray(value)) {
+          value.forEach((currentValue) => {
+            if (currentValue != null) {
+              searchParams.append(key, currentValue.toString());
             }
+          });
+        } else if (value != null) {
+          searchParams.set(key, value.toString());
         }
-        
-        return `?${searchParams.toString()}`
+      }
+    }
+    const queryString = searchParams.toString();
+    return queryString ? `?${queryString}` : "";
+  }
+
+  public async request<T>(
+    endpoint: string,
+    method: RequestInit["method"],
+    options: RequestOptions = {}
+  ): Promise<T> {
+    let url = `${this.baseUrl}${endpoint}`;
+    if (options.params || this.params) {
+      url += this.createSearchParams(options.params);
     }
 
-    private async request<T>(
-        endpoint: string,
-        method: RequestInit['method'],
-        options: RequestOptions = {}
-    ) {
-        let url = `${this.baseUrl}${endpoint}`
+    let config: RequestInit = {
+      ...this.options,
+      ...options,
+      method,
+      headers: {
+        ...this.headers,
+        ...options.headers,
+      },
+    };
 
-        if (options.params) {
-            url += this.createSearchParams(options.params)
+    for (const interceptor of this.interceptors.request.handlers) {
+      try {
+        config = await interceptor.fulfilled(config);
+      } catch (error) {
+        if (interceptor.rejected) {
+          interceptor.rejected(error as FetchError);
         }
+        return Promise.reject(error);
+      }
+    }
 
-        const config: RequestInit = {
-            ...options,
-            ...(!!this.options && {...this.options}),
-            method,
-            headers: {
-                ...(!!options?.headers && options.headers),
-                ...this.headers
-            }
+    let response: Response;
+    try {
+      response = await fetch(url, config);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+
+    if (response.ok) {
+      for (const interceptor of this.interceptors.response.handlers) {
+        try {
+          response = await interceptor.fulfilled(response);
+        } catch (error) {
+          if (interceptor.rejected) {
+            interceptor.rejected(error as FetchError);
+          }
+          return Promise.reject(error);
         }
-
-        const response: Response = await fetch(url, config);
-
-        if (!response.ok) {
-            const error = (await response.json()) as | { detail: string } | undefined
-            console.log(error)
-            throw new FetchError(response.status, error?.detail || response.statusText);
+      }
+    } else {
+      let errorObj: any = new FetchError(response.status, response.statusText, config);
+      for (const interceptor of this.interceptors.response.handlers) {
+        if (interceptor.rejected) {
+          try {
+            errorObj = await interceptor.rejected(errorObj);
+          } catch (e) {
+            errorObj = e;
+          }
         }
-
-        if (response.headers.get('Content-Type')?.includes('application/json')) {
-            return (await response.json()) as unknown as T;
-        }
-
-        else {
-            return (await response.text()) as unknown as T
-        }
+      }
+      return Promise.reject(errorObj);
     }
 
-    public get<T>(endpoint: string, options: Omit<RequestOptions, 'body'> = {}) {
-        return this.request<T>(endpoint, 'GET', options);
+    const contentType = response.headers.get("Content-Type");
+    if (contentType && contentType.includes("application/json")) {
+      return response.json() as Promise<T>;
+    } else {
+      return response.text() as unknown as Promise<T>;
     }
+  }
 
-    public post<T>(endpoint: string, body?: Record<string, string> | FormData, options: RequestOptions = {}) {
-        const isFormData = body instanceof FormData;
-    
-        return this.request<T>(endpoint, 'POST', {
-            ...options,
-            headers: {
-                ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
-                ...(options?.headers || {})
-            },
-            body: isFormData ? body : this.formatBody(body)
-        });
-    }
+  public get<T>(endpoint: string, options: Omit<RequestOptions, "body"> = {}) {
+    return this.request<T>(endpoint, "GET", options);
+  }
 
-    public put<T>(endpoint: string, body: Record<string, string>, options: RequestOptions = {}) {
-        return this.request<T>(endpoint, 'PUT', {
-            ...options,
-            headers: {
-                'Content-Type': 'application/json',
-                ...(options?.headers || {})
-            },
-            body: this.formatBody(body)
-        });
-    }
-    
-    public delete<T>(endpoint: string, options: Omit<RequestOptions, 'body'> = {}) {
-        return this.request<T>(endpoint, 'DELETE', options);
-    }
-    
-    public patch<T>(endpoint: string, body: Record<string, string>, options: RequestOptions = {}) {
-        return this.request<T>(endpoint, 'PATCH', {
-            ...options,
-            headers: {
-                'Content-Type': 'application/json',
-                ...(options?.headers || {})
-            },
-            body: this.formatBody(body)
-        });
-    }
+  public post<T>(
+    endpoint: string,
+    body?: Record<string, any> | FormData,
+    options: RequestOptions = {}
+  ) {
+    const isFormData = body instanceof FormData;
+    return this.request<T>(endpoint, "POST", {
+      ...options,
+      headers: {
+        ...(!isFormData ? { "Content-Type": "application/json" } : {}),
+        ...options.headers,
+      },
+      body: isFormData ? body : this.formatBody(body),
+    });
+  }
+
+  public put<T>(endpoint: string, body: Record<string, any>, options: RequestOptions = {}) {
+    return this.request<T>(endpoint, "PUT", {
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        ...options.headers,
+      },
+      body: this.formatBody(body)
+    });
+  }
+
+  public delete<T>(endpoint: string, options: Omit<RequestOptions, "body"> = {}) {
+    return this.request<T>(endpoint, "DELETE", options);
+  }
+
+  public patch<T>(endpoint: string, body: Record<string, any>, options: RequestOptions = {}) {
+    return this.request<T>(endpoint, "PATCH", {
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        ...options.headers,
+      },
+      body: this.formatBody(body),
+    });
+  }
 }

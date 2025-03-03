@@ -1,6 +1,6 @@
 import { Drawer} from 'antd';
 import { useState } from 'react';
-import { Button, Input, Form, Upload, Typography, Space  } from 'antd';
+import { Button, Input, Form, Upload, Typography, Space, Select } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { HighlightedText } from '@/app/shared/ui/highlighted-text';
 import { useCreateModelMutation } from '../hooks';
@@ -16,32 +16,34 @@ interface CreateModelDrawerProps {
 }
 
 export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onClose }) => {
-  const { createModelMutation, isCreatingModel } = useCreateModelMutation();
+  const { createModelMutation, isCreatingModel } = useCreateModelMutation(onClose);
   const [modelName, setModelName] = useState('');
   const [fileList, setFileList] = useState<any[]>([]);
+  const [gender, setGender] = useState<'man' | 'female'>('man');
 
   const handleSubmit = async () => {
     const formData = new FormData();
     
     fileList.forEach((file) => {
-      formData.append('images', file.originFileObj);
+      formData.append('train_photos', file.originFileObj);
     });
     formData.append('name', modelName);
+    formData.append('gender', gender);
 
     createModelMutation(formData);
   };
 
   const uploadProps = {
     beforeUpload: (file: any) => {
-      if (fileList.length >= 15) {
-        toast.error('You can only upload up to 15 files.');
+      const MAX_SIZE_MB = 5;
+      const fileSizeInMB = file.size / 1024 / 1024;
+  
+      if (fileSizeInMB > MAX_SIZE_MB) {
+        toast.error('File must be smaller than 5 MB!');
         return false;
       }
-      else if (fileList.length < 11) {
-        toast.error('You must upload at least 10 files.');
-        return false;
-      }
-      return true;
+  
+      return true
     },
     onChange: (info: any) => {
       setFileList(info.fileList);
@@ -82,6 +84,21 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
             value={modelName}
             onChange={(e) => setModelName(e.target.value)}
             size='large'
+          />
+        </Form.Item>
+        <Form.Item
+          name="gender"
+          label="Gender"
+          rules={[{ required: true, message: 'Please select gender!' }]}
+        >
+          <Select
+            value={gender}
+            onChange={(value) => setGender(value)}
+            placeholder="Select gender"
+            options={[
+              { value: 'man', label: 'Man' },
+              { value: 'female', label: 'Female' }
+            ]}
           />
         </Form.Item>
         <Space direction="vertical" size="middle" className='bg-indigo-50 border-2 border-indigo-400 rounded-xl p-6 mb-6 w-full'>

@@ -4,11 +4,13 @@ import { IModelsResponse } from "./types";
 
 class ModelsService {
     public async list() {
-        return await api.get<IModelsResponse>('/models');
+        const response = await api.get<IModelsResponse>('/models');
+        return response
     }
 
     public async create(body: FormData) {
-        return await api.post('/models', body);
+        const response = await api.post('/models', body)
+        return response;
     }
 }
 

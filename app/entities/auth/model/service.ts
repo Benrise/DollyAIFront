@@ -1,5 +1,5 @@
 import { api } from "@/app/api";
-import { ILoginResponse, IRegisterResponse, TypeLoginSchema, TypeRegisterSchema } from "./types";
+import { ILoginResponse, IRefreshResponse, IRegisterResponse, TypeLoginSchema, TypeRegisterSchema } from "./types";
 
 class AuthService {
     public async register(body: TypeRegisterSchema) {
@@ -24,6 +24,12 @@ class AuthService {
 
     public async logout() {
         const response = await api.post('/auth/sign-out')
+
+        return response;
+    }
+
+    public async refresh() {
+        const response = await api.post<IRefreshResponse>('/auth/refresh')
 
         return response;
     }

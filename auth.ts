@@ -1,8 +1,5 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials"
-import { api } from "@/app/api";
-import { authService, ILoginResponse } from "@/app/entities/auth";
-import { access } from "fs";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -21,7 +18,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         token.id = user.id;
         token.email = user.email;
-        token.access_token = user.access_token;
+        token.access = user.access;
       }
       return token;
     },
@@ -29,7 +26,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (token) {
         session.user.id = token.id as string;
         session.user.email = token.email as string;
-        session.user.access_token = token.access_token as string;
+        session.user.access = token.access as string;
       }
       return session;
     },

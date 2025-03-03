@@ -1,11 +1,11 @@
-import { IModel, modelsService } from '@/app/entities/model';
+import { IModel, IModelsResponse, modelsService } from '@/app/entities/model';
 
 import { toastErrorHandler } from '@/app/shared/utils';
 
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 
-export function useGetModelsListMutation() {
+export function useGetModelsListMutation(setActiveModel: React.Dispatch<React.SetStateAction<IModel | undefined>>) {
     const [models, setModels] = useState<IModel[]>([]);
 
     const { mutate: getModelsListMutation, isPending: isGettingModels } = useMutation({
@@ -15,7 +15,11 @@ export function useGetModelsListMutation() {
             if (data.message) {
                 toastErrorHandler(data);
             }
-            setModels(data);
+            setModels(data.models);
+
+            if (data.models.length > 0) {
+                setActiveModel(data.models[0]);
+            }
         },
         onError(error) {
             toastErrorHandler(error);
