@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
-import { modelsService } from '@/app/entities/model/model';
+import { IModelsListeningResponse, modelsService, ModelsListeningStatusEnum } from '@/app/entities/model';
 
-export function useListenToResultMutation(model_id?: number, callback?: (data: any) => void) {
+export function useListenToResultMutation(model_id?: number, callback?: (data: string) => void) {
     const { mutate: listenResultMutation, isPending: isListening } = useMutation({
         mutationKey: ['listen to result'],
         mutationFn: (data: { model_id: number }) => modelsService.listen_result(data.model_id, handleResult),
@@ -10,11 +10,10 @@ export function useListenToResultMutation(model_id?: number, callback?: (data: a
         }
     });
 
-    const handleResult = (data: any) => {
-        if (model_id && data.status === 'ready') {
-                modelsService.result(model_id, data.result_id).then((result_url) => {
-                    callback?.(result_url);
-            });
+    const handleResult = async (data: IModelsListeningResponse) => {
+        if (model_id && data.status === ModelsListeningStatusEnum.COMPLETED) {
+                const result_url = await modelsService.result(model_id, data.id);
+                callback?.(result_url)
         }
     };
 

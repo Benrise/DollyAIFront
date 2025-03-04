@@ -1,5 +1,5 @@
 import { api } from "@/app/api";
-import { IModelsResponse } from "./types";
+import { IModelsResponse, IModelsListeningResponse } from "./types";
 
 
 class ModelsService {
@@ -18,7 +18,7 @@ class ModelsService {
         return response;
     }
 
-    public async listen_result(model_id: number, callback: (data: any) => void) {
+    public async listen_result(model_id: number, callback: (data: IModelsListeningResponse) => void) {
         const eventSource = new EventSource(`/models/${model_id}/last-result`);
         
         eventSource.onmessage = (event) => {
@@ -35,7 +35,7 @@ class ModelsService {
     }
 
     public async result(model_id: number, result_id: number) {
-        const response = await api.get(`/models/${model_id}/results/${result_id}`);
+        const response = await api.get<string>(`/models/${model_id}/results/${result_id}`);
         return response;
     }
 }

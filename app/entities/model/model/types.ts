@@ -11,3 +11,14 @@ export interface IModel {
 export interface IModelsResponse {
     models: IModel[];
 }
+
+export interface IModelsListeningResponse {
+    id: number;
+    status: ModelsListeningStatusEnum
+}
+
+export const enum ModelsListeningStatusEnum {
+    QUEQUED = 'quequed',
+    COMPLETED = 'completed',
+    ERROR = 'error'
+}
