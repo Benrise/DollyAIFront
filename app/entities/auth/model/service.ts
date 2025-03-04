@@ -1,6 +1,7 @@
 import { api } from "@/app/api";
 import { ILoginResponse, IRefreshResponse, IRegisterResponse, TypeLoginSchema, TypeRegisterSchema } from "./types";
 
+
 class AuthService {
     public async register(body: TypeRegisterSchema) {
         const response = await api.post<IRegisterResponse>('/auth/sign-up', body, {

@@ -14,13 +14,21 @@ const { Dragger } = Upload;
 interface CreateModelDrawerProps {
   open: boolean;
   onClose: () => void;
+  onModelCreated: () => void;
 }
 
-export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onClose }) => {
-  const { createModelMutation, isCreatingModel } = useCreateModelMutation(onClose);
+export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onClose, onModelCreated }) => {
   const [modelName, setModelName] = useState('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [gender, setGender] = useState<'man' | 'female'>('man');
+  const [form] = Form.useForm();
+
+  const resetForm = () => {
+    form.resetFields();
+    setFileList([]);
+  };
+
+  const { createModelMutation, isCreatingModel } = useCreateModelMutation([onClose, onModelCreated, resetForm]);
 
   const handleSubmit = async () => {
     const formData = new FormData();
@@ -63,20 +71,7 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
       height="100vh"
       placement='bottom'
     >
-      <Form onFinish={handleSubmit} layout="vertical">
-        <Form.Item
-          label="Upload Photos"
-          rules={[{ required: true, message: 'Please upload between 10 to 15 photos!' }]}
-        >
-          <Dragger {...uploadProps}>
-            <div className="p-6">
-              <p className="ant-upload-drag-icon">
-                <UploadOutlined size={48} />
-              </p>
-              <Text type="secondary">Upload (10-15 photos)</Text>
-            </div>
-          </Dragger>
-        </Form.Item>
+      <Form onFinish={handleSubmit} form={form} layout="vertical">
         <Form.Item
           name="name"
           label="Model Name"
@@ -99,9 +94,10 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
             onChange={(value) => setGender(value)}
             placeholder="Select gender"
             options={[
-              { value: 'man', label: 'Man' },
+              { value: 'male', label: 'Male' },
               { value: 'female', label: 'Female' }
             ]}
+            size='large'
           />
         </Form.Item>
         <Space direction="vertical" size="middle" className='bg-indigo-50 border-2 border-indigo-400 rounded-xl p-6 mb-6 w-full'>
@@ -123,6 +119,19 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
             The more <HighlightedText>diverse your</HighlightedText> pictures are, the <HighlightedText>more realistic</HighlightedText> and <HighlightedText>accurate</HighlightedText> the result.
           </Paragraph>
         </Space>
+        <Form.Item
+          label="Upload Photos"
+          rules={[{ required: true, message: 'Please upload between 10 to 15 photos!' }]}
+        >
+          <Dragger {...uploadProps}>
+            <div className="p-6">
+              <p className="ant-upload-drag-icon">
+                <UploadOutlined size={48} />
+              </p>
+              <Text type="secondary">Upload (10-15 photos)</Text>
+            </div>
+          </Dragger>
+        </Form.Item>
         <Form.Item>
           <div className="flex gap-2">
             <Button block type="default" htmlType="button" size='large' onClick={onClose}>

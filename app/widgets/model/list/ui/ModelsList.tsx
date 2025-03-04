@@ -15,9 +15,10 @@ interface ModelsListProps {
     models: IModel[];
     setActiveModel: (model: IModel) => void; 
     activeModel: IModel | undefined;
+    onModelCreated: () => void;
   }
 
-  export function ModelsList({ models, setActiveModel, activeModel }: ModelsListProps) {
+  export function ModelsList({ models, setActiveModel, activeModel, onModelCreated }: ModelsListProps) {
     const [open, setOpen] = useState(false);
     
     const openDrawer = () => setOpen(true);
@@ -25,10 +26,10 @@ interface ModelsListProps {
 
     return (
         <div className='flex gap-2 w-max-[80%] overflow-x-auto pb-2 pl-10'>
-            <CreateModelDrawer open={open} onClose={onClose}/>
+            <CreateModelDrawer open={open} onClose={onClose} onModelCreated={onModelCreated}/>
             <div className="flex flex-col gap-1 items-center">
                 <Button onClick={openDrawer} type="primary" shape="circle" size="large" style={{width: 64, height: 64, minWidth: 64}} block><Plus/></Button>
-                <Text className='align-middle w-fit text-[12px]!'>Создать</Text>
+                <Text className='align-middle w-fit text-[12px]!'>Create</Text>
             </div>
             {models.map((model) => (
                 <div

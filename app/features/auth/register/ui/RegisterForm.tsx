@@ -1,66 +1,67 @@
 import { Button, Form, Input } from 'antd';
 import { Terms } from '@/app/entities/terms'
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { type TypeRegisterSchema, RegisterSchema } from '@/app/entities/auth';
 import { useRegisterMutation } from '@/app/features/auth/register';
 
 export function RegisterForm() {
     const { registerMutation, isLoadingRegister } = useRegisterMutation();
+    const { control, handleSubmit, formState: { errors } } = useForm<TypeRegisterSchema>({
+      resolver: zodResolver(RegisterSchema),
+    });
 
     return (
         <Form
-            name="register"
-            layout="vertical"
-            initialValues={{ remember: true }}
-            className="space-y-4 px-10!"
-            onFinish={registerMutation}
+        name="register"
+        layout="vertical"
+        className="space-y-4 px-10!"
+        onFinish={handleSubmit((values) => registerMutation(values))}
       >
         <Form.Item
           label="Email"
-          name="email"
-          rules={[
-            { required: true, message: 'Email is required!' },
-            { type: 'email', message: 'Invalid email!' },
-            { min: 5, message: 'Email must be at least 5 characters long' },
-            { max: 128, message: 'Email must be less than 128 characters long' }
-          ]}
+          validateStatus={errors.email ? "error" : ""}
+          help={errors.email?.message}
         >
-          <Input size="large" placeholder="Enter your email" />
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => <Input size="large" placeholder="Enter your email" {...field} />}
+          />
         </Form.Item>
-
         <Form.Item
           label="Password"
-          name="password"
+          validateStatus={errors.password ? "error" : ""}
+          help={errors.password?.message}
         >
-          <Input.Password size="large" placeholder="Enter password" />
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => <Input.Password size="large" placeholder="Enter password" {...field} />}
+          />
         </Form.Item>
-
         <Form.Item
           label="Confirm Password"
-          name="password_confirm"
-          dependencies={['password']}
-          rules={[
-            { required: true, message: "Confirm your password!" },
-            { min: 8, message: "Password must be at least 8 characters!" },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue('password') === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error("Passwords do not match."));
-              },
-            }),
-          ]}
+          validateStatus={errors.password_confirm ? "error" : ""}
+          help={errors.password_confirm?.message}
         >
-          <Input.Password size="large" placeholder="Repeat password" />
+          <Controller
+            name="password_confirm"
+            control={control}
+            render={({ field }) => <Input.Password size="large" placeholder="Repeat password" {...field} />}
+          />
         </Form.Item>
-
-        <Form.Item className='mb-2!'>
-          <Button type="primary" size="large" htmlType="submit" loading={isLoadingRegister} block>Register</Button>
+        <Form.Item className="mb-2!">
+          <Button type="primary" size="large" htmlType="submit" loading={isLoadingRegister} block>
+            Register
+          </Button>
         </Form.Item>
-
         <Form.Item>
-          <Button type="link" href='/auth/login' className='text-[14px]!' block>Already have an account? Login</Button>
+          <Button type="link" href="/auth/login" className="text-[14px]!" block>
+            Already have an account? Login
+          </Button>
         </Form.Item>
-         <Terms/>
+        <Terms />
       </Form>
     )
 }
