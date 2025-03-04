@@ -29,7 +29,7 @@ interface ModelsListProps {
             <CreateModelDrawer open={open} onClose={onClose} onModelCreated={onModelCreated}/>
             <div className="flex flex-col gap-1 items-center">
                 <Button onClick={openDrawer} type="primary" shape="circle" size="large" style={{width: 64, height: 64, minWidth: 64}} block><Plus/></Button>
-                <Text className='align-middle w-fit text-[12px]!'>Создать</Text>
+                <Text className='align-middle w-fit text-[12px]!'>Create</Text>
             </div>
             {models.map((model) => (
                 <div

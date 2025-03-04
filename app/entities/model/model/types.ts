@@ -1,5 +1,5 @@
 export interface IModel {
-    id: string;
+    id: number;
     name: string;
     cover: string;
     created_at: string;
