@@ -24,7 +24,13 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-50">
-      <div className="max-w-lg w-full py-10 bg-white rounded-4xl shadow-lg shadow-indigo-50 overflow-hidden">
+      <div 
+          className="
+              w-full sm:max-w-lg sm:py-10 bg-white rounded-none sm:rounded-4xl 
+              shadow-none sm:shadow-lg sm:shadow-indigo-50 overflow-hidden
+              h-screen sm:h-auto pt-32
+          "
+        >
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
           <UserBadge/>
           <div className='flex flex-col gap-2 '>

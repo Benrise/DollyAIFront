@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '5mb'
     },
   },
+  distDir: 'dist',
 };
 
 export default nextConfig;

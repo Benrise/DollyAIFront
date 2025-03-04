@@ -29,7 +29,7 @@ export function ExampleGallery ({ images }: ExampleGalleryProps) {
                     alt={`Slide ${index}`}
                     width={1024}
                     height={1024}
-                    className="rounded-2xl select-none"
+                    className="rounded-4xl select-none"
                 />
             </SwiperSlide>
         ))}
