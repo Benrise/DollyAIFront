@@ -1,7 +1,11 @@
 import { toast } from 'sonner'
+import { FetchError } from '../lib'
 
-export function toastErrorHandler(error: Error) {
-    if (error.message) {
+export function toastErrorHandler(error: FetchError) {
+    if (error.detail) {
+        toast.error(error.detail)
+    }
+    else if (error.message) {
         const errorMessage = error.message
         const firstDotIndex = errorMessage.indexOf('.')
 

@@ -19,7 +19,7 @@ export function useCreateModelMutation(callback?: () => void) {
                 toast.success('Model created successfully!');
             }
         },
-        onError(error: Error) {
+        onError(error: FetchError) {
             toastErrorHandler(error);
         }
     });

@@ -22,8 +22,8 @@ export function useRegisterMutation() {
                 router.push('/auth/login')
             }
         },
-        onError(error: Error) {
-            toastErrorHandler(error)
+        onError(error: FetchError) {
+            toastErrorHandler(error);
         }
     })
 

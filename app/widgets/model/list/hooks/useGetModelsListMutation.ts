@@ -24,7 +24,7 @@ export function useGetModelsListMutation(setActiveModel: React.Dispatch<React.Se
                 }
             }
         },
-        onError(error: Error) {
+        onError(error: FetchError) {
             toastErrorHandler(error);
         }
     });
