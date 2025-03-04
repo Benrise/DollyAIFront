@@ -67,19 +67,33 @@ export default function Home() {
           </div>
 
           <div className="px-10 flex flex-col gap-4">
-          <Card 
+            <Card 
               title="Generation result" 
               extra={<Button type='text' shape="circle" size="large" icon={<DownloadOutlined className='text-fuchsia-600' />} disabled/>}
             >
               <div className='flex max-w-[512px] justify-center'>
                 {isListening ? (
-                    <GeneratingAnimation />
-                  ) : resultUrl ? (
-                    <Image src={resultUrl} alt="Generation result" width={192} className="rounded-2xl select-none" preview={false} />
-                  ) : activeModel && !activeModel.is_ready ? (
-                    <Image src={`/images/etc/silky-waves.png`} alt="Model is training" width={192} className="rounded-2xl select-none" preview={false} />
-                  ) : (
-                    <Image src={`/images/etc/magnify.png`} alt="No generations" width={192} className="rounded-2xl select-none" preview={false} />
+                  <GeneratingAnimation />
+                ) : (
+                  <Image 
+                    src={
+                      resultUrl 
+                        ? resultUrl 
+                        : activeModel && !activeModel.is_ready
+                        ? '/images/etc/silky-waves.png' 
+                        : '/images/etc/magnify.png'
+                    }
+                    alt={
+                      resultUrl 
+                        ? "Generation result" 
+                        : activeModel && !activeModel.is_ready 
+                        ? "Model is training" 
+                        : "No generations"
+                    }
+                    width={192} 
+                    className="rounded-2xl select-none" 
+                    preview={false} 
+                  />
                 )}
               </div>
               <div className="flex w-full justify-center">

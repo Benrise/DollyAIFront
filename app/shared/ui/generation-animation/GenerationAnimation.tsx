@@ -21,14 +21,15 @@ export function GeneratingAnimation() {
       const div = document.createElement("div");
       div.style.width = "1rem";
       div.style.height = "1rem";
-      div.style.border = "1px solid #FFF";
-      div.style.backgroundColor = "#FFF";
+      div.style.border = "1px solid #7559ff";
+      div.style.background = "#7559ff";
+      div.style.borderRadius = "999px";
       fragment.appendChild(div);
     }
     staggerVisualizerEl.appendChild(fragment);
 
     const staggersAnimation = anime.timeline({
-      targets: ".stagger-visualizer div",
+      targets: staggerVisualizerEl.children,
       easing: "easeInOutSine",
       delay: anime.stagger(50),
       loop: true,
@@ -43,14 +44,9 @@ export function GeneratingAnimation() {
         { value: anime.stagger("-.1rem", { grid, from: "center", axis: "y" }) },
         { value: anime.stagger(".1rem", { grid, from: "center", axis: "y" }) },
       ],
-      duration: 1000,
+      duration: 800,
       scale: 0.5,
       delay: anime.stagger(100, { grid, from: "center" }),
-    })
-    .add({
-      translateX: () => anime.random(-10, 10),
-      translateY: () => anime.random(-10, 10),
-      delay: anime.stagger(8, { from: "last" }),
     })
     .add({
       translateX: anime.stagger(".25rem", { grid, from: "center", axis: "x" }),
@@ -70,7 +66,7 @@ export function GeneratingAnimation() {
       scale: 0.5,
       scaleX: 1,
       rotate: 180,
-      duration: 1000,
+      duration: 800,
       delay: anime.stagger(100, { grid, from: "center" }),
     })
     .add({
