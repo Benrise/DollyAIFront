@@ -19,7 +19,6 @@ export function LoginForm() {
       onFinish={handleSubmit((values) => loginMutation(values))}
     >
       <Form.Item
-        label="Email"
         validateStatus={errors.email ? "error" : ""}
         help={errors.email?.message}
       >
@@ -30,7 +29,6 @@ export function LoginForm() {
         />
       </Form.Item>
       <Form.Item
-        label="Password"
         validateStatus={errors.password ? "error" : ""}
         help={errors.password?.message}
       >
