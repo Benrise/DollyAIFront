@@ -22,6 +22,10 @@ export default function Home() {
     getModelsListMutation();
   }, [getModelsListMutation]);
 
+  const handleModelCreated = () => {
+    getModelsListMutation();
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-50">
       <div 
@@ -38,6 +42,7 @@ export default function Home() {
                 models={models}
                 setActiveModel={setActiveModel}
                 activeModel={activeModel}
+                onModelCreated={handleModelCreated}
               />
             <div ref={parent}>
               {models.length > 0 && (

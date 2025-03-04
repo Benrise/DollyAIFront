@@ -20,7 +20,7 @@ export function useLoginMutation() {
                 toast.success('Success login!');
             }
         },
-        onError(error: Error) {
+        onError(error: FetchError) {
             toastErrorHandler(error)
         }
     })

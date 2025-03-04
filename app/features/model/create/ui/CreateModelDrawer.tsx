@@ -14,10 +14,11 @@ const { Dragger } = Upload;
 interface CreateModelDrawerProps {
   open: boolean;
   onClose: () => void;
+  onModelCreated: () => void;
 }
 
-export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onClose }) => {
-  const { createModelMutation, isCreatingModel } = useCreateModelMutation(onClose);
+export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onClose, onModelCreated }) => {
+  const { createModelMutation, isCreatingModel } = useCreateModelMutation([onClose, onModelCreated]);
   const [modelName, setModelName] = useState('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [gender, setGender] = useState<'man' | 'female'>('man');

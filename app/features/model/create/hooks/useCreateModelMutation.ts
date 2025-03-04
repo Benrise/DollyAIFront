@@ -6,7 +6,7 @@ import { toastErrorHandler } from '@/app/shared/utils';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-export function useCreateModelMutation(callback?: () => void) {
+export function useCreateModelMutation(callbacks: (() => void)[] = []) {
     const { mutate: createModelMutation, isPending: isCreatingModel } = useMutation({
         mutationKey: ['create model'],
         mutationFn: (data: FormData) => modelsService.create(data),
@@ -15,7 +15,7 @@ export function useCreateModelMutation(callback?: () => void) {
                 toastErrorHandler(data);
             } 
             else {
-                callback?.();
+                callbacks.forEach(callback => callback?.());
                 toast.success('Model created successfully!');
             }
         },
