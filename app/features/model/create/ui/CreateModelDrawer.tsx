@@ -18,10 +18,17 @@ interface CreateModelDrawerProps {
 }
 
 export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onClose, onModelCreated }) => {
-  const { createModelMutation, isCreatingModel } = useCreateModelMutation([onClose, onModelCreated]);
   const [modelName, setModelName] = useState('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [gender, setGender] = useState<'man' | 'female'>('man');
+  const [form] = Form.useForm();
+
+  const resetForm = () => {
+    form.resetFields();
+    setFileList([]);
+  };
+
+  const { createModelMutation, isCreatingModel } = useCreateModelMutation([onClose, onModelCreated, resetForm]);
 
   const handleSubmit = async () => {
     const formData = new FormData();
@@ -64,7 +71,7 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
       height="100vh"
       placement='bottom'
     >
-      <Form onFinish={handleSubmit} layout="vertical">
+      <Form onFinish={handleSubmit} form={form} layout="vertical">
         <Form.Item
           label="Upload Photos"
           rules={[{ required: true, message: 'Please upload between 10 to 15 photos!' }]}
