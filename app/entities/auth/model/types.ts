@@ -25,15 +25,20 @@ export const RegisterSchema = z.object({
   message: PASS_DONT_MATCH_ERR,
   path: ["password_confirm"],
 });
-
 export type TypeRegisterSchema = z.infer<typeof RegisterSchema>
 
-
 export const LoginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8, { message: "Password must be at least 8 characters long" })
+  email: z.string()
+    .min(5, { message: "Email must be at least 5 characters long" })
+    .max(128, { message: "Email must be no longer than 128 characters" })
+    .email({ message: "Invalid email format" }),
+  password: z.string()
+    .min(8, { message: "Password must be at least 8 characters long" })
+    .regex(/[a-z]/, { message: PASS_LOWERCASE_ERR })
+    .regex(/[A-Z]/, { message: PASS_CAPITAL_ERR })
+    .regex(/\d/, { message: PASS_DIGIT_ERR })
+    .regex(/[#$@!%&*?]/, { message: PASS_SPECIAL_SYMBOL_ERR }),
 });
-
 export type TypeLoginSchema = z.infer<typeof LoginSchema>
 
 export interface ILoginResponse {
