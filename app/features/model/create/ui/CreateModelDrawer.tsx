@@ -73,19 +73,6 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
     >
       <Form onFinish={handleSubmit} form={form} layout="vertical">
         <Form.Item
-          label="Upload Photos"
-          rules={[{ required: true, message: 'Please upload between 10 to 15 photos!' }]}
-        >
-          <Dragger {...uploadProps}>
-            <div className="p-6">
-              <p className="ant-upload-drag-icon">
-                <UploadOutlined size={48} />
-              </p>
-              <Text type="secondary">Upload (10-15 photos)</Text>
-            </div>
-          </Dragger>
-        </Form.Item>
-        <Form.Item
           name="name"
           label="Model Name"
           rules={[{ required: true, message: 'Please enter the model name!' }]}
@@ -132,6 +119,19 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
             The more <HighlightedText>diverse your</HighlightedText> pictures are, the <HighlightedText>more realistic</HighlightedText> and <HighlightedText>accurate</HighlightedText> the result.
           </Paragraph>
         </Space>
+        <Form.Item
+          label="Upload Photos"
+          rules={[{ required: true, message: 'Please upload between 10 to 15 photos!' }]}
+        >
+          <Dragger {...uploadProps}>
+            <div className="p-6">
+              <p className="ant-upload-drag-icon">
+                <UploadOutlined size={48} />
+              </p>
+              <Text type="secondary">Upload (10-15 photos)</Text>
+            </div>
+          </Dragger>
+        </Form.Item>
         <Form.Item>
           <div className="flex gap-2">
             <Button block type="default" htmlType="button" size='large' onClick={onClose}>
