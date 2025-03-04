@@ -28,16 +28,12 @@ export function AuthWrapper({ children, title, description, isShowExamples = tru
             <div 
                 className="
                     w-full sm:max-w-lg sm:py-10 bg-white rounded-none sm:rounded-4xl 
-                    shadow-none sm:shadow-lg sm:shadow-indigo-50 overflow-hidden
-                    h-screen sm:h-auto pt-32
+                    shadow-none sm:shadow-xl sm:shadow-indigo-50 overflow-hidden
+                    h-screen sm:h-auto pt-16
                 "
             >
-                <Title level={1} className="text-center mb-6 text-lg sm:text-2xl">
-                    AI Love Photo
-                </Title>
-
                 {isShowExamples && (
-                    <div className="mb-6" ref={parent}>
+                    <div className="mb-4" ref={parent}>
                         {!images.length ? (
                             <div ref={parent} className='flex justify-center items-center w-full h-full'>
                                 <Spin size='large'/>
@@ -48,8 +44,8 @@ export function AuthWrapper({ children, title, description, isShowExamples = tru
                     </div>
                 )}
 
-                <div className="mb-6 px-4 sm:px-10">
-                    <Title level={4} className="text-center text-base sm:text-xl">{title}</Title>
+                <div className="mb-12 px-4 sm:px-10">
+                    <Title level={3} className="text-center text-base sm:text-xl">{title}</Title>
                     <Paragraph className="text-center text-sm sm:text-base">
                         {description}
                     </Paragraph>

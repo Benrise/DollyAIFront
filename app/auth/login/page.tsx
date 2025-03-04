@@ -7,7 +7,7 @@ import { HighlightedText } from "@/app/shared/ui/highlighted-text";
 
 export default function LoginPage() {
   return (
-    <AuthWrapper title={<div><HighlightedText>AI Love Photo</HighlightedText> - your personal photoclone</div>} description={"Forget about studios and photographers - create perfect shots with AI in minutes"}>
+    <AuthWrapper title={<div><HighlightedText>AI Love Photo</HighlightedText> - your personal photoclone</div>}>
       <LoginForm/>
     </AuthWrapper>
   );

@@ -10,6 +10,7 @@ export const theme: ThemeConfig = {
     lineWidth: 2,
     fontFamily: '"Rubik", sans-serif',
     colorBgSpotlight: '#7559ff',
+    controlHeightLG: 48,
   },
 };
 

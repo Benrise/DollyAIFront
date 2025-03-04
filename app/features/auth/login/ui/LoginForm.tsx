@@ -15,7 +15,6 @@ export function LoginForm() {
         onFinish={loginMutation}
       >
         <Form.Item
-          label="Email"
           name="email"
           rules={[
             { required: true, message: 'Email is required!' },
@@ -24,11 +23,10 @@ export function LoginForm() {
             { max: 128, message: 'Email must be less than 128 characters long' }
           ]}
         >
-          <Input size="large" placeholder="Enter your email" />
+          <Input size="large" height={64} placeholder="Enter your email" />
         </Form.Item>
 
         <Form.Item
-          label="Password"
           name="password"
           rules={[
             { required: true, message: "Password is required!" },

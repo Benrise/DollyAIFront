@@ -50,7 +50,7 @@ export function RegisterForm() {
             }),
           ]}
         >
-          <Input.Password size="large" placeholder="Confirm password" />
+          <Input.Password size="large" placeholder="Repeat password" />
         </Form.Item>
 
         <Form.Item className='mb-2!'>
