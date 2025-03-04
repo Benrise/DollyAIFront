@@ -99,9 +99,10 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
             onChange={(value) => setGender(value)}
             placeholder="Select gender"
             options={[
-              { value: 'man', label: 'Man' },
+              { value: 'male', label: 'Male' },
               { value: 'female', label: 'Female' }
             ]}
+            size='large'
           />
         </Form.Item>
         <Space direction="vertical" size="middle" className='bg-indigo-50 border-2 border-indigo-400 rounded-xl p-6 mb-6 w-full'>
