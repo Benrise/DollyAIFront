@@ -156,11 +156,16 @@ export class FetchClient {
     }
 
     const contentType = response.headers.get("Content-Type");
+
+    if (options.responseType === 'blob') {
+      return response.blob() as unknown as Promise<T>;
+    }
+
     if (contentType && contentType.includes("application/json")) {
       return response.json() as Promise<T>;
-    } else {
-      return response.text() as unknown as Promise<T>;
     }
+  
+    return response.text() as unknown as Promise<T>;
   }
 
   public get<T>(endpoint: string, options: Omit<RequestOptions, "body"> = {}) {

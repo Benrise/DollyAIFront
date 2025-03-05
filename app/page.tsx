@@ -15,13 +15,15 @@ import { useListenToResultMutation } from './features/model/create';
 import { useListenToReadinessMutation } from './features/model/create';
 import { useGenerateModelMutation } from './features/model/create';
 import { PricingDrawer } from './features/pricing/ui';
+import { downloadBlob } from './shared/lib/download/download';
 
 const { Text } = Typography;
 
 export default function Home() {
-  const  [parent ] = useAutoAnimate();
+  const  [ parent ] = useAutoAnimate();
   const [ activeModel, setActiveModel ] = useState<IModel | undefined>(undefined);
   const [ resultUrl, setResultUrl ] = useState<string | null>(null);
+  const [ form ] = Form.useForm();
   const [ isPricingOpen, setIsPricingOpen ] = useState(false);
   const { models, getModelsListMutation } = useGetModelsListMutation(setActiveModel);
   const { generateModelMutation, isSendingGenerationRequest } = useGenerateModelMutation(() => {
@@ -35,12 +37,19 @@ export default function Home() {
   const closePricing = () => setIsPricingOpen(false);
   const openPricing = () => setIsPricingOpen(true);
 
+  const reset = () => {
+    setResultUrl(null);
+    form.resetFields();
+  }
+
   useEffect(() => {
     getModelsListMutation();
   }, [getModelsListMutation]);
 
   useEffect(() => {
     if (activeModel) {
+      reset();
+
       if (activeModel.is_ready) {
         listenResultMutation(activeModel.id);
       } else {
@@ -58,6 +67,12 @@ export default function Home() {
       generateModelMutation({ model_id: activeModel.id, prompt: values.prompt });
     }
   };
+
+  const handleDownload = (result_url: string | null, name='result.png') => {
+    if (result_url) {
+      downloadBlob(result_url, name);
+    }
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-50">
@@ -93,7 +108,7 @@ export default function Home() {
           <div className="px-10 flex flex-col gap-4">
             <Card 
               title="Generation result" 
-              extra={<Button type='text' shape="circle" size="large" icon={<DownloadOutlined className='text-fuchsia-500' />} disabled/>}
+              extra={<Button type='text' shape="circle" size="large" icon={<DownloadOutlined className='text-fuchsia-500' />} onClick={() => handleDownload(resultUrl)} disabled={resultUrl === null}/>}
             >
               <div ref={parent} className='flex max-w-[512px] justify-center'>
                 {isListeningResult ? (
@@ -114,8 +129,8 @@ export default function Home() {
                         ? "Model is training" 
                         : "No generations"
                     }
-                    width={192}
-                    height={192}
+                    width={324}
+                    height={324}
                     className="rounded-2xl select-none"
                     fallback='' 
                     preview={false} 
@@ -127,21 +142,21 @@ export default function Home() {
                   {isListeningResult
                     ? "Generating..."
                     : resultUrl
-                    ? "Generation complete"
+                    ? ""
                     : activeModel && !activeModel.is_ready
                     ? "Model is training, this may take some time"
                     : "You haven’t generated any photos yet"}
                 </Text>
               </div>
             </Card>
-            <Form onFinish={handleGenerate} className="px-10 flex flex-col gap-4">
+            <Form form={form} onFinish={handleGenerate} className="px-10 flex flex-col gap-4">
               <Form.Item name="prompt" rules={[{ required: true, message: 'Enter a prompt' }]}>
                 <Input.TextArea disabled={!!activeModel && !activeModel.is_ready || isListeningResult} placeholder="Imagine me as an astronaut in outer space" style={{ height: 80, resize: "none" }} />
               </Form.Item>
               {
                 activeModel && !activeModel.is_ready ? (
                   <Tooltip trigger={"click"} title="Model is training. Please wait. Often it takes a while (up to 3 hours).">
-                    <Button type="primary" size="large" htmlType="submit" ghost block>
+                    <Button type="primary" size="large" htmlType="reset" ghost block>
                       Generate
                     </Button>
                   </Tooltip>
@@ -153,7 +168,7 @@ export default function Home() {
               }
             </Form>
           </div>
-          <div className="flex w-full gap-4 justify-evenly items-center">
+          <div className="w-full gap-4 justify-evenly items-center sm:flex hidden">
             <div className="min-w-[144px] max-h-[164px]">
               <Image
                     src={`/images/etc/robot.png`}

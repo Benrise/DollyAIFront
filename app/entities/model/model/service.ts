@@ -1,5 +1,7 @@
 import { api } from "@/app/api";
 import { IModelsReadinessResponse, IModelsResponse, IModelsListeningResponse, ModelsListeningStatusEnum } from "./types";
+import { toastErrorHandler } from "@/app/shared/utils";
+import { FetchError } from "@/app/shared/lib";
 
 class ModelsService {
     public async list() {
@@ -17,22 +19,12 @@ class ModelsService {
         return response;
     }
 
-    public async get_training_status(model_id: number) {
-        const response = await api.get<IModelsReadinessResponse>(`/models/${model_id}/readiness`);
-        return response;
-    }
-
-    public async listen_training_status(model_id: number, onReady: (isReady: boolean) => void) {
+    public async listen_training_status(model_id: number, callback: (data: IModelsReadinessResponse | FetchError) => void) {
         const eventSource = new EventSource(`/models/${model_id}/readiness`);
 
-        eventSource.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            if (data.is_ready) {
-                onReady(true);
-                eventSource.close();
-            } else {
-                onReady(false);
-            }
+        eventSource.onmessage = (event: MessageEvent<IModelsReadinessResponse | FetchError>) => {
+            const data = event.data;
+            callback(data);
         }
 
         eventSource.onerror = (error) => {
@@ -43,16 +35,12 @@ class ModelsService {
         return eventSource;
     }
 
-    public async listen_result_status(model_id: number, callback: (data: IModelsListeningResponse) => void) {
+    public async listen_result_status(model_id: number, callback: (data: IModelsListeningResponse | FetchError) => void) {
         const eventSource = new EventSource(`/models/${model_id}/last-result`);
         
-        eventSource.onmessage = (event) => {
-            const data = JSON.parse(event.data);
+        eventSource.onmessage = (event: MessageEvent<IModelsListeningResponse | FetchError>) => {
+            const data = event.data
             callback(data);
-    
-            if (data.status === ModelsListeningStatusEnum.COMPLETED || data.status === ModelsListeningStatusEnum.ERROR) {
-                eventSource.close();
-            }
         };
         
         eventSource.onerror = (error) => {  
@@ -63,14 +51,8 @@ class ModelsService {
         return eventSource;
     }
 
-    public async get_result_status(model_id: number) {
-        const response = await api.get<IModelsListeningResponse>(`/models/${model_id}/last-result`);
-        return response;
-    }
-
     public async get_result_url(model_id: number, result_id: number) {
-        const response = await api.get<Blob>( `/models/${model_id}/results/${result_id}`);
-
+        const response = await api.get<Blob>( `/models/${model_id}/results/${result_id}`, {responseType: 'blob'});
         return URL.createObjectURL(response);
     }
 }
