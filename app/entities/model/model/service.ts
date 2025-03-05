@@ -1,6 +1,7 @@
 import { api } from "@/app/api";
-import { IModelsResponse, IModelsListeningResponse } from "./types";
-
+import { IModelsReadinessResponse, IModelsResponse, IModelsListeningResponse } from "./types";
+import { FetchError } from "@/app/shared/lib";
+import { fetchEventSource } from '@microsoft/fetch-event-source';
 
 class ModelsService {
     public async list() {
@@ -14,29 +15,53 @@ class ModelsService {
     }
 
     public async generate(model_id: number, prompt: string) {
-        const response = await api.post<null>(`/models/${model_id}/generate`, { prompt });
+        const response = await api.post<null>(`/models/${model_id}/generate`, { promt: prompt  });
         return response;
     }
 
-    public async listen_result(model_id: number, callback: (data: IModelsListeningResponse) => void) {
-        const eventSource = new EventSource(`/models/${model_id}/last-result`);
-        
-        eventSource.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            callback(data);
+    public async listen_status(
+        model_id: number,
+        token: string,
+        type: 'training' | 'result',
+        controller: AbortController,
+        callback: (data: IModelsReadinessResponse | IModelsListeningResponse | FetchError) => void
+    ) {
+        const base_url = process.env.NEXT_PUBLIC_API_URL;
+        const { signal } = controller;
+    
+        const headers = {
+            'Authorization': `Bearer ${token}`
         };
-        
-        eventSource.onerror = (error) => {  
-            console.error("EventSource failed:", error);
-            eventSource.close();
-        };
+    
+        const url = type === 'training'
+            ? `${base_url}/models/${model_id}/readiness`
+            : `${base_url}/models/${model_id}/last-result`;
 
-        return eventSource;
+        await fetchEventSource(url, {
+            headers,
+            signal,
+            onmessage(event) {
+                if (!event.data) return;
+        
+                try {
+                    const data = JSON.parse(event.data);
+                    callback(data);
+                } catch (error) {
+                    console.error("Failed to parse JSON:", event.data, error);
+                }
+            },
+            onerror(error) {
+                console.error(`Error in ${type} event:`, error);
+                callback(error);
+            },
+        });
+
+        return controller;
     }
 
-    public async result(model_id: number, result_id: number) {
-        const response = await api.get<string>(`/models/${model_id}/results/${result_id}`);
-        return response;
+    public async get_result_url(model_id: number, result_id: number) {
+        const response = await api.get<Blob>( `/models/${model_id}/results/${result_id}`, {responseType: 'blob'});
+        return URL.createObjectURL(response);
     }
 }
 

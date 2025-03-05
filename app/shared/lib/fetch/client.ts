@@ -44,15 +44,26 @@ export class FetchClient {
     this.options = init.options;
   }
 
-  private formatBody(body?: Record<string, string>) {
-    if (body === null || body === undefined) return '';
-    const formBody = body
-      ? Object.keys(body)
-          .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(String(body[key as keyof typeof body])))
-          .join('&')
-      : '';
+  private formatBody(body?: Record<string, string | object> | FormData, contentType?: string): string | FormData | undefined {
+    if (body instanceof FormData) {
+      return body;
+    }
   
-    return formBody;
+    if (body === null || body === undefined) {
+      return undefined;
+    }
+  
+    if (contentType === "application/x-www-form-urlencoded") {
+      return Object.keys(body)
+        .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(String(body[key as keyof typeof body])))
+        .join('&');
+    }
+  
+    if (typeof body === 'object') {
+      return JSON.stringify(body);
+    }
+  
+    return String(body);
   }
 
   private createSearchParams(params?: TypeSearchParams): string {
@@ -145,11 +156,16 @@ export class FetchClient {
     }
 
     const contentType = response.headers.get("Content-Type");
+
+    if (options.responseType === 'blob') {
+      return response.blob() as unknown as Promise<T>;
+    }
+
     if (contentType && contentType.includes("application/json")) {
       return response.json() as Promise<T>;
-    } else {
-      return response.text() as unknown as Promise<T>;
     }
+  
+    return response.text() as unknown as Promise<T>;
   }
 
   public get<T>(endpoint: string, options: Omit<RequestOptions, "body"> = {}) {
@@ -162,24 +178,28 @@ export class FetchClient {
     options: RequestOptions = {}
   ) {
     const isFormData = body instanceof FormData;
+    const contentType = options.headers?.["Content-Type"];
+
     return this.request<T>(endpoint, "POST", {
       ...options,
       headers: {
         ...(!isFormData ? { "Content-Type": "application/json" } : {}),
         ...options.headers,
       },
-      body: isFormData ? body : this.formatBody(body),
+      body: this.formatBody(body, contentType),
     });
   }
 
   public put<T>(endpoint: string, body: Record<string, string>, options: RequestOptions = {}) {
+    const contentType = options.headers?.["Content-Type"];
+
     return this.request<T>(endpoint, "PUT", {
       ...options,
       headers: {
         "Content-Type": "application/json",
         ...options.headers,
       },
-      body: this.formatBody(body)
+      body: this.formatBody(body, contentType),
     });
   }
 
@@ -188,13 +208,15 @@ export class FetchClient {
   }
 
   public patch<T>(endpoint: string, body: Record<string, string>, options: RequestOptions = {}) {
+    const contentType = options.headers?.["Content-Type"];
+
     return this.request<T>(endpoint, "PATCH", {
       ...options,
       headers: {
         "Content-Type": "application/json",
         ...options.headers,
       },
-      body: this.formatBody(body),
+      body: this.formatBody(body, contentType),
     });
   }
 }

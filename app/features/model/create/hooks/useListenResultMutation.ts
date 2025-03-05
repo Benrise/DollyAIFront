@@ -1,21 +1,50 @@
 import { useMutation } from '@tanstack/react-query';
-import { IModelsListeningResponse, modelsService, ModelsListeningStatusEnum } from '@/app/entities/model';
+import { modelsService, ModelsListeningStatusEnum } from '@/app/entities/model';
+import { toastErrorHandler } from '@/app/shared/utils';
+import { useSession } from 'next-auth/react';
+import { useRef } from 'react';
 
-export function useListenToResultMutation(model_id?: number, callback?: (data: string) => void) {
-    const { mutate: listenResultMutation, isPending: isListening } = useMutation({
+
+export function useListenToResultMutation(onCompleted: (url: string | null) => void) {
+    const token = useSession().data?.user.access || '';
+
+    const previousControllerRef = useRef<AbortController | null>(null);
+
+    const { mutate: listenResultMutation, isPending: isListeningResult } = useMutation({
         mutationKey: ['listen to result'],
-        mutationFn: (data: { model_id: number }) => modelsService.listen_result(data.model_id, handleResult),
+        mutationFn: async (model_id: number) => {
+            if (previousControllerRef.current) {
+                previousControllerRef.current.abort();
+            
+            }
+            const controller = new AbortController();
+            previousControllerRef.current = controller;
+
+            await modelsService.listen_status(model_id, token, 'result', controller, (data) => {
+                if ('detail' in data) {
+                    toastErrorHandler(data);
+                    controller.abort();
+                } else if ('status' in data) {
+                    if (data.status === ModelsListeningStatusEnum.COMPLETED) {
+                        modelsService.get_result_url(model_id, data.id).then(imageUrl => onCompleted(imageUrl));
+                        controller.abort();
+                    } else if (data.status === ModelsListeningStatusEnum.ERROR) {
+                        console.error("Generation failed");
+                        onCompleted(null);
+                        controller.abort();
+                    }
+                }
+            });
+            return controller ;
+        },
         onError(error) {
             console.error('Error while listening for result', error);
-        }
+        },
+        onSettled: () => {
+            previousControllerRef.current = null;
+        },
     });
 
-    const handleResult = async (data: IModelsListeningResponse) => {
-        if (model_id && data.status === ModelsListeningStatusEnum.COMPLETED) {
-                const result_url = await modelsService.result(model_id, data.id);
-                callback?.(result_url)
-        }
-    };
-
-    return { listenResultMutation, isListening };
+    return { listenResultMutation, isListeningResult };
 }
+

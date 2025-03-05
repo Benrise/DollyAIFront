@@ -4,7 +4,8 @@ export type TypeSearchParams = {
 
 export interface RequestOptions extends RequestInit {
     headers?: Record<string, string>
-    params?: TypeSearchParams
+    params?: TypeSearchParams,
+    responseType?: string
 }
 
 export type TypeFetchRequsetConfig<Params = undefined> = Params extends undefined ? {config?: RequestOptions} : {params: Params, config?: RequestOptions}

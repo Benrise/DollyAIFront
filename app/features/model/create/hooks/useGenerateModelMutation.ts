@@ -7,7 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 export function useGenerateModelMutation(callback: () => void) {
-    const { mutate: generateModelMtation, isPending: isGenerating } = useMutation({
+    const { mutate: generateModelMutation, isPending: isSendingGenerationRequest } = useMutation({
         mutationKey: ['generate model'],
         mutationFn: (data: {model_id: number, prompt: string}) => modelsService.generate(data.model_id, data.prompt),
         onSuccess(data: FetchError | null) {
@@ -16,7 +16,7 @@ export function useGenerateModelMutation(callback: () => void) {
             } 
             else {
                 callback?.()
-                toast.success('Model created successfully!');
+                toast.success('Request sent successfully!');
             }
         },
         onError(error: FetchError) {
@@ -24,5 +24,5 @@ export function useGenerateModelMutation(callback: () => void) {
         }
     });
 
-    return { generateModelMtation, isGenerating };
+    return { generateModelMutation, isSendingGenerationRequest };
 }
