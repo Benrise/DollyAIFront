@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Drawer, Button, Radio, Typography, Card } from 'antd';
+import { Drawer, Button, Radio, Typography, Card, type RadioChangeEvent } from 'antd';
 import { CheckOutlined, CreditCardOutlined, MoneyCollectOutlined, AlipayCircleOutlined } from '@ant-design/icons';
 
 interface PricingDrawerProps {
@@ -19,7 +19,7 @@ export const PricingDrawer: React.FC<PricingDrawerProps> = ({ open, onClose }) =
   const [paymentMethod, setPaymentMethod] = useState('creditCard');
   const [selectedPlan, setSelectedPlan] = useState<number | null>(1);
 
-  const handlePaymentMethodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePaymentMethodChange = (e: RadioChangeEvent) => {
     setPaymentMethod(e.target.value);
   };
 
