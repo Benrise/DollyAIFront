@@ -32,7 +32,9 @@ export default function Home() {
     }
   });
   const { listenResultMutation, isListeningResult } = useListenToResultMutation((url) => setResultUrl(url));
-  const { listenReadinessMutation } = useListenToReadinessMutation((model_id) => {listenResultMutation(model_id)});
+  const { listenReadinessMutation } = useListenToReadinessMutation((model_id) => {
+    listenResultMutation(model_id)
+  });
 
   const closePricing = () => setIsPricingOpen(false);
   const openPricing = () => setIsPricingOpen(true);

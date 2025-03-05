@@ -1,6 +1,7 @@
 import { api } from "@/app/api";
 import { IModelsReadinessResponse, IModelsResponse, IModelsListeningResponse } from "./types";
 import { FetchError } from "@/app/shared/lib";
+import { fetchEventSource } from '@microsoft/fetch-event-source';
 
 class ModelsService {
     public async list() {
@@ -18,40 +19,39 @@ class ModelsService {
         return response;
     }
 
-    public async listen_training_status(model_id: number, callback: (data: IModelsReadinessResponse | FetchError) => void) {
-        const eventSource = new EventSource(`/models/${model_id}/readiness`, { withCredentials: true });
-
-        eventSource.onmessage = (event: MessageEvent<IModelsReadinessResponse | FetchError>) => {
-            const data = event.data;
-            callback(data);
-        }
-
-        eventSource.onerror = (error) => {
-            console.error("EventSource failed:", error);
-            eventSource.close();
-        }
-
-        return eventSource;
-    }
-
-    public async listen_result_status(model_id: number, callback: (data: IModelsListeningResponse | FetchError) => void) {
-        const eventSource = new EventSource(`/models/${model_id}/last-result`, { withCredentials: true });
-
-        eventSource.addEventListener('error', function(e) {
-            console.log(e);
-          }, false);
-        
-        eventSource.onmessage = (event: MessageEvent<IModelsListeningResponse | FetchError>) => {
-            const data = event.data
-            callback(data);
+    public async listen_status(
+        model_id: number,
+        token: string,
+        type: 'training' | 'result',
+        controller: AbortController,
+        callback: (data: IModelsReadinessResponse | IModelsListeningResponse | FetchError) => void
+    ) {
+        const base_url = process.env.NEXT_PUBLIC_API_URL;
+        const { signal } = controller;
+    
+        const headers = {
+            'Authorization': `Bearer ${token}`
         };
-        
-        eventSource.onerror = (error) => {  
-            console.error("EventSource failed:", error);
-            eventSource.close();
-        };
+    
+        const url = type === 'training'
+            ? `${base_url}/models/${model_id}/readiness`
+            : `${base_url}/models/${model_id}/last-result`;
 
-        return eventSource;
+        await fetchEventSource(url, {
+            headers,
+            signal,
+            onmessage(event) {
+                const data = JSON.parse(event.data);
+                callback(data);
+            },
+            onerror(error) {
+                console.error(`Error in ${type} event:`, error);
+                callback(error);
+                throw Error
+            },
+        });
+
+        return controller;
     }
 
     public async get_result_url(model_id: number, result_id: number) {
