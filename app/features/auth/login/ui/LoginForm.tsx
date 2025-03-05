@@ -33,16 +33,16 @@ export function LoginForm() {
 
     return (
       <div className="flex flex-col gap-4">
-          <div ref={parent} className={`flex w-full transition-all duration-300`}>
+          <div ref={parent} className={`flex w-full ${isInputFocused ? "scale-0" : ""}`}>
               {!images.length ? (
                   <div className="flex justify-center items-center w-full h-full">
                       <Spin size="large" />
                   </div>
               ) : !isInputFocused ? (
-                  <ExampleGallery images={images} />
+                <ExampleGallery images={images} />
               ) : null}
           </div>
-          <Title level={3} className="text-center text-base sm:text-xl px-10! mb-8!">
+          <Title onClick={handleBlur} level={3} className="text-center text-base sm:text-xl px-10! mb-8!">
             <div>
               <HighlightedText> AI Love Photo</HighlightedText> - your personal photoclone
             </div>
@@ -59,7 +59,7 @@ export function LoginForm() {
             <Controller
               name="email"
               control={control}
-              render={({ field }) => <Input size="large" placeholder="Enter your email" {...field} onFocus={handleFocus} onBlur={handleBlur} />}
+              render={({ field }) => <Input size="large" placeholder="Enter your email" {...field} onFocus={handleFocus} />}
             />
           </Form.Item>
           <Form.Item
@@ -69,11 +69,11 @@ export function LoginForm() {
             <Controller
               name="password"
               control={control}
-              render={({ field }) => <Input.Password size="large" placeholder="Enter password" {...field} onFocus={handleFocus} onBlur={handleBlur} />}
+              render={({ field }) => <Input.Password size="large" placeholder="Enter password" {...field} onFocus={handleFocus} />}
             />
           </Form.Item>
           <Form.Item className="mb-2!">
-            <Button type="primary" size="large" htmlType="submit" loading={isLoadingLogin} block>
+            <Button type="primary" size="large" onClick={handleBlur} htmlType="submit" loading={isLoadingLogin} block>
               Login
             </Button>
           </Form.Item>

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { Form, Button, Card, Input, Typography, Space, Image, Tooltip } from 'antd';
+import { Form, Button, Input, Typography, Space, Image, Tooltip } from 'antd';
 
 import { Sparkles } from 'lucide-react'
 import { DownloadOutlined } from '@ant-design/icons';
@@ -33,8 +33,9 @@ export default function Home() {
   });
   const { listenResultMutation, isListeningResult } = useListenToResultMutation((url) => {
     setResultUrl(url)
+    form.resetFields();
   });
-  const { listenReadinessMutation } = useListenToReadinessMutation((model_id) => {
+  const { listenReadinessMutation, isListeningReadiness } = useListenToReadinessMutation((model_id) => {
     listenResultMutation(model_id)
   });
 
@@ -64,6 +65,7 @@ export default function Home() {
 
   const handleGenerate = (values: { prompt: string }) => {
     if (activeModel) {
+      setResultUrl(null); 
       generateModelMutation({ model_id: activeModel.id, prompt: values.prompt });
     }
   };
@@ -80,7 +82,7 @@ export default function Home() {
           className="
               w-full sm:max-w-lg bg-white rounded-none sm:rounded-4xl 
               shadow-none sm:shadow-xl sm:shadow-indigo-50 overflow-hidden
-              h-screen sm:h-auto py-10
+              h-screen sm:h-auto py-8
           "
         >
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
@@ -105,52 +107,50 @@ export default function Home() {
             </div>     
           </div>
 
-          <div className="px-10 flex flex-col gap-4">
-            <Card 
-              title="Generation result" 
-              extra={<Button type='text' shape="circle" size="large" icon={<DownloadOutlined className='text-fuchsia-500' />} onClick={() => handleDownload(resultUrl)} disabled={resultUrl === null}/>}
-            >
-              <div ref={parent} className='flex max-w-[512px] justify-center'>
-                {isListeningResult ? (
-                  <GeneratingAnimation />
-                ) : (
-                  <Image 
-                    src={
-                      resultUrl 
-                        ? resultUrl 
-                        : activeModel && !activeModel.is_ready
-                        ? '/images/etc/silky-waves.png' 
-                        : '/images/etc/magnify.png'
-                    }
-                    alt={
-                      resultUrl 
-                        ? "Generation result" 
-                        : activeModel && !activeModel.is_ready 
-                        ? "Model is training" 
-                        : "No generations"
-                    }
-                    width={324}
-                    height={324}
-                    className="rounded-2xl select-none"
-                    fallback='' 
-                    preview={false} 
-                  />
-                )}
+          <div className="px-10 flex flex-col gap-8">
+            <div className='flex flex-col items-center'>
+              <div ref={parent} className='flex max-w-[512px] justify-center relative'>
+                  {!isListeningReadiness && isListeningResult && activeModel?.is_ready ? (
+                    <GeneratingAnimation />
+                  ) : (
+                    <Image 
+                      src={
+                        resultUrl 
+                          ? resultUrl 
+                          : activeModel && !activeModel.is_ready
+                          ? '/images/etc/silky-waves.png' 
+                          : '/images/etc/magnify.png'
+                      }
+                      alt={
+                        resultUrl 
+                          ? "Generation result" 
+                          : activeModel && !activeModel.is_ready 
+                          ? "Model is training" 
+                          : "No generations"
+                      }
+                      width={432}
+                      height={432}
+                      className="rounded-[24px] select-none aspect-square object-cover object-top max-w-full"
+                      fallback='' 
+                      preview={false} 
+                    />
+                  )}
+                  { resultUrl && <Button type='default' size="large" className='absolute! right-[16px] top-[16px] opacity-70 hover:opacity-100' icon={<DownloadOutlined/>} onClick={() => handleDownload(resultUrl)} disabled={resultUrl === null}/>}
               </div>
               <div className="flex w-full justify-center">
-                <Text className="align-middle w-fit text-[14px]!" type="secondary">
-                  {isListeningResult
-                    ? "Generating..."
-                    : resultUrl
-                    ? ""
-                    : activeModel && !activeModel.is_ready
-                    ? "Model is training, this may take some time"
-                    : "You haven’t generated any photos yet"}
-                </Text>
+                  <Text className="align-middle w-fit text-[14px]!" type="secondary">
+                    {isListeningResult
+                      ? "Generating..."
+                      : resultUrl
+                      ? ""
+                      : activeModel && !activeModel.is_ready
+                      ? "Model is training, this may take some time"
+                      : "You haven’t generated any photos yet"}
+                  </Text>
               </div>
-            </Card>
+            </div>
             <Form form={form} onFinish={handleGenerate} className="px-10 flex flex-col gap-4">
-              <Form.Item name="prompt" rules={[{ required: true, message: 'Enter a prompt' }]}>
+              <Form.Item className='mb-0!' name="prompt" rules={[{ required: true, message: 'Enter a prompt' }]}>
                 <Input.TextArea disabled={!!activeModel && !activeModel.is_ready || isListeningResult} placeholder="Imagine me as an astronaut in outer space" style={{ height: 80, resize: "none" }} />
               </Form.Item>
               {
