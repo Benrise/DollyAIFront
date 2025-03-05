@@ -93,7 +93,7 @@ export default function Home() {
           <div className="px-10 flex flex-col gap-4">
             <Card 
               title="Generation result" 
-              extra={<Button type='text' shape="circle" size="large" icon={<DownloadOutlined className='text-fuchsia-600' />} disabled/>}
+              extra={<Button type='text' shape="circle" size="large" icon={<DownloadOutlined className='text-fuchsia-500' />} disabled/>}
             >
               <div ref={parent} className='flex max-w-[512px] justify-center'>
                 {isListeningResult ? (

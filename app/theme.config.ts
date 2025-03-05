@@ -12,5 +12,11 @@ export const theme: ThemeConfig = {
     colorBgSpotlight: '#7559ff',
     controlHeightLG: 48,
   },
+  components: {
+    Radio: {
+      radioSize: 20,
+      dotSize: 8
+    },
+  }
 };
 
