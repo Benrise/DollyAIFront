@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { Button, Card, Input, Typography, Space, Image, Tooltip } from 'antd';
+import { Form, Button, Card, Input, Typography, Space, Image, Tooltip } from 'antd';
 
 import { Sparkles } from 'lucide-react'
 import { DownloadOutlined } from '@ant-design/icons';
@@ -13,16 +13,18 @@ import { type IModel } from '@/app/entities/model';
 import { ModelsList, useGetModelsListMutation } from '@/app/widgets/model/list';
 import { useListenToResultMutation } from './features/model/create';
 import { useListenToReadinessMutation } from './features/model/create';
+import { useGenerateModelMutation } from './features/model/create';
 
 const { Text } = Typography;
 
 export default function Home() {
-  const [parent] = useAutoAnimate();
-  const [activeModel, setActiveModel] = useState<IModel | undefined>(undefined);
-  const [resultUrl, setResultUrl] = useState<string | null>(null);
+  const  [parent ] = useAutoAnimate();
+  const [ activeModel, setActiveModel ] = useState<IModel | undefined>(undefined);
+  const [ resultUrl, setResultUrl ] = useState<string | null>(null);
   const { models, getModelsListMutation } = useGetModelsListMutation(setActiveModel);
-  const { listenResultMutation, isListening } = useListenToResultMutation((url) => setResultUrl(url));
-  const { listenReadinessMutation } = useListenToReadinessMutation((model_id) => { listenResultMutation(model_id) });
+  const { generateModelMutation, isSendingGenerationRequest } = useGenerateModelMutation(() => {activeModel && listenResultMutation(activeModel.id)});
+  const { listenResultMutation, isListeningResult } = useListenToResultMutation((url) => setResultUrl(url));
+  const { listenReadinessMutation } = useListenToReadinessMutation((model_id) => {listenResultMutation(model_id)});
 
   useEffect(() => {
     getModelsListMutation();
@@ -40,6 +42,12 @@ export default function Home() {
 
   const handleModelCreated = () => {
     getModelsListMutation();
+  };
+
+  const handleGenerate = (values: { prompt: string }) => {
+    if (activeModel) {
+      generateModelMutation({ model_id: activeModel.id, prompt: values.prompt });
+    }
   };
 
   return (
@@ -77,8 +85,8 @@ export default function Home() {
               title="Generation result" 
               extra={<Button type='text' shape="circle" size="large" icon={<DownloadOutlined className='text-fuchsia-600' />} disabled/>}
             >
-              <div ref={parent} className='flex max-w-[256px] justify-center'>
-                {isListening ? (
+              <div ref={parent} className='flex max-w-[512px] justify-center'>
+                {isListeningResult ? (
                   <GeneratingAnimation />
                 ) : (
                   <Image 
@@ -106,7 +114,7 @@ export default function Home() {
               </div>
               <div className="flex w-full justify-center">
                 <Text className="align-middle w-fit text-[14px]!" type="secondary">
-                  {isListening
+                  {isListeningResult
                     ? "Generating..."
                     : resultUrl
                     ? "Generation complete"
@@ -116,20 +124,24 @@ export default function Home() {
                 </Text>
               </div>
             </Card>
-            <Input.TextArea disabled={!!activeModel && !activeModel.is_ready || isListening} placeholder="Imagine me as an astronaut in outer space" style={{ height: 80, resize: "none" }} />
-            {
-              activeModel && !activeModel.is_ready ? (
-                <Tooltip trigger={"click"} title="Model is training. Please wait. Often it takes a while (up to 3 hours).">
-                  <Button type="primary" size="large" htmlType="submit" ghost block>
+            <Form onFinish={handleGenerate} className="px-10 flex flex-col gap-4">
+              <Form.Item name="prompt" rules={[{ required: true, message: 'Enter a prompt' }]}>
+                <Input.TextArea disabled={!!activeModel && !activeModel.is_ready || isListeningResult} placeholder="Imagine me as an astronaut in outer space" style={{ height: 80, resize: "none" }} />
+              </Form.Item>
+              {
+                activeModel && !activeModel.is_ready ? (
+                  <Tooltip trigger={"click"} title="Model is training. Please wait. Often it takes a while (up to 3 hours).">
+                    <Button type="primary" size="large" htmlType="submit" ghost block>
+                      Generate
+                    </Button>
+                  </Tooltip>
+                ) : (
+                  <Button disabled={!activeModel} loading={isSendingGenerationRequest || isListeningResult} type="primary" size="large" htmlType="submit" block>
                     Generate
                   </Button>
-                </Tooltip>
-              ) : (
-                <Button disabled={!activeModel} type="primary" size="large" htmlType="submit" block>
-                  Generate
-                </Button>
-              )
-            }
+                )
+              }
+            </Form>
           </div>
           <div className="flex w-full gap-4 justify-evenly items-center">
             <div className="min-w-[144px] max-h-[164px]">

@@ -44,15 +44,20 @@ export class FetchClient {
     this.options = init.options;
   }
 
-  private formatBody(body?: Record<string, string>) {
-    if (body === null || body === undefined) return '';
-    const formBody = body
-      ? Object.keys(body)
-          .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(String(body[key as keyof typeof body])))
-          .join('&')
-      : '';
+  private formatBody(body?: Record<string, any> | FormData): string | FormData | undefined {
+    if (body instanceof FormData) {
+      return body;
+    }
   
-    return formBody;
+    if (body === null || body === undefined) {
+      return undefined;
+    }
+  
+    if (typeof body === 'object') {
+      return JSON.stringify(body);
+    }
+  
+    return String(body);
   }
 
   private createSearchParams(params?: TypeSearchParams): string {
@@ -168,7 +173,7 @@ export class FetchClient {
         ...(!isFormData ? { "Content-Type": "application/json" } : {}),
         ...options.headers,
       },
-      body: isFormData ? body : this.formatBody(body),
+      body: this.formatBody(body),
     });
   }
 
@@ -179,7 +184,7 @@ export class FetchClient {
         "Content-Type": "application/json",
         ...options.headers,
       },
-      body: this.formatBody(body)
+      body: this.formatBody(body),
     });
   }
 

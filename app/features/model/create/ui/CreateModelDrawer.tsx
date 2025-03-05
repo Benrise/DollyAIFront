@@ -101,7 +101,7 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
           />
         </Form.Item>
         <Space direction="vertical" size="middle" className='bg-indigo-50 border-2 border-indigo-400 rounded-xl p-6 mb-6 w-full'>
-          <Paragraph>
+          <Paragraph className='mb-0!'>
             To achieve maximum accuracy, it is recommended to <HighlightedText>upload 10-15 photos.</HighlightedText> The <HighlightedText>more</HighlightedText> pictures there are, the <HighlightedText>better</HighlightedText> the neural network will be able to understand your <HighlightedText>unique</HighlightedText> features.
           </Paragraph>
           <ul>
@@ -115,7 +115,7 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
               <Text><HighlightedText>•</HighlightedText> Add photos with different emotions (smile, serious expression, etc.).</Text>
             </li>
           </ul>
-          <Paragraph>
+          <Paragraph className='mb-0!'>
             The more <HighlightedText>diverse your</HighlightedText> pictures are, the <HighlightedText>more realistic</HighlightedText> and <HighlightedText>accurate</HighlightedText> the result.
           </Paragraph>
         </Space>

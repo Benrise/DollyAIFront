@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { modelsService } from '@/app/entities/model';
 
 export function useListenToReadinessMutation(onReady: (model_id: number) => void) {
-    const { mutate: listenReadinessMutation, isPending: isCheckingReadiness } = useMutation({
+    const { mutate: listenReadinessMutation, isPending: isListeningReadiness } = useMutation({
         mutationKey: ['listen to readiness'],
         mutationFn: async (model_id: number) => {
             const readiness = await modelsService.get_training_status(model_id);
@@ -29,5 +29,5 @@ export function useListenToReadinessMutation(onReady: (model_id: number) => void
         }
     });
 
-    return { listenReadinessMutation, isCheckingReadiness };
+    return { listenReadinessMutation, isListeningReadiness };
 }

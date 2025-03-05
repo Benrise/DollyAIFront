@@ -13,7 +13,7 @@ class ModelsService {
     }
 
     public async generate(model_id: number, prompt: string) {
-        const response = await api.post<null>(`/models/${model_id}/generate`, { prompt });
+        const response = await api.post<null>(`/models/${model_id}/generate`, { promt: prompt  });
         return response;
     }
 

@@ -3,7 +3,7 @@ import { IModelsListeningResponse, modelsService, ModelsListeningStatusEnum } fr
 
 
 export function useListenToResultMutation(onCompleted: (url: string | null) => void) {
-    const { mutate: listenResultMutation, isPending: isListening } = useMutation({
+    const { mutate: listenResultMutation, isPending: isListeningResult } = useMutation({
         mutationKey: ['listen to result'],
         mutationFn: async (model_id: number) => {
             const resultStatus = await modelsService.get_result_status(model_id);
@@ -36,6 +36,6 @@ export function useListenToResultMutation(onCompleted: (url: string | null) => v
         }
     });
 
-    return { listenResultMutation, isListening };
+    return { listenResultMutation, isListeningResult };
 }
 
