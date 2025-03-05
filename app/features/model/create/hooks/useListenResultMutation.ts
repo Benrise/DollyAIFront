@@ -14,8 +14,7 @@ export function useListenToResultMutation(onCompleted: (url: string | null) => v
                 return;
             }
 
-            let eventSource: EventSource;
-            eventSource = await modelsService.listen_result_status(model_id, (data: IModelsListeningResponse) => {
+            const eventSource: EventSource = await modelsService.listen_result_status(model_id, (data: IModelsListeningResponse) => {
                 if (data.status === ModelsListeningStatusEnum.COMPLETED) {
                     modelsService.get_result_url(model_id, data.id).then(imageUrl => onCompleted(imageUrl));
                     eventSource.close();

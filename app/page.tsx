@@ -22,7 +22,11 @@ export default function Home() {
   const [ activeModel, setActiveModel ] = useState<IModel | undefined>(undefined);
   const [ resultUrl, setResultUrl ] = useState<string | null>(null);
   const { models, getModelsListMutation } = useGetModelsListMutation(setActiveModel);
-  const { generateModelMutation, isSendingGenerationRequest } = useGenerateModelMutation(() => {activeModel && listenResultMutation(activeModel.id)});
+  const { generateModelMutation, isSendingGenerationRequest } = useGenerateModelMutation(() => {
+    if (activeModel) {
+      listenResultMutation(activeModel.id);
+    }
+  });
   const { listenResultMutation, isListeningResult } = useListenToResultMutation((url) => setResultUrl(url));
   const { listenReadinessMutation } = useListenToReadinessMutation((model_id) => {listenResultMutation(model_id)});
 

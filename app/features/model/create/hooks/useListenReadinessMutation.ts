@@ -10,8 +10,7 @@ export function useListenToReadinessMutation(onReady: (model_id: number) => void
             if (readiness.is_ready) {
                 onReady(model_id);
             } else {
-                let eventSource: EventSource;
-                eventSource = await modelsService.listen_training_status(model_id, (isReady: boolean) => {
+                const eventSource: EventSource = await modelsService.listen_training_status(model_id, (isReady: boolean) => {
                     if (isReady) {
                         onReady(model_id);
                         eventSource.close();

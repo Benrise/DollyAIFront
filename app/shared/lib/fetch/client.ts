@@ -44,7 +44,7 @@ export class FetchClient {
     this.options = init.options;
   }
 
-  private formatBody(body?: Record<string, any> | FormData): string | FormData | undefined {
+  private formatBody(body?: Record<string, string | object> | FormData): string | FormData | undefined {
     if (body instanceof FormData) {
       return body;
     }
