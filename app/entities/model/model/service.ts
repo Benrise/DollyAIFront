@@ -41,13 +41,18 @@ class ModelsService {
             headers,
             signal,
             onmessage(event) {
-                const data = JSON.parse(event.data);
-                callback(data);
+                if (!event.data) return;
+        
+                try {
+                    const data = JSON.parse(event.data);
+                    callback(data);
+                } catch (error) {
+                    console.error("Failed to parse JSON:", event.data, error);
+                }
             },
             onerror(error) {
                 console.error(`Error in ${type} event:`, error);
                 callback(error);
-                throw Error
             },
         });
 
