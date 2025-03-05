@@ -14,7 +14,7 @@ import { ModelsList, useGetModelsListMutation } from '@/app/widgets/model/list';
 import { useListenToResultMutation } from './features/model/create';
 import { useListenToReadinessMutation } from './features/model/create';
 import { useGenerateModelMutation } from './features/model/create';
-// import { PricingDrawer } from './features/pricing/ui';
+import { PricingDrawer } from './features/pricing/ui';
 
 const { Text } = Typography;
 
@@ -22,7 +22,7 @@ export default function Home() {
   const  [parent ] = useAutoAnimate();
   const [ activeModel, setActiveModel ] = useState<IModel | undefined>(undefined);
   const [ resultUrl, setResultUrl ] = useState<string | null>(null);
-  // const [ isPricingOpen, setIsPricingOpen ] = useState(false);
+  const [ isPricingOpen, setIsPricingOpen ] = useState(false);
   const { models, getModelsListMutation } = useGetModelsListMutation(setActiveModel);
   const { generateModelMutation, isSendingGenerationRequest } = useGenerateModelMutation(() => {
     if (activeModel) {
@@ -31,6 +31,8 @@ export default function Home() {
   });
   const { listenResultMutation, isListeningResult } = useListenToResultMutation((url) => setResultUrl(url));
   const { listenReadinessMutation } = useListenToReadinessMutation((model_id) => {listenResultMutation(model_id)});
+
+  const onPricingClose = () => setIsPricingOpen(false);
 
   useEffect(() => {
     getModelsListMutation();
@@ -81,6 +83,7 @@ export default function Home() {
                   <Button type="primary" size="middle" disabled>
                     Buy more
                   </Button>
+                  <PricingDrawer onClose={onPricingClose} open={isPricingOpen} />
                 </div>
               )}
             </div>     
