@@ -80,7 +80,7 @@ export function LoginForm() {
           <Form.Item>
             <Button type="link" href='/auth/register' size="small" className='text-[14px]!' block>No account? Register</Button>
           </Form.Item>
-          <Terms className="absolute bottom-8"/>
+          <Terms/>
         </Form>
       </div>
     )
