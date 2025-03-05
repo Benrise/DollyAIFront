@@ -109,41 +109,43 @@ export default function Home() {
 
           <div className="px-10 flex flex-col gap-8 items-center">
               <div ref={parent} className='flex max-w-[512px] justify-center relative'>
+                <div className="flex flex-col items-center">
                   {!isListeningReadiness && isListeningResult && activeModel?.is_ready ? (
-                    <GeneratingAnimation />
-                  ) : (
-                    <Image 
-                      src={
-                        resultUrl 
-                          ? resultUrl 
+                      <GeneratingAnimation />
+                    ) : (
+                      <Image 
+                        src={
+                          resultUrl 
+                            ? resultUrl 
+                            : activeModel && !activeModel.is_ready
+                            ? '/images/etc/silky-waves.png' 
+                            : '/images/etc/magnify.png'
+                        }
+                        alt={
+                          resultUrl 
+                            ? "Generation result" 
+                            : activeModel && !activeModel.is_ready 
+                            ? "Model is training" 
+                            : "No generations"
+                        }
+                        className="rounded-[24px] select-none aspect-square object-cover object-top relative"
+                        fallback='' 
+                        preview={false} 
+                      />
+                    )}
+                    { resultUrl && <Button type='default' size="large" className='absolute! right-[16px] top-[16px] opacity-70 hover:opacity-100' icon={<DownloadOutlined/>} onClick={() => handleDownload(resultUrl)} disabled={resultUrl === null}/>}
+                    <div className="flex w-full justify-center">
+                      <Text className="align-middle w-fit text-[14px]!" type="secondary">
+                        {isListeningResult
+                          ? "Generating..."
+                          : resultUrl
+                          ? ""
                           : activeModel && !activeModel.is_ready
-                          ? '/images/etc/silky-waves.png' 
-                          : '/images/etc/magnify.png'
-                      }
-                      alt={
-                        resultUrl 
-                          ? "Generation result" 
-                          : activeModel && !activeModel.is_ready 
-                          ? "Model is training" 
-                          : "No generations"
-                      }
-                      className="rounded-[24px] select-none aspect-square object-cover object-top relative"
-                      fallback='' 
-                      preview={false} 
-                    />
-                  )}
-                  { resultUrl && <Button type='default' size="large" className='absolute! right-[16px] top-[16px] opacity-70 hover:opacity-100' icon={<DownloadOutlined/>} onClick={() => handleDownload(resultUrl)} disabled={resultUrl === null}/>}
-              </div>
-              <div className="flex w-full justify-center">
-                  <Text className="align-middle w-fit text-[14px]!" type="secondary">
-                    {isListeningResult
-                      ? "Generating..."
-                      : resultUrl
-                      ? ""
-                      : activeModel && !activeModel.is_ready
-                      ? "Model is training, this may take some time"
-                      : "You haven’t generated any photos yet"}
-                  </Text>
+                          ? "Model is training, this may take some time"
+                          : "You haven’t generated any photos yet"}
+                      </Text>
+                  </div>
+                </div>
               </div>
             <Form form={form} onFinish={handleGenerate} className="px-10 flex flex-col gap-4 w-full">
               <Form.Item className='mb-0!' name="prompt" rules={[{ required: true, message: 'Enter a prompt' }]}>
