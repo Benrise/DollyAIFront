@@ -32,7 +32,8 @@ export default function Home() {
   const { listenResultMutation, isListeningResult } = useListenToResultMutation((url) => setResultUrl(url));
   const { listenReadinessMutation } = useListenToReadinessMutation((model_id) => {listenResultMutation(model_id)});
 
-  const onPricingClose = () => setIsPricingOpen(false);
+  const closePricing = () => setIsPricingOpen(false);
+  const openPricing = () => setIsPricingOpen(true);
 
   useEffect(() => {
     getModelsListMutation();
@@ -80,10 +81,10 @@ export default function Home() {
               {models.length > 0 && (
                 <div className="flex gap-2 min-w-fit justify-between items-center w-full px-10">
                   <Text type="secondary">∞ generations</Text>
-                  <Button type="primary" size="middle" disabled>
+                  <Button type="primary" size="middle" onClick={openPricing}>
                     Buy more
                   </Button>
-                  <PricingDrawer onClose={onPricingClose} open={isPricingOpen} />
+                  <PricingDrawer onClose={closePricing} open={isPricingOpen} />
                 </div>
               )}
             </div>     
