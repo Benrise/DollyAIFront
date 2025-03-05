@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Form, Button, Card, Input, Typography, Space, Image, Tooltip } from 'antd';
 
@@ -37,10 +37,10 @@ export default function Home() {
   const closePricing = () => setIsPricingOpen(false);
   const openPricing = () => setIsPricingOpen(true);
 
-  const reset = () => {
+  const reset = useCallback(() => {
     setResultUrl(null);
     form.resetFields();
-  }
+  }, [form]);
 
   useEffect(() => {
     getModelsListMutation();
@@ -56,7 +56,7 @@ export default function Home() {
         listenReadinessMutation(activeModel.id);
       }
     }
-  }, [activeModel, listenResultMutation, listenReadinessMutation]);
+  }, [activeModel, listenResultMutation, listenReadinessMutation, reset]);
 
   const handleModelCreated = () => {
     getModelsListMutation();

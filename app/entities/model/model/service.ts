@@ -36,6 +36,10 @@ class ModelsService {
 
     public async listen_result_status(model_id: number, callback: (data: IModelsListeningResponse | FetchError) => void) {
         const eventSource = new EventSource(`/models/${model_id}/last-result`, { withCredentials: true });
+
+        eventSource.addEventListener('error', function(e) {
+            console.log(e);
+          }, false);
         
         eventSource.onmessage = (event: MessageEvent<IModelsListeningResponse | FetchError>) => {
             const data = event.data
