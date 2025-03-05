@@ -1,10 +1,6 @@
 "use client"
 
-import { Typography } from "antd";
 import { type PropsWithChildren } from "react";
-
-
-const { Title, Paragraph } = Typography;
 
 
 export function AuthWrapper({ children }: PropsWithChildren) {

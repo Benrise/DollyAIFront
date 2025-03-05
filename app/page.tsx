@@ -56,7 +56,7 @@ export default function Home() {
         listenReadinessMutation(activeModel.id);
       }
     }
-  }, [activeModel, listenResultMutation, listenReadinessMutation]);
+  }, [activeModel, listenResultMutation, listenReadinessMutation, form]);
 
   const handleModelCreated = () => {
     getModelsListMutation();
