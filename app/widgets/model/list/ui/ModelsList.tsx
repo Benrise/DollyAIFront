@@ -19,14 +19,14 @@ interface ModelsListProps {
   }
 
   export function ModelsList({ models, setActiveModel, activeModel, onModelCreated }: ModelsListProps) {
-    const [open, setOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     
-    const openDrawer = () => setOpen(true);
-    const onClose = () => setOpen(false);
+    const openDrawer = () => setIsOpen(true);
+    const onClose = () => setIsOpen(false);
 
     return (
         <div className='flex gap-2 w-max-[80%] overflow-x-auto pb-2 pl-10'>
-            <CreateModelDrawer open={open} onClose={onClose} onModelCreated={onModelCreated}/>
+            <CreateModelDrawer open={isOpen} onClose={onClose} onModelCreated={onModelCreated}/>
             <div className="flex flex-col gap-1 items-center">
                 <Button onClick={openDrawer} type="primary" shape="circle" size="large" style={{width: 64, height: 64, minWidth: 64}} block><Plus/></Button>
                 <Text className='align-middle w-fit text-[12px]!'>Create</Text>
