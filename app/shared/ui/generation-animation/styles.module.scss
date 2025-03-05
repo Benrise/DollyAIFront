@@ -1,6 +1,7 @@
 .staggerVisualizer {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(17, 1rem);
+    grid-template-rows: repeat(17, 1rem);
     justify-content: center;
     align-items: center;
     width: 17rem;

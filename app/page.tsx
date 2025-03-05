@@ -12,6 +12,7 @@ import { UserBadge } from '@/app/entities/user';
 import { type IModel } from '@/app/entities/model';
 import { ModelsList, useGetModelsListMutation } from '@/app/widgets/model/list';
 import { useListenToResultMutation } from './features/model/create';
+import { useListenToReadinessMutation } from './features/model/create';
 
 const { Text } = Typography;
 
@@ -19,30 +20,35 @@ export default function Home() {
   const [parent] = useAutoAnimate();
   const [activeModel, setActiveModel] = useState<IModel | undefined>(undefined);
   const [resultUrl, setResultUrl] = useState<string | null>(null);
-  const {models, getModelsListMutation} = useGetModelsListMutation(setActiveModel);
-  const { listenResultMutation, isListening } = useListenToResultMutation(activeModel?.id, (resultUrl) => setResultUrl(resultUrl));
+  const { models, getModelsListMutation } = useGetModelsListMutation(setActiveModel);
+  const { listenResultMutation, isListening } = useListenToResultMutation((url) => setResultUrl(url));
+  const { listenReadinessMutation } = useListenToReadinessMutation((model_id) => { listenResultMutation(model_id) });
 
   useEffect(() => {
     getModelsListMutation();
   }, [getModelsListMutation]);
 
   useEffect(() => {
-    if (activeModel && activeModel.is_ready) {
-      listenResultMutation({ model_id: activeModel.id });
+    if (activeModel) {
+      if (activeModel.is_ready) {
+        listenResultMutation(activeModel.id);
+      } else {
+        listenReadinessMutation(activeModel.id);
+      }
     }
-  }, [activeModel, listenResultMutation]);
+  }, [activeModel, listenResultMutation, listenReadinessMutation]);
 
   const handleModelCreated = () => {
-      getModelsListMutation();
+    getModelsListMutation();
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-50">
       <div 
           className="
-              w-full sm:max-w-lg sm:py-10 bg-white rounded-none sm:rounded-4xl 
+              w-full sm:max-w-lg bg-white rounded-none sm:rounded-4xl 
               shadow-none sm:shadow-xl sm:shadow-indigo-50 overflow-hidden
-              h-screen sm:h-auto pt-16
+              h-screen sm:h-auto py-10
           "
         >
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
@@ -58,7 +64,7 @@ export default function Home() {
               {models.length > 0 && (
                 <div className="flex gap-2 min-w-fit justify-between items-center w-full px-10">
                   <Text type="secondary">∞ generations</Text>
-                  <Button type="primary" size="large" disabled>
+                  <Button type="primary" size="middle" disabled>
                     Buy more
                   </Button>
                 </div>
@@ -71,7 +77,7 @@ export default function Home() {
               title="Generation result" 
               extra={<Button type='text' shape="circle" size="large" icon={<DownloadOutlined className='text-fuchsia-600' />} disabled/>}
             >
-              <div className='flex max-w-[512px] justify-center'>
+              <div ref={parent} className='flex max-w-[256px] justify-center'>
                 {isListening ? (
                   <GeneratingAnimation />
                 ) : (
@@ -90,8 +96,10 @@ export default function Home() {
                         ? "Model is training" 
                         : "No generations"
                     }
-                    width={192} 
-                    className="rounded-2xl select-none" 
+                    width={192}
+                    height={192}
+                    className="rounded-2xl select-none"
+                    fallback='' 
                     preview={false} 
                   />
                 )}
