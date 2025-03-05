@@ -68,7 +68,7 @@ export function RegisterForm() {
               Already have an account? Login
             </Button>
           </Form.Item>
-          <Terms className="absolute bottom-8"/>
+          <Terms/>
         </Form>
       </div>
     )
