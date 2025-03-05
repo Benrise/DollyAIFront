@@ -5,7 +5,7 @@ import { AuthWrapper } from '@/app/widgets/auth/wrapper';
 
 export default function RegisterPage() {
   return (
-   <AuthWrapper title={"Registration"} isShowExamples={false}>
+   <AuthWrapper>
       <RegisterForm/>
    </AuthWrapper>
   );

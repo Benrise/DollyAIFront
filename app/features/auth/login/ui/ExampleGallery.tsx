@@ -20,7 +20,6 @@ export function ExampleGallery ({ images }: ExampleGalleryProps) {
         centeredSlides={true} 
         loop={true}
         autoplay={{ delay: 3000, disableOnInteraction: false }}
-        className="w-full"
     >
         {images.map((image, index) => (
             <SwiperSlide key={index} className="flex justify-center items-center">
