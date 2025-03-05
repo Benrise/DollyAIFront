@@ -19,7 +19,7 @@ export const PricingDrawer: React.FC<PricingDrawerProps> = ({ open, onClose }) =
   const [paymentMethod, setPaymentMethod] = useState('creditCard');
   const [selectedPlan, setSelectedPlan] = useState<number | null>(1);
 
-  const handlePaymentMethodChange = (e: any) => {
+  const handlePaymentMethodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPaymentMethod(e.target.value);
   };
 
