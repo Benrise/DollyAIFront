@@ -54,7 +54,7 @@ export const PricingDrawer: React.FC<PricingDrawerProps> = ({ open, onClose }) =
               <ul className="text-left mb-4">
                 {plan.features.map((feature, index) => (
                   <li key={index} className="flex items-center mb-2">
-                    <CheckOutlined className="text-green-500 mr-2" /> {feature}
+                    <CheckOutlined className="mr-2 text-green-500!" /> {feature}
                   </li>
                 ))}
               </ul>
