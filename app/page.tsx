@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Form, Button, Card, Input, Typography, Space, Image, Tooltip } from 'antd';
 
@@ -31,7 +31,9 @@ export default function Home() {
       listenResultMutation(activeModel.id);
     }
   });
-  const { listenResultMutation, isListeningResult } = useListenToResultMutation((url) => setResultUrl(url));
+  const { listenResultMutation, isListeningResult } = useListenToResultMutation((url) => {
+    setResultUrl(url)
+  });
   const { listenReadinessMutation } = useListenToReadinessMutation((model_id) => {
     listenResultMutation(model_id)
   });
@@ -39,18 +41,14 @@ export default function Home() {
   const closePricing = () => setIsPricingOpen(false);
   const openPricing = () => setIsPricingOpen(true);
 
-  const reset = useCallback(() => {
-    setResultUrl(null);
-    form.resetFields();
-  }, [form]);
-
   useEffect(() => {
     getModelsListMutation();
   }, [getModelsListMutation]);
 
   useEffect(() => {
     if (activeModel) {
-      reset();
+      setResultUrl(null);
+      form.resetFields();
 
       if (activeModel.is_ready) {
         listenResultMutation(activeModel.id);
@@ -58,7 +56,7 @@ export default function Home() {
         listenReadinessMutation(activeModel.id);
       }
     }
-  }, [activeModel, listenResultMutation, listenReadinessMutation, reset]);
+  }, [activeModel, listenResultMutation, listenReadinessMutation]);
 
   const handleModelCreated = () => {
     getModelsListMutation();

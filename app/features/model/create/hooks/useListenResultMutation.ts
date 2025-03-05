@@ -2,15 +2,24 @@ import { useMutation } from '@tanstack/react-query';
 import { modelsService, ModelsListeningStatusEnum } from '@/app/entities/model';
 import { toastErrorHandler } from '@/app/shared/utils';
 import { useSession } from 'next-auth/react';
+import { useRef } from 'react';
 
 
 export function useListenToResultMutation(onCompleted: (url: string | null) => void) {
     const token = useSession().data?.user.access || '';
 
+    const previousControllerRef = useRef<AbortController | null>(null);
+
     const { mutate: listenResultMutation, isPending: isListeningResult } = useMutation({
         mutationKey: ['listen to result'],
         mutationFn: async (model_id: number) => {
+            if (previousControllerRef.current) {
+                previousControllerRef.current.abort();
+            
+            }
             const controller = new AbortController();
+            previousControllerRef.current = controller;
+
             await modelsService.listen_status(model_id, token, 'result', controller, (data) => {
                 if ('detail' in data) {
                     toastErrorHandler(data);
@@ -26,11 +35,13 @@ export function useListenToResultMutation(onCompleted: (url: string | null) => v
                     }
                 }
             });
-
             return controller ;
         },
         onError(error) {
             console.error('Error while listening for result', error);
+        },
+        onSettled: () => {
+            previousControllerRef.current = null;
         },
     });
 
