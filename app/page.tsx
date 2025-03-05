@@ -107,8 +107,7 @@ export default function Home() {
             </div>     
           </div>
 
-          <div className="px-10 flex flex-col gap-8">
-            <div className='flex flex-col items-center'>
+          <div className="px-10 flex flex-col gap-8 items-center">
               <div ref={parent} className='flex max-w-[512px] justify-center relative'>
                   {!isListeningReadiness && isListeningResult && activeModel?.is_ready ? (
                     <GeneratingAnimation />
@@ -128,9 +127,7 @@ export default function Home() {
                           ? "Model is training" 
                           : "No generations"
                       }
-                      width={432}
-                      height={432}
-                      className="rounded-[24px] select-none aspect-square object-cover object-top max-w-full"
+                      className="rounded-[24px] select-none aspect-square object-cover object-top relative"
                       fallback='' 
                       preview={false} 
                     />
@@ -148,8 +145,7 @@ export default function Home() {
                       : "You haven’t generated any photos yet"}
                   </Text>
               </div>
-            </div>
-            <Form form={form} onFinish={handleGenerate} className="px-10 flex flex-col gap-4">
+            <Form form={form} onFinish={handleGenerate} className="px-10 flex flex-col gap-4 w-full">
               <Form.Item className='mb-0!' name="prompt" rules={[{ required: true, message: 'Enter a prompt' }]}>
                 <Input.TextArea disabled={!!activeModel && !activeModel.is_ready || isListeningResult} placeholder="Imagine me as an astronaut in outer space" style={{ height: 80, resize: "none" }} />
               </Form.Item>
