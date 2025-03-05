@@ -17,6 +17,11 @@ export const theme: ThemeConfig = {
       radioSize: 20,
       dotSize: 8
     },
+    Button: {
+      onlyIconSizeLG: 24,
+      borderRadiusLG: 16,
+      defaultBorderColor: ''
+    }
   }
 };
 
