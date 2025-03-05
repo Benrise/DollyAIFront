@@ -1,6 +1,5 @@
 import { api } from "@/app/api";
-import { IModelsReadinessResponse, IModelsResponse, IModelsListeningResponse, ModelsListeningStatusEnum } from "./types";
-import { toastErrorHandler } from "@/app/shared/utils";
+import { IModelsReadinessResponse, IModelsResponse, IModelsListeningResponse } from "./types";
 import { FetchError } from "@/app/shared/lib";
 
 class ModelsService {
@@ -20,7 +19,7 @@ class ModelsService {
     }
 
     public async listen_training_status(model_id: number, callback: (data: IModelsReadinessResponse | FetchError) => void) {
-        const eventSource = new EventSource(`/models/${model_id}/readiness`);
+        const eventSource = new EventSource(`/models/${model_id}/readiness`, { withCredentials: true });
 
         eventSource.onmessage = (event: MessageEvent<IModelsReadinessResponse | FetchError>) => {
             const data = event.data;
@@ -36,7 +35,7 @@ class ModelsService {
     }
 
     public async listen_result_status(model_id: number, callback: (data: IModelsListeningResponse | FetchError) => void) {
-        const eventSource = new EventSource(`/models/${model_id}/last-result`);
+        const eventSource = new EventSource(`/models/${model_id}/last-result`, { withCredentials: true });
         
         eventSource.onmessage = (event: MessageEvent<IModelsListeningResponse | FetchError>) => {
             const data = event.data

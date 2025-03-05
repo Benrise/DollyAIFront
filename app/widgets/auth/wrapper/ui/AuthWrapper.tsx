@@ -15,6 +15,7 @@ interface AuthWrapperProps {
 
 const { Title, Paragraph } = Typography;
 
+
 export function AuthWrapper({ children, title, description, isShowExamples = true }: PropsWithChildren<AuthWrapperProps>) {
     const [parent] = useAutoAnimate();
     const [images, setImages] = useState<string[]>([]);

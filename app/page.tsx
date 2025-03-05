@@ -15,7 +15,7 @@ import { useListenToResultMutation } from './features/model/create';
 import { useListenToReadinessMutation } from './features/model/create';
 import { useGenerateModelMutation } from './features/model/create';
 import { PricingDrawer } from './features/pricing/ui';
-import { downloadBlob } from './shared/lib/download/download';
+import { downloadBlob } from './shared/utils/download';
 
 const { Text } = Typography;
 
