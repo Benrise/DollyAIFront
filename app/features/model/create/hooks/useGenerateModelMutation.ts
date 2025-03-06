@@ -4,7 +4,6 @@ import { FetchError } from '@/app/shared/lib';
 import { toastErrorHandler } from '@/app/shared/utils';
 
 import { useMutation } from '@tanstack/react-query';
-import { toast } from 'sonner';
 
 export function useGenerateModelMutation(callback: () => void) {
     const { mutate: generateModelMutation, isPending: isSendingGenerationRequest } = useMutation({
@@ -16,7 +15,6 @@ export function useGenerateModelMutation(callback: () => void) {
             } 
             else {
                 callback?.()
-                toast.success('Request sent successfully!');
             }
         },
         onError(error: FetchError) {

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Form, Button, Input, Typography, Space, Image, Tooltip } from 'antd';
 
-import { Sparkles } from 'lucide-react'
+import { Sparkles, ChevronDown } from 'lucide-react'
 import { DownloadOutlined } from '@ant-design/icons';
 
 import { GeneratingAnimation } from '@/app/shared/ui/generation-animation';
@@ -16,15 +16,19 @@ import { useListenToReadinessMutation } from './features/model/create';
 import { useGenerateModelMutation } from './features/model/create';
 import { PricingDrawer } from './features/pricing/ui';
 import { downloadBlob } from './shared/utils/download';
+import { useMobileDetect } from './shared/lib';
 
 const { Text } = Typography;
 
 export default function Home() {
-  const  [ parent ] = useAutoAnimate();
+  const [ parent ] = useAutoAnimate();
   const [ activeModel, setActiveModel ] = useState<IModel | undefined>(undefined);
   const [ resultUrl, setResultUrl ] = useState<string | null>(null);
   const [ form ] = Form.useForm();
   const [ isPricingOpen, setIsPricingOpen ] = useState(false);
+  const [ isTextAreaFocused, setIsTextAreaFocused ] = useState(false);
+  const { isMobile } = useMobileDetect();
+
   const { models, getModelsListMutation } = useGetModelsListMutation(setActiveModel);
   const { generateModelMutation, isSendingGenerationRequest } = useGenerateModelMutation(() => {
     if (activeModel) {
@@ -45,7 +49,6 @@ export default function Home() {
   useEffect(() => {
     getModelsListMutation();
   }, [getModelsListMutation]);
-
   useEffect(() => {
     if (activeModel) {
       setResultUrl(null);
@@ -62,19 +65,19 @@ export default function Home() {
   const handleModelCreated = () => {
     getModelsListMutation();
   };
-
   const handleGenerate = (values: { prompt: string }) => {
     if (activeModel) {
       setResultUrl(null); 
       generateModelMutation({ model_id: activeModel.id, prompt: values.prompt });
     }
   };
-
   const handleDownload = (result_url: string | null, name='result.png') => {
     if (result_url) {
       downloadBlob(result_url, name);
     }
   }
+  const handleFocus = () => setIsTextAreaFocused(isMobile && true);
+  const handleBlur = () => setIsTextAreaFocused(isMobile && false);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-50">
@@ -85,7 +88,7 @@ export default function Home() {
               h-screen sm:h-auto py-8
           "
         >
-        <Space direction="vertical" size="large" style={{ width: '100%' }}>
+        <Space direction="vertical" size="large" className='relative' style={{ width: '100%' }}>
           <UserBadge/>
           <div className='flex flex-col gap-2 '>
               <ModelsList
@@ -107,49 +110,51 @@ export default function Home() {
             </div>     
           </div>
 
-          <div className="px-10 flex flex-col gap-8 items-center">
-              <div ref={parent} className='flex max-w-[512px] justify-center relative'>
-                <div className="flex flex-col items-center">
+          <div ref={parent} className="px-10 flex flex-col gap-8 items-center">
+              { !isTextAreaFocused ? <div ref={parent} className={`flex flex-col max-w-[512px] items-center justify-center relative`}>
                   {!isListeningReadiness && isListeningResult && activeModel?.is_ready ? (
-                      <GeneratingAnimation />
-                    ) : (
-                      <Image 
-                        src={
-                          resultUrl 
-                            ? resultUrl 
-                            : activeModel && !activeModel.is_ready
-                            ? '/images/etc/silky-waves.png' 
-                            : '/images/etc/magnify.png'
-                        }
-                        alt={
-                          resultUrl 
-                            ? "Generation result" 
-                            : activeModel && !activeModel.is_ready 
-                            ? "Model is training" 
-                            : "No generations"
-                        }
-                        className="rounded-[24px] select-none aspect-square object-cover object-top relative"
-                        fallback='' 
-                        preview={false} 
-                      />
-                    )}
-                    { resultUrl && <Button type='default' size="large" className='absolute! right-[16px] top-[16px] opacity-70 hover:opacity-100' icon={<DownloadOutlined/>} onClick={() => handleDownload(resultUrl)} disabled={resultUrl === null}/>}
-                    <div className="flex w-full justify-center">
-                      <Text className="align-middle w-fit text-[14px]!" type="secondary">
-                        {isListeningResult
-                          ? "Generating..."
-                          : resultUrl
-                          ? ""
+                    <GeneratingAnimation />
+                  ) : (
+                    <Image 
+                      src={
+                        resultUrl 
+                          ? resultUrl 
                           : activeModel && !activeModel.is_ready
-                          ? "Model is training, this may take some time"
-                          : "You haven’t generated any photos yet"}
-                      </Text>
-                  </div>
+                          ? '/images/etc/silky-waves.png' 
+                          : '/images/etc/magnify.png'
+                      }
+                      alt={
+                        resultUrl 
+                          ? "Generation result" 
+                          : activeModel && !activeModel.is_ready 
+                          ? "Model is training" 
+                          : "No generations"
+                      }
+                      className="rounded-[24px] select-none aspect-square object-cover object-top relative"
+                      fallback='' 
+                      preview={false} 
+                    />
+                  )}
+                  { resultUrl && <Button type='default' size="large" className='absolute! right-[16px] top-[16px] opacity-70 hover:opacity-100' icon={<DownloadOutlined/>} onClick={() => handleDownload(resultUrl)} disabled={resultUrl === null}/>}
+                  <div className="flex w-full justify-center">
+                    <Text className="align-middle w-fit text-[14px]!" type="secondary">
+                      {isListeningResult
+                        ? "Generating..."
+                        : resultUrl
+                        ? ""
+                        : activeModel && !activeModel.is_ready
+                        ? "Model is training, this may take some time"
+                        : "You haven’t generated any photos yet"}
+                    </Text>
                 </div>
-              </div>
+              </div> : (
+                <Button onClick={handleBlur} type="default" size='large' className="bg-gray-50!" block>
+                    <ChevronDown/>
+                </Button>
+              )}
             <Form form={form} onFinish={handleGenerate} className="px-10 flex flex-col gap-4 w-full">
               <Form.Item className='mb-0!' name="prompt" rules={[{ required: true, message: 'Enter a prompt' }]}>
-                <Input.TextArea disabled={!!activeModel && !activeModel.is_ready || isListeningResult} placeholder="Imagine me as an astronaut in outer space" style={{ height: 80, resize: "none" }} />
+                <Input.TextArea onClick={handleFocus} disabled={!!activeModel && !activeModel.is_ready || isListeningResult} placeholder="Imagine me as an astronaut in outer space" style={{ height: 80, resize: "none" }} />
               </Form.Item>
               {
                 activeModel && !activeModel.is_ready ? (
@@ -159,7 +164,7 @@ export default function Home() {
                     </Button>
                   </Tooltip>
                 ) : (
-                  <Button disabled={!activeModel} loading={isSendingGenerationRequest || isListeningResult} type="primary" size="large" htmlType="submit" block>
+                  <Button onClick={handleBlur} disabled={!activeModel} loading={isSendingGenerationRequest || isListeningResult} type="primary" size="large" htmlType="submit" block>
                     Generate
                   </Button>
                 )

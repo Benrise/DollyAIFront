@@ -20,7 +20,7 @@ export const theme: ThemeConfig = {
     Button: {
       onlyIconSizeLG: 24,
       borderRadiusLG: 16,
-      defaultBorderColor: ''
+      defaultBorderColor: '',
     }
   }
 };
