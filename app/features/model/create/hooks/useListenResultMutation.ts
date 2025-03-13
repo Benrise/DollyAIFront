@@ -1,12 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
 import { modelsService, ModelsListeningStatusEnum } from '@/app/entities/model';
 import { toastErrorHandler } from '@/app/shared/utils';
-import { useSession } from 'next-auth/react';
+import { useAuthStore } from '@/app/entities/auth';
 import { useRef } from 'react';
 
 
 export function useListenToResultMutation(onCompleted: (url: string | null) => void) {
-    const token = useSession().data?.user.access || '';
+    const { getAccessToken } = useAuthStore();
+    const token = getAccessToken();
 
     const previousControllerRef = useRef<AbortController | null>(null);
 

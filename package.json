@@ -24,7 +24,6 @@
     "less-loader": "^12.2.0",
     "lucide-react": "^0.477.0",
     "next": "15.2.0",
-    "next-auth": "5.0.0-beta.25",
     "postcss": "^8.5.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -32,7 +31,8 @@
     "sonner": "^2.0.1",
     "swiper": "^11.2.4",
     "swr": "^2.3.2",
-    "zod": "^3.24.2"
+    "zod": "^3.24.2",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

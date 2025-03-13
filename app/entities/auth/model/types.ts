@@ -45,7 +45,7 @@ export interface ILoginResponse {
   id: number,
   email: string,
   access: string,
-  acess_type: string
+  access_type: string
 }
 
 export interface IRegisterResponse {

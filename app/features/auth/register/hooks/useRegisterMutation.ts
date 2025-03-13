@@ -1,5 +1,5 @@
-import { authService, type IRegisterResponse, type TypeRegisterSchema } from '@/app/entities/auth';
-import { FetchError } from '@/app/shared/lib';
+import { useAuthStore, type IRegisterResponse, type TypeRegisterSchema } from '@/app/entities/auth';
+import { FetchError } from "@/app/api";
 
 import { toastErrorHandler } from '@/app/shared/utils';
 
@@ -9,10 +9,11 @@ import { toast } from 'sonner';
 
 export function useRegisterMutation() {
     const router = useRouter()
+    const { signUp } = useAuthStore();
 
     const {mutate: registerMutation, isPending: isLoadingRegister} = useMutation({
         mutationKey: ['register user'],
-        mutationFn: (values: TypeRegisterSchema) => authService.register(values),
+        mutationFn: (values: TypeRegisterSchema) => signUp(values.email, values.password, values.password_confirm),
         onSuccess(data: FetchError | IRegisterResponse) {
             if ('detail' in data) {
                 toastErrorHandler(data);

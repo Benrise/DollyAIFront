@@ -9,8 +9,7 @@ class AuthService {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         })
-
-        return response
+        return response.data
     }
 
     public async login(body: TypeLoginSchema) {
@@ -19,20 +18,17 @@ class AuthService {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         })
-
-        return response
+        return response.data
     }
 
     public async logout() {
-        const response = await api.post('/auth/sign-out')
-
-        return response;
+        const response = await api.delete<null>('/auth/sign-out')
+        return response.data
     }
 
     public async refresh() {
         const response = await api.post<IRefreshResponse>('/auth/refresh')
-
-        return response;
+        return response.data
     }
 }
 

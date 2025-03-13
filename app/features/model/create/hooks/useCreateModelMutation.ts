@@ -1,5 +1,5 @@
 import { type IModelsResponse, modelsService } from '@/app/entities/model/model';
-import { FetchError } from '@/app/shared/lib';
+import { FetchError } from '@/app/api';
 
 import { toastErrorHandler } from '@/app/shared/utils';
 

@@ -1,51 +1,62 @@
-import { FetchClient } from "@/app/shared/lib";
-import { signOut, getSession } from "next-auth/react";
-import { toast } from "sonner";
+import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import { useAuthStore } from "@/app/entities/auth";
 
-export const api = new FetchClient({
-    baseUrl: process.env.NEXT_PUBLIC_API_URL as string,
-    options: {
-        credentials: 'include'
-    }
-})
+export class FetchError extends Error {
+  public constructor(
+      public statusCode: number,
+      public message: string,
+      public config: RequestInit,
+      public detail?: string
+  ){
+      super(message);
+      
 
-api.interceptors.request.use(
-    async (config) => {
+      Object.setPrototypeOf(this, new.target.prototype)
+  }
+}
 
-    const session = await getSession();
+export const api = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL as string,
+  headers: {
+    "Content-Type": "application/json",
+  },
+  withCredentials: true,
+  timeout: 3000,
+});
 
-    if (session && session.user) {
-        const accessToken = session.user.access;
+api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  const authState = useAuthStore.getState();
+  const accessToken = authState.getAccessToken();
 
-        if (accessToken) {
-            config.headers = {
-                ...config.headers,
-                Authorization: `Bearer ${accessToken}`,
-            };
-        }
-    }
-        
-      return config;
-    },
-    async (error) => {
-      return Promise.reject(error);
-    }
-  );
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
+  return config;
+});
 
 api.interceptors.response.use(
-    async (response) => response,
-    async (error) => {
-        const statusCode = error.statusCode;
+  async (response: AxiosResponse) => {
+    return response;
+  },
+  async (error: AxiosError) => {
+    const authStore = useAuthStore.getState();
+    const originalRequest = error.config as InternalAxiosRequestConfig & { _isRetry?: boolean };
 
-        if (statusCode === 401 || statusCode === 403) {
-            signOut({ callbackUrl: "/auth/login" });
-        }
-
-        if (statusCode && statusCode >= 500) {
-            toast.error('Server error');
-        }
-      
-      return Promise.reject(error);
+    if (error.response?.status === 401 && !originalRequest._isRetry) {
+      originalRequest._isRetry = true;
+      try {
+        await authStore.refresh();
+        return api.request(originalRequest);
+      } catch (refreshError) {
+        console.error("Ошибка обновления токена:", refreshError);
+        authStore.signOut();
+      }
     }
-  );
 
+    if (error.response?.status && error.response?.status >= 500) {
+      console.error("Внутренняя ошибка сервера:", error);
+    }
+
+    return Promise.reject(error);
+  }
+);

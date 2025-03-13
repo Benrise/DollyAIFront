@@ -4,7 +4,6 @@ import '@/app/style.scss';
 import type { Metadata } from "next";
 import { ConfigProvider } from 'antd';
 import { Toaster } from 'sonner';
-import { SessionProvider } from "next-auth/react"
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 
 import { MainProvider } from '@/app/providers';
@@ -24,16 +23,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SessionProvider>
-            <AntdRegistry>
-              <MainProvider>
-                <ConfigProvider theme={theme}>
-                  {children}
-                  <Toaster/>
-                </ConfigProvider>
-              </MainProvider>
-            </AntdRegistry>
-          </SessionProvider>
+          <AntdRegistry>
+            <MainProvider>
+              <ConfigProvider theme={theme}>
+                {children}
+                <Toaster/>
+              </ConfigProvider>
+            </MainProvider>
+          </AntdRegistry>
       </body>
     </html>
   );
