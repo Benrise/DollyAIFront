@@ -111,7 +111,7 @@ export default function Home() {
           </div>
 
           <div ref={parent} className="px-10 flex flex-col gap-8 items-center">
-              { !isTextAreaFocused ? <div ref={parent} className={`flex flex-col max-w-[512px] items-center justify-center relative`}>
+              { !isTextAreaFocused ? <div ref={parent} className={`flex flex-col rounded-[24px] overflow-hidden max-w-[512px] items-center justify-center relative`}>
                   {!isListeningReadiness && isListeningResult && activeModel?.is_ready ? (
                     <GeneratingAnimation />
                   ) : (
@@ -130,9 +130,9 @@ export default function Home() {
                           ? "Model is training" 
                           : "No generations"
                       }
-                      className="rounded-[24px] select-none aspect-square object-cover object-top relative"
+                      className="select-none aspect-square object-cover object-top relative"
                       fallback='' 
-                      preview={false} 
+                      preview={!!resultUrl} 
                     />
                   )}
                   { resultUrl && <Button type='default' size="large" className='absolute! right-[16px] top-[16px] opacity-70 hover:opacity-100' icon={<DownloadOutlined/>} onClick={() => handleDownload(resultUrl)} disabled={resultUrl === null}/>}
@@ -146,7 +146,7 @@ export default function Home() {
                         ? "Model is training, this may take some time"
                         : "You haven’t generated any photos yet"}
                     </Text>
-                </div>
+                  </div>
               </div> : (
                 <Button onClick={handleBlur} type="default" size='large' className="bg-gray-50!" block>
                     <ChevronDown/>
