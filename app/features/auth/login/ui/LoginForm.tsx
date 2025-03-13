@@ -3,8 +3,9 @@ import { Input, Button, Form, Spin, Typography } from 'antd';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from 'react-hook-form';
-import { useMobileDetect } from '@/app/shared/lib/hooks';
+import { Divider } from 'antd';
 
+import { useMobileDetect } from '@/app/shared/lib/hooks';
 import { HighlightedText } from "@/app/shared/ui/highlighted-text";
 import { Terms } from '@/app/entities/terms';
 import { type TypeLoginSchema, LoginSchema } from '@/app/entities/auth';
@@ -15,6 +16,8 @@ const { Title } = Typography;
 
 
 export function LoginForm() {
+    const OAUTH_LINK = process.env.NEXT_OAUTH_LINK + "?redirect_uri=" + window.location.origin
+
     const { loginMutation, isLoadingLogin } = useLoginMutation();
     const { control, handleSubmit, formState: { errors } } = useForm<TypeLoginSchema>({
       resolver: zodResolver(LoginSchema),
@@ -32,7 +35,7 @@ export function LoginForm() {
     const handleBlur = () => setIsInputFocused(isMobile && false);
 
     return (
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col">
           <div ref={parent} className={`flex w-full ${isInputFocused ? "scale-0" : ""}`}>
               {!images.length ? (
                   <div className="flex justify-center items-center w-full h-full">
@@ -49,37 +52,43 @@ export function LoginForm() {
           </Title>
         <Form
           layout="vertical"
-          className="space-y-4 px-10!"
+          className="flex flex-col gap-6 px-10!"
           onFinish={handleSubmit((values) => loginMutation(values))}
         >
-          <Form.Item
-            validateStatus={errors.email ? "error" : ""}
-            help={errors.email?.message}
-          >
-            <Controller
-              name="email"
-              control={control}
-              render={({ field }) => <Input size="large" placeholder="Enter your email" {...field} onFocus={handleFocus} />}
-            />
-          </Form.Item>
-          <Form.Item
-            validateStatus={errors.password ? "error" : ""}
-            help={errors.password?.message}
-          >
-            <Controller
-              name="password"
-              control={control}
-              render={({ field }) => <Input.Password size="large" placeholder="Enter password" {...field} onFocus={handleFocus} />}
-            />
-          </Form.Item>
-          <Form.Item className="mb-2!">
+          <div className="flex flex-col gap-3">
+            <Form.Item
+              validateStatus={errors.email ? "error" : ""}
+              className='mb-0!'
+              help={errors.email?.message}
+            >
+              <Controller
+                name="email"
+                control={control}
+                render={({ field }) => <Input size="large" placeholder="Enter your email" {...field} onFocus={handleFocus} />}
+              />
+            </Form.Item>
+            <Form.Item
+              validateStatus={errors.password ? "error" : ""}
+              help={errors.password?.message}
+              className='mb-0!'
+            >
+              <Controller
+                name="password"
+                control={control}
+                render={({ field }) => <Input.Password size="large" placeholder="Enter password" {...field} onFocus={handleFocus} />}
+              />
+            </Form.Item>
+          </div>
+          <div className="mb-2 flex flex-col">
             <Button type="primary" size="large" onClick={handleBlur} htmlType="submit" loading={isLoadingLogin} block>
               Login
             </Button>
-          </Form.Item>
-          <Form.Item>
-            <Button type="link" href='/auth/register' size="small" className='text-[14px]!' block>No account? Register</Button>
-          </Form.Item>
+            <Button type="link" href='/auth/register' size="small" className='text-[14px]! mt-2!' block>No account? Register</Button>
+            <Divider plain>or</Divider>
+            <a href={OAUTH_LINK}>
+              <Button type="default" icon={<img src="/images/svg/oauth_google.svg" alt="google"></img>} size="large" onClick={handleBlur} block>Sign in with Google</Button>
+            </a>
+          </div>
           <Terms/>
         </Form>
       </div>
