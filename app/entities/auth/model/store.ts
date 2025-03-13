@@ -16,6 +16,7 @@ interface AuthState {
   signUp: (email: string, password: string, password_confirm: string) => Promise<IRegisterResponse>;
   signOut: () => Promise<null>;
   refresh: () => Promise<IRefreshResponse>;
+  setUser: (user: IUser) => void;
   getAccessToken: () => string;
 }
 
@@ -48,6 +49,10 @@ export const useAuthStore = create<AuthState>()(
             user: state.user ? { ...state.user, access: response.access } : null,
           }));
           return response
+      },
+
+      setUser(user) {
+        set({ user });
       },
 
       getAccessToken: () => {

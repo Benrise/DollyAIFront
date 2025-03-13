@@ -1,13 +1,14 @@
 "use client";
 
 import { useAuthStore } from "@/app/entities/auth";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { user, refresh } = useAuthStore();
+  const { user, setUser, refresh } = useAuthStore();
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams()
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -23,6 +24,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (isLoading) return;
+
+    const id = Number(searchParams.get("id"));
+    const email = searchParams.get("email");
+    const access = searchParams.get("access");
+    const access_type = searchParams.get("access_type");
+
+    if (id && email && access && access_type) {
+      setUser({ id, email, access, access_type });
+    }
 
     if (!user && pathname !== "/auth/login" && pathname !== "/auth/register") {
       router.push(`/auth/login?redirect_to=${pathname}`);
