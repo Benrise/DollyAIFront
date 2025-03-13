@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
     else if (user) {
       router.replace(pathname);
+      return
     }
 
 
