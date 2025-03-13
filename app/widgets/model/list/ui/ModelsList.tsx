@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Image, Typography } from 'antd';
+import { Button, Typography } from 'antd';
 import { useState } from 'react';
 
 import { Plus } from 'lucide-react'
