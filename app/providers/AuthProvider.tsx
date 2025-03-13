@@ -30,14 +30,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const access = searchParams.get("access");
     const access_type = searchParams.get("access_type");
 
-    if (id && email && access && access_type) {
+    if (!user && id && email && access && access_type) {
       setUser({ id, email, access, access_type });
+      router.replace(pathname);
     }
+    else if (user) {
+      router.replace(pathname);
+    }
+
 
     if (!user && pathname !== "/auth/login" && pathname !== "/auth/register") {
       router.push(`/auth/login?redirect_to=${pathname}`);
     }
-  }, [user, isLoading, pathname, router ]);
+  }, [isLoading, pathname, router, searchParams, setUser, user]);
 
   if (isLoading) {
     return null;
