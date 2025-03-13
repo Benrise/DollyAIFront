@@ -16,7 +16,7 @@ export function useListenToReadinessMutation(onReady: (model_id: number) => void
                 if ('detail' in data) {
                     toastErrorHandler(data);
                     controller.abort();
-                } else {
+                } else if ("is_ready" in data && data.is_ready) {
                     onReady(model_id);
                     controller.abort();
                 }
