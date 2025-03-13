@@ -1,6 +1,5 @@
-import { Drawer} from 'antd';
 import { useState } from 'react';
-import { Button, Input, Form, Upload, Typography, Space, Select } from 'antd';
+import { Drawer, Button, Input, Form, Upload, Typography, Space, Select } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { HighlightedText } from '@/app/shared/ui/highlighted-text';
 import { useCreateModelMutation } from '../hooks';

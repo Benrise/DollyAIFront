@@ -9,6 +9,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { ProtectedImage } from '@/app/shared/ui/protected-image';
 import { CreateModelDrawer } from '@/app/features/model/create';
 import { type IModel } from '@/app/entities/model';
+import { UpdateModelDrawer } from '@/app/features/model/update/ui/UpdateModelDrawer';
 
 const { Text } = Typography;
 
@@ -20,28 +21,41 @@ interface ModelsListProps {
   }
 
   export function ModelsList({ models, setActiveModel, activeModel, onModelCreated }: ModelsListProps) {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isCreateDrawerOpen, setIsCreateDrawerOpen] = useState(false);
+    const [isUpdateDrawerOpen, setIsUpdateDrawerOpen] = useState(false);
     
-    const openDrawer = () => setIsOpen(true);
-    const onClose = () => setIsOpen(false);
+    const openCreateDrawer = () => setIsCreateDrawerOpen(true);
+    const onCloseCreateDrawer = () => setIsCreateDrawerOpen(false);
+
+    const openUpdateDrawer = () => setIsUpdateDrawerOpen(true);
+    const onCloseUpdateDrawer = () => setIsUpdateDrawerOpen(false);
+
+    const handleModelClick = (model: IModel) => {
+        if (model.id === activeModel?.id) {
+            openUpdateDrawer();
+        } else {
+            setActiveModel(model);
+        }
+    };
 
     return (
         <div className='flex gap-2 w-max-[80%] overflow-x-auto pb-2 pl-10'>
-            <CreateModelDrawer open={isOpen} onClose={onClose} onModelCreated={onModelCreated}/>
+            <CreateModelDrawer open={isCreateDrawerOpen} onClose={onCloseCreateDrawer} onModelCreated={onModelCreated}/>
+            {activeModel && <UpdateModelDrawer open={isUpdateDrawerOpen} onClose={onCloseUpdateDrawer} onDelete={onModelCreated} model={activeModel}/>}
             <div className="flex flex-col gap-1 items-center">
-                <Button onClick={openDrawer} type="primary" shape="circle" size="large" style={{width: 64, height: 64, minWidth: 64}} block><Plus/></Button>
+                <Button onClick={openCreateDrawer} type="primary" shape="circle" size="large" style={{width: 64, height: 64, minWidth: 64}} block><Plus/></Button>
                 <Text className='align-middle w-fit text-[12px]!'>Create</Text>
             </div>
             {models.map((model) => (
                 <div
                     key={model.id}
                     className="flex flex-col gap-1 items-center"
-                    onClick={() => setActiveModel(model)}
+                    onClick={() => handleModelClick(model)}
                 >
-                    <div className="relative flex">
+                    <div className="relative flex hover:cursor-pointer">
                         <ProtectedImage src={model.cover} fallback='/images/etc/spheric-vortex.png' width={64} height={64} preview={false} alt={model.name} className={`
                             rounded-full select-none min-w-[64px] border-3 transition-all duration-300 object-cover object-top
-                            ${activeModel?.id === model.id? "border-fuchsia-500": "border-white hover:cursor-pointer hover:border-fuchsia-200"}
+                            ${activeModel?.id === model.id? "border-fuchsia-500": "border-white hover:border-fuchsia-200"}
                         `}/>
                         {!model.is_ready && (
                             <div className="absolute top-0 left-0 w-full h-full">
