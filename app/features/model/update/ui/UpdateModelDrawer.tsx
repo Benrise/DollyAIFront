@@ -8,15 +8,15 @@ interface UpdateModelDrawerProps {
     open: boolean;
     model: IModel
     onClose: () => void;
-    onDelete: () => void
+    onAfterAction: () => void
   }
 
 
-  export const UpdateModelDrawer: React.FC<UpdateModelDrawerProps> = ({ open, onClose, model, onDelete }) => {
+  export const UpdateModelDrawer: React.FC<UpdateModelDrawerProps> = ({ open, onClose, model, onAfterAction }) => {
     const [modelName, setModelName] = useState("");
     const [modal, contextHolder] = Modal.useModal();
-    const { updateModelMutation, isSendingUpdateRequest } = useUpdateModelMutation();
-    const { deleteModelMutation, isSendingDeleteRequest } = useDeleteModelMutation([() => onClose(), () => onDelete()]);
+    const { updateModelMutation, isSendingUpdateRequest } = useUpdateModelMutation(() => onAfterAction());
+    const { deleteModelMutation, isSendingDeleteRequest } = useDeleteModelMutation([() => onClose(), () => onAfterAction()]);
     const [form] = Form.useForm();
 
     const handleSubmit = async (values: { name: string }) => {

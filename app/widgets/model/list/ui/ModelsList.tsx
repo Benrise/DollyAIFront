@@ -41,7 +41,7 @@ interface ModelsListProps {
     return (
         <div className='flex gap-2 w-max-[80%] overflow-x-auto pb-2 pl-10'>
             <CreateModelDrawer open={isCreateDrawerOpen} onClose={onCloseCreateDrawer} onModelCreated={onModelCreated}/>
-            {activeModel && <UpdateModelDrawer open={isUpdateDrawerOpen} onClose={onCloseUpdateDrawer} onDelete={onModelCreated} model={activeModel}/>}
+            {activeModel && <UpdateModelDrawer open={isUpdateDrawerOpen} onClose={onCloseUpdateDrawer} onAfterAction={onModelCreated} model={activeModel}/>}
             <div className="flex flex-col gap-1 items-center">
                 <Button onClick={openCreateDrawer} type="primary" shape="circle" size="large" style={{width: 64, height: 64, minWidth: 64}} block><Plus/></Button>
                 <Text className='align-middle w-fit text-[12px]!'>Create</Text>

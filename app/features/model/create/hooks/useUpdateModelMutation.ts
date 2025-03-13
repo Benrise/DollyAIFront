@@ -6,7 +6,7 @@ import { toastErrorHandler } from '@/app/shared/utils';
 
 import { useMutation } from '@tanstack/react-query';
 
-export function useUpdateModelMutation() {
+export function useUpdateModelMutation(callback?: () => void) {
     const { mutate: updateModelMutation, isPending: isSendingUpdateRequest } = useMutation({
         mutationKey: ['generate model'],
         mutationFn: ({ model_id, name }: { model_id: number; name: string }) => modelsService.update(model_id, { name }),
@@ -14,6 +14,7 @@ export function useUpdateModelMutation() {
             if (data && 'detail' in data) {
                 toastErrorHandler(data);
             } else {
+                callback?.();
                 toast.success('Model updated successfully!');
             }
         },
