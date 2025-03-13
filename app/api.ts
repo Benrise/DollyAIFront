@@ -54,8 +54,12 @@ api.interceptors.response.use(
     }
 
     if (error.response?.status && error.response?.status >= 500) {
-      console.error("Внутренняя ошибка сервера:", error);
+        console.error("Внутренняя ошибка сервера:", error);
     }
+
+   if (error.response?.data) {
+      return Promise.reject(error.response.data);
+   }
 
     return Promise.reject(error);
   }
