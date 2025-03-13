@@ -1,7 +1,7 @@
 import { IModel, IModelsResponse, modelsService } from '@/app/entities/model';
 import { FetchError } from '@/app/api';
 
-import { toastErrorHandler } from '@/app/shared/utils';
+import { fetchProtectedImage, toastErrorHandler } from '@/app/shared/utils';
 
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';

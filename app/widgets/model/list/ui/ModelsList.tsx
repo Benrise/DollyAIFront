@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Plus } from 'lucide-react'
 import { LoadingOutlined } from '@ant-design/icons';
 
+import { ProtectedImage } from '@/app/shared/ui/protected-image';
 import { CreateModelDrawer } from '@/app/features/model/create';
 import { type IModel } from '@/app/entities/model';
 
@@ -38,8 +39,8 @@ interface ModelsListProps {
                     onClick={() => setActiveModel(model)}
                 >
                     <div className="relative flex">
-                        <Image src={model.cover} fallback='/images/etc/spheric-vortex.png' width={64} height={64} preview={false} alt={model.name} className={`
-                            rounded-full select-none min-w-[64px] border-3 transition-all duration-300
+                        <ProtectedImage src={model.cover} fallback='/images/etc/spheric-vortex.png' width={64} height={64} preview={false} alt={model.name} className={`
+                            rounded-full select-none min-w-[64px] border-3 transition-all duration-300 object-cover object-top
                             ${activeModel?.id === model.id? "border-fuchsia-500": "border-white hover:cursor-pointer hover:border-fuchsia-200"}
                         `}/>
                         {!model.is_ready && (

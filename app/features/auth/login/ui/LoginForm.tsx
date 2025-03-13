@@ -35,7 +35,7 @@ export function LoginForm() {
     const handleBlur = () => setIsInputFocused(isMobile && false);
 
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-2">
           <div ref={parent} className={`flex w-full ${isInputFocused ? "scale-0" : ""}`}>
               {!images.length ? (
                   <div className="flex justify-center items-center w-full h-full">
