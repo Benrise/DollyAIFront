@@ -3,7 +3,12 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import { authService } from "@/app/entities/auth";
 import { ILoginResponse, IRefreshResponse, IRegisterResponse } from "./types";
 
-interface IUser extends ILoginResponse {}
+interface IUser {
+  id: number,
+  email: string,
+  access: string,
+  access_type: string
+}
 
 interface AuthState {
   user: IUser | null;

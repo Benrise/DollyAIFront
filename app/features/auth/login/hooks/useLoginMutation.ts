@@ -1,9 +1,8 @@
-import { authService, TypeLoginSchema, ILoginResponse, useAuthStore } from '@/app/entities/auth';
+import { TypeLoginSchema, ILoginResponse, useAuthStore } from '@/app/entities/auth';
 
 import { toastErrorHandler } from '@/app/shared/utils';
 
 import { useMutation } from '@tanstack/react-query';
-import { toast } from 'sonner';
 import { FetchError } from "@/app/api";
 import { useRouter } from 'next/navigation';
 
