@@ -21,7 +21,7 @@ export const api = axios.create({
     "Content-Type": "application/json",
   },
   withCredentials: true,
-  timeout: 3000,
+  timeout: Number(process.env.NEXT_PUBLIC_API_TIMEOUT_MS) || 300_000,
 });
 
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {

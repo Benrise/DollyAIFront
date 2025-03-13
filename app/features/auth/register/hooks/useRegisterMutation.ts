@@ -19,7 +19,7 @@ export function useRegisterMutation() {
                 toastErrorHandler(data);
             } 
             else {
-                toast.success('Success registration!')
+                toast.success('Success registration! Welcome to AI Love Photo!');
                 router.push('/auth/login')
             }
         },

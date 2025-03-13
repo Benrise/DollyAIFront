@@ -20,7 +20,6 @@ export function useLoginMutation() {
             } 
             else {
                 router.push('/');
-                toast.success('Success login!');
             }
         },
         onError(error: FetchError) {

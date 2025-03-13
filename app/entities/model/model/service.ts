@@ -10,7 +10,7 @@ class ModelsService {
     }
 
     public async create(body: FormData) {
-        const response = await api.post<IModelsResponse>('/models', body)
+        const response = await api.post<IModelsResponse>('/models', body, { headers: { 'Content-Type': 'multipart/form-data' } });
         return response.data;
     }
 

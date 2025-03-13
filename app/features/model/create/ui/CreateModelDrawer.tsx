@@ -31,6 +31,8 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
   const { createModelMutation, isCreatingModel } = useCreateModelMutation([onClose, onModelCreated, resetForm]);
 
   const handleSubmit = async () => {
+    if (isCreatingModel) return;
+
     const formData = new FormData();
     
     fileList.forEach((file) => {

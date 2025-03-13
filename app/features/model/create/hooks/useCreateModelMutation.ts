@@ -16,7 +16,7 @@ export function useCreateModelMutation(callbacks: (() => void)[] = []) {
             } 
             else {
                 callbacks.forEach(callback => callback?.());
-                toast.success('Model created successfully!');
+                toast.success("Model  created successfully!");
             }
         },
         onError(error: FetchError) {
