@@ -30,6 +30,11 @@ class AuthService {
         const response = await api.post<IRefreshResponse>('/auth/refresh')
         return response.data
     }
+
+    public async sendCode(email: string) {
+        const response = await api.post<null>('/auth/forgot-pass', { email })
+        return response.data
+    }
 }
 
 export const authService = new AuthService()

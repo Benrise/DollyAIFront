@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
 
-    if (!user && pathname !== "/auth/login" && pathname !== "/auth/register") {
+    if (!user && pathname !== "/auth/login" && pathname !== "/auth/register" && pathname !== "/auth/recover") {
       router.push(`/auth/login?redirect_to=${pathname}`);
     }
   }, [isLoading, pathname, router, searchParams, setUser, user]);

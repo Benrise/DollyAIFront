@@ -16,7 +16,7 @@ const { Title } = Typography;
 
 
 export function LoginForm() {
-    const OAUTH_LINK = process.env.NEXT_OAUTH_LINK + "?redirect_uri=" + window.location.origin
+    const OAUTH_LINK = process.env.NEXT_OAUTH_LINK
 
     const { loginMutation, isLoadingLogin } = useLoginMutation();
     const { control, handleSubmit, formState: { errors } } = useForm<TypeLoginSchema>({
@@ -77,13 +77,16 @@ export function LoginForm() {
                 control={control}
                 render={({ field }) => <Input.Password size="large" placeholder="Enter password" {...field} onFocus={handleFocus} />}
               />
+              <Button type="link" href='/auth/recover' size="small" className='text-[14px]! mt-2! justify-end!' block>Forgot password</Button>
             </Form.Item>
           </div>
           <div className="mb-2 flex flex-col">
             <Button type="primary" size="large" onClick={handleBlur} htmlType="submit" loading={isLoadingLogin} block>
               Login
             </Button>
+            <div className="flex">
             <Button type="link" href='/auth/register' size="small" className='text-[14px]! mt-2!' block>No account? Register</Button>
+            </div>
             <Divider plain>or</Divider>
             <a href={OAUTH_LINK}>
               <Button type="default" icon={<img src="/images/svg/oauth_google.svg" alt="google"></img>} size="large" onClick={handleBlur} block>Sign in with Google</Button>
