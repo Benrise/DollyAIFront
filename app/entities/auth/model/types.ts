@@ -40,6 +40,21 @@ export const SendCodeSchema = z.object({
 })
 export type TypeSendCodeSchema = z.infer<typeof SendCodeSchema>
 
+export const VerifyCodeSchema = z.object({
+  code: z.string().min(6, { message: "Code must be at least 6 characters long" })
+})
+export type TypeVerifyCodeSchema = z.infer<typeof VerifyCodeSchema>
+
+export const ChangePasswordSchema = z.object({
+  password: passwordRule,
+  password_confirm: z.string()
+    .min(8, { message: "Password must be at least 8 characters long" })
+}).refine((data) => data.password === data.password_confirm, {
+  message: PASS_DONT_MATCH_ERR,
+  path: ["password_confirm"],
+});
+export type TypeChangePasswordSchema = z.infer<typeof ChangePasswordSchema>
+
 export interface ILoginResponse {
   id: number,
   email: string,

@@ -35,6 +35,16 @@ class AuthService {
         const response = await api.post<null>('/auth/forgot-pass', { email })
         return response.data
     }
+
+    public async verifyCode(code: string) {
+        const response = await api.post<null>('/auth/verify-code', { code })
+        return response.data
+    }
+
+    public async changePassword(password: string, password_confirm: string) {
+        const response = await api.post<null>('/auth/new-pass', { password, password_confirm })
+        return response.data
+    }
 }
 
 export const authService = new AuthService()

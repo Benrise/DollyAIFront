@@ -16,6 +16,8 @@ interface AuthState {
   signUp: (email: string, password: string, password_confirm: string) => Promise<IRegisterResponse>;
   signOut: () => Promise<null>;
   sendCode: (email: string) => Promise<null>;
+  verifyCode: (code: string) => Promise<null>;
+  changePassword: (password: string, password_confirm: string) => Promise<null>;
   refresh: () => Promise<IRefreshResponse>;
   setUser: (user: IUser) => void;
   getAccessToken: () => string;
@@ -40,6 +42,16 @@ export const useAuthStore = create<AuthState>()(
 
       sendCode: async (email: string) => {
         const response = await authService.sendCode(email);
+        return response
+      },
+
+      verifyCode: async (code: string) => {
+        const response = await authService.verifyCode(code);
+        return response
+      },
+
+      changePassword: async (password: string, password_confirm: string) => {
+        const response = await authService.changePassword(password, password_confirm);
         return response
       },
 
