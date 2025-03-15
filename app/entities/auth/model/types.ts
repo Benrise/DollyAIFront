@@ -41,7 +41,7 @@ export const SendCodeSchema = z.object({
 export type TypeSendCodeSchema = z.infer<typeof SendCodeSchema>
 
 export const VerifyCodeSchema = z.object({
-  code: z.string().min(6, { message: "Code must be at least 6 characters long" })
+  code: z.string().min(6, { message: "Code must be at least 6 characters long" }).max(6, { message: "Code must be no longer than 6 characters" })
 })
 export type TypeVerifyCodeSchema = z.infer<typeof VerifyCodeSchema>
 
