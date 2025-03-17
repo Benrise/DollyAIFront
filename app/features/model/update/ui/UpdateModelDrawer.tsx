@@ -1,6 +1,6 @@
 import { IModel } from '@/app/entities/model';
 import { ProtectedImage } from '@/app/shared/ui/protected-image';
-import { Drawer, Button, Form, Input, Modal } from 'antd';
+import { Drawer, Button, Form, Input, Modal, Alert } from 'antd';
 import { useState } from 'react';
 import { useDeleteModelMutation, useUpdateModelMutation } from '@/app/features/model/create';
 
@@ -45,6 +45,9 @@ interface UpdateModelDrawerProps {
           <Form style={{ height: "100%" }} onFinish={handleSubmit} form={form} layout="vertical" initialValues={{ name: model.name }}>
             <div className="flex flex-col h-full justify-between">
                 <div className="flex flex-col">
+                    {model.is_train_failed && <Form.Item>
+                        <Alert message="Training your model encountered an issue and failed to complete. This can happen due to various reasons, such as insufficient data, resource limitations, or unexpected errors during the process. Please try again later or contact support if the issue persists." type="error"/>
+                    </Form.Item>}
                     <Form.Item label="Preview Image">
                         <ProtectedImage preview={false} src={model.cover} fallback="/images/etc/spheric-vortex.png" width={128} height={128} className='max-w-[128px] max-h-[128px] object-cover object-top rounded-full'/>
                     </Form.Item>

@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { modelsService } from '@/app/entities/model';
 import { toastErrorHandler } from '@/app/shared/utils';
 import { useAuthStore } from '@/app/entities/auth';
+import { toast } from 'sonner';
 
 
 export function useListenToReadinessMutation(onReady: (model_id: number) => void) {
@@ -19,6 +20,9 @@ export function useListenToReadinessMutation(onReady: (model_id: number) => void
                 } else if ("is_ready" in data && data.is_ready) {
                     onReady(model_id);
                     controller.abort();
+                } else if ("is_train_failed" in data && data.is_train_failed) {
+                    controller.abort();
+                    toast.error("Error while training model.");
                 }
             });
 

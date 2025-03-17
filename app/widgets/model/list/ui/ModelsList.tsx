@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 import { Plus } from 'lucide-react'
 import { LoadingOutlined } from '@ant-design/icons';
+import { CircleX } from 'lucide-react'
 
 import { ProtectedImage } from '@/app/shared/ui/protected-image';
 import { CreateModelDrawer } from '@/app/features/model/create';
@@ -57,16 +58,19 @@ interface ModelsListProps {
                             rounded-full select-none min-w-[64px] border-3 transition-all duration-300 object-cover object-top
                             ${activeModel?.id === model.id? "border-fuchsia-500": "border-white hover:border-fuchsia-200"}
                         `}/>
-                        {!model.is_ready && (
+                        {!model.is_ready && !model.is_train_failed && (
                             <div className="absolute top-0 left-0 w-full h-full">
                                 <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[85%] h-[85%] bg-black opacity-50 flex items-center justify-center rounded-full"></div>
                                 <LoadingOutlined className='absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-white!'/>
                             </div>
                         )}
                     </div>
-                    <Text className="align-middle w-fit text-[12px]! whitespace-nowrap overflow-hidden text-ellipsis max-w-[64px]">
-                        {model.name}
-                    </Text>
+                    <div className="flex items-center gap-0.5">
+                        <Text className={`align-middle w-fit text-[12px]! whitespace-nowrap overflow-hidden text-ellipsis max-w-[64px] ${model.is_train_failed && 'text-red-500!'}`}>
+                            {model.name}
+                        </Text>
+                        {model.is_train_failed && <CircleX className='text-red-500' size={14}/>}
+                    </div>
                 </div>
             ))}
       </div>
