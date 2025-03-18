@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Drawer, Button, Input, Form, Upload, Typography, Space, Select, Tooltip } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { HighlightedText } from '@/app/shared/ui/highlighted-text';
@@ -30,9 +30,7 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
     form.resetFields();
     setFileList([]);
   };
-
   const { createModelMutation, isCreatingModel } = useCreateModelMutation([onClose, onModelCreated, resetForm]);
-
   const handleSubmit = async () => {
     if (isCreatingModel) return;
 
@@ -77,8 +75,15 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
         window.open(file.url, '_blank');
       }
     },
+    accept: 'image/*'
   }
   const hasErrorFiles = fileList.some((file) => file.status === 'error');
+
+  useEffect(() => {
+    return () => {
+      resetForm();
+    };
+  }, []);
 
   return (
     <Drawer
