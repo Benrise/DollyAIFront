@@ -7,6 +7,7 @@ import { TypeSendCodeSchema, VerifyCodeSchema, ChangePasswordSchema, SendCodeSch
 import { useRecoverMutation } from '../hooks';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useMobileDetect } from '@/app/shared/lib';
 
 const { Title } = Typography;
 
@@ -34,6 +35,7 @@ export function RecoverForm() {
     const changePasswordForm = useForm<TypeChangePasswordSchema>({
       resolver: zodResolver(ChangePasswordSchema),
     });
+    const { isMobile } = useMobileDetect();
 
     const onSendCode = async (data: TypeSendCodeSchema) => {
       sendCodeMutation(data);
@@ -74,8 +76,10 @@ export function RecoverForm() {
           <Title level={3} className="text-center text-base sm:text-xl">
               Recover Password
           </Title>
-          <Steps 
-              className='px-10! mb-4!' 
+          <Steps
+              responsive={false}
+              type={isMobile ? 'inline' : 'default'}
+              className={`px-10! mb-4! ${isMobile && 'justify-center'}`} 
               size='small' 
               current={currentStep}
               items={steps.map(item => ({ title: item.title }))}
