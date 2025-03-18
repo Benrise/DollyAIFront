@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Drawer, Button, Input, Form, Upload, Typography, Space, Select } from 'antd';
+import { Drawer, Button, Input, Form, Upload, Typography, Space, Select, Tooltip } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { HighlightedText } from '@/app/shared/ui/highlighted-text';
 import { useCreateModelMutation } from '../hooks';
 import { toast } from 'sonner';
-import { UploadFile, UploadChangeParam  } from 'antd/lib/upload';
+import { UploadFile, UploadChangeParam, UploadProps  } from 'antd/lib/upload';
 
 const { Text, Paragraph } = Typography;
 const { Dragger } = Upload;
@@ -17,6 +17,10 @@ interface CreateModelDrawerProps {
 }
 
 export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onClose, onModelCreated }) => {
+  const MIN_FILE_COUNT = 10;
+  const MAX_FILE_COUNT = 15;
+  const MAX_SIZE_MB = 5;
+
   const [modelName, setModelName] = useState('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [gender, setGender] = useState<'man' | 'female'>('man');
@@ -45,13 +49,14 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
     createModelMutation(formData);
   };
 
-  const uploadProps = {
-    beforeUpload: (file: File) => {
-      const MAX_SIZE_MB = 5;
-      const fileSizeInMB = file.size / 1024 / 1024;
+  const uploadProps: UploadProps = {
+    beforeUpload: (file: UploadFile) => {
+      const fileSizeInMB = file.size! / 1024 / 1024;
   
       if (fileSizeInMB > MAX_SIZE_MB) {
         toast.error('File must be smaller than 5 MB!');
+        file.error = new Error('File must be smaller than 5 MB!');
+        file.status = 'error';
         return false;
       }
   
@@ -62,7 +67,18 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
     },
     fileList,
     multiple: true,
-  };
+    maxCount: MAX_FILE_COUNT,
+    listType: 'picture',
+    onPreview: (file) => {
+      if (file.originFileObj) {
+        const imageUrl = URL.createObjectURL(file.originFileObj);
+        window.open(imageUrl, '_blank');
+      } else if (file.url) {
+        window.open(file.url, '_blank');
+      }
+    },
+  }
+  const hasErrorFiles = fileList.some((file) => file.status === 'error');
 
   return (
     <Drawer
@@ -138,9 +154,11 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
             <Button block type="default" htmlType="button" size='large' onClick={onClose}>
               Cancel
             </Button>
-            <Button block type="primary" htmlType="submit" size='large' loading={isCreatingModel}>
-              Create Model
-            </Button>
+            <Tooltip title={fileList.length < MIN_FILE_COUNT || fileList.length > MAX_FILE_COUNT ? 'Please upload 10 to 15 photos!' : hasErrorFiles ? 'Uploaded photos have errors!' : ''}>
+              <Button disabled={fileList.length < MIN_FILE_COUNT || hasErrorFiles} block type="primary" htmlType="submit" size='large' loading={isCreatingModel}>
+                Create Model
+              </Button>
+            </Tooltip>
           </div>
         </Form.Item>
       </Form>
