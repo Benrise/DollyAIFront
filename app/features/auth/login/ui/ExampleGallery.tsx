@@ -1,4 +1,3 @@
-import { Image } from 'antd';
 import NextImage from 'next/image';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -35,6 +34,7 @@ export function ExampleGallery ({ images, className }: ExampleGalleryProps) {
                         className="select-none rounded-4xl object-cover"
                         width={1024}
                         height={1024}
+                        lazyBoundary='200px'
                     />
             </SwiperSlide>
         ))}
