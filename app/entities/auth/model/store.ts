@@ -3,7 +3,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import { authService } from "@/app/entities/auth";
 import { ILoginResponse, IRefreshResponse, IRegisterResponse } from "./types";
 
-interface IUser {
+interface IAuthData {
   id: number,
   email: string,
   access: string,
@@ -11,7 +11,7 @@ interface IUser {
 }
 
 interface AuthState {
-  user: IUser | null;
+  session: IAuthData | null;
   signIn: (email: string, password: string) => Promise<ILoginResponse>;
   signUp: (email: string, password: string, password_confirm: string) => Promise<IRegisterResponse>;
   signOut: () => Promise<null>;
@@ -19,68 +19,59 @@ interface AuthState {
   verifyCode: (code: string) => Promise<null>;
   changePassword: (password: string, password_confirm: string) => Promise<null>;
   refresh: () => Promise<IRefreshResponse>;
-  setUser: (user: IUser) => void;
+  setSession: (session: IAuthData) => void;
   getAccessToken: () => string;
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
-      user: null,
-  
+      session: null,
       signIn: async (email, password) => {
         const response = await authService.login({ email, password });
-        set({ user: response });
+        set({ session: response });
         return response
       },
-
       signUp: async (email, password, password_confirm) => {
         const response = await authService.register({ email, password, password_confirm });
-        set({ user: response });
+        set({ session: response });
         return response
       },
-
       sendCode: async (email: string) => {
         const response = await authService.sendCode(email);
         return response
       },
-
       verifyCode: async (code: string) => {
         const response = await authService.verifyCode(code);
         return response
       },
-
       changePassword: async (password: string, password_confirm: string) => {
         const response = await authService.changePassword(password, password_confirm);
         return response
       },
-
       signOut: async () => {
         const response = await authService.logout();
-        set({ user: null });
+        set({ session: null });
         return response
       },
-
       refresh: async () => {
         const response = await authService.refresh();
           set((state) => ({
-            user: state.user ? { ...state.user, access: response.access } : null,
+            session: state.session ? { ...state.session, access: response.access } : null,
           }));
           return response
       },
-
-      setUser(user) {
-        set({ user });
+      setSession(session) {
+        set({ session });
       },
-
       getAccessToken: () => {
-        const user = get().user;
-        return user ? user.access : "";
+        const session = get().session;
+        return session ? session.access : "";
       },
     }),
     {
       name: "auth-storage",
-      partialize: (state) => ({ user: state.user }),
+      partialize: (state) => ({ session: state.session }),
       storage: createJSONStorage(() => localStorage),
     }
   )

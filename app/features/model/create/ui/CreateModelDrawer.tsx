@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Drawer, Button, Input, Form, Upload, Typography, Space, Select, Tooltip } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { HighlightedText } from '@/app/shared/ui/highlighted-text';
 import { useCreateModelMutation } from '../hooks';
 import { toast } from 'sonner';
 import { UploadFile, UploadChangeParam, UploadProps  } from 'antd/lib/upload';
+import { useUserContext } from '@/app/providers/UserProvider';
 
 const { Text, Paragraph } = Typography;
 const { Dragger } = Upload;
@@ -25,6 +26,7 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [gender, setGender] = useState<'man' | 'female'>('man');
   const [form] = Form.useForm();
+  const { user } = useUserContext();
 
   const resetForm = () => {
     form.resetFields();
@@ -33,6 +35,10 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
   const { createModelMutation, isCreatingModel } = useCreateModelMutation([onClose, onModelCreated, resetForm]);
   const handleSubmit = async () => {
     if (isCreatingModel) return;
+    if (user?.models_left === 0) {
+      toast.error('You have reached the maximum number of models!');
+      return;
+    };
 
     const formData = new FormData();
     
@@ -78,12 +84,6 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
     accept: 'image/*'
   }
   const hasErrorFiles = fileList.some((file) => file.status === 'error');
-
-  useEffect(() => {
-    return () => {
-      resetForm();
-    };
-  }, []);
 
   return (
     <Drawer

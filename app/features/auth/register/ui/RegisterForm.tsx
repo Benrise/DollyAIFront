@@ -2,7 +2,6 @@ import { Button, Form, Input, Typography, Checkbox } from 'antd';
 import { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 import { Terms } from '@/app/entities/terms'
 import { type TypeRegisterSchema, RegisterSchema } from '@/app/entities/auth';
@@ -15,15 +14,18 @@ const { Title } = Typography;
 
 export function RegisterForm() {
     const { registerMutation, isLoadingRegister } = useRegisterMutation();
-    const [ parent ] = useAutoAnimate();
     const [ isPlansHidden, setIsPlansHidden ] = useState<boolean>(false);
     const { subscriptions, getSubscriptionsListMutation } = useGetSubscriptionsListMutation();
-    const { control, handleSubmit, formState: { errors } } = useForm<TypeRegisterSchema>({
+    const { control, handleSubmit, formState: { errors }, trigger } = useForm<TypeRegisterSchema>({
       resolver: zodResolver(RegisterSchema),
     });
 
-    const handleSelectPlan = (subscription: ISubscriptionProduct) => {
-      console.log(subscription);
+    const handleSelectPlan = async (subscription: ISubscriptionProduct) => {
+      const isFormValid = await trigger();
+
+      if (isFormValid) {
+          handleSubmit((values) => registerMutation(values))();
+      }
     };
 
     useEffect(() => {
@@ -77,7 +79,7 @@ export function RegisterForm() {
                     />
               </Form.Item>
               {!isPlansHidden && <Form.Item label="Plan">
-                <SubscriptionsList subscriptions={subscriptions} onSubscriptionSelect={handleSelectPlan} actionLabel="Continue" className='flex md:flex-nowrap flex-wrap gap-4'/>
+                <SubscriptionsList isActionsDisabled={Object.keys(errors).length > 0} subscriptions={subscriptions} onSubscriptionSelect={handleSelectPlan} actionLabel="Continue" className='flex md:flex-nowrap flex-wrap gap-4'/>
               </Form.Item>}
               <Form.Item>
                 <Checkbox onChange={() => setIsPlansHidden(!isPlansHidden)}>Register without payment</Checkbox>

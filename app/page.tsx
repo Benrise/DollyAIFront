@@ -14,10 +14,10 @@ import { ModelsList, useGetModelsListMutation } from '@/app/widgets/model/list';
 import { useListenToResultMutation } from './features/model/create';
 import { useListenToReadinessMutation } from './features/model/create';
 import { useGenerateModelMutation } from './features/model/create';
-import { PricingDrawer } from './features/pricing/ui';
 import { downloadBlob } from './shared/utils/download';
 import { useMobileDetect } from './shared/lib';
 import { ContentSection } from './shared/ui/content-section';
+import { useUserContext } from './providers';
 
 const { Text } = Typography;
 
@@ -26,7 +26,6 @@ export default function Home() {
   const [ activeModel, setActiveModel ] = useState<IModel | undefined>(undefined);
   const [ resultUrl, setResultUrl ] = useState<string | null>(null);
   const [ form ] = Form.useForm();
-  const [ isPricingOpen, setIsPricingOpen ] = useState(false);
   const [ isTextAreaFocused, setIsTextAreaFocused ] = useState(false);
   const { isMobile } = useMobileDetect();
 
@@ -43,25 +42,7 @@ export default function Home() {
   const { listenReadinessMutation, isListeningReadiness } = useListenToReadinessMutation((model_id) => {
     listenResultMutation(model_id)
   });
-
-  const closePricing = () => setIsPricingOpen(false);
-  const openPricing = () => setIsPricingOpen(true);
-
-  useEffect(() => {
-    getModelsListMutation();
-  }, []);
-  useEffect(() => {
-    if (activeModel) {
-      setResultUrl(null);
-      form.resetFields();
-
-      if (activeModel.is_ready) {
-        listenResultMutation(activeModel.id);
-      } else {
-        listenReadinessMutation(activeModel.id);
-      }
-    }
-  }, [activeModel, listenResultMutation, listenReadinessMutation, form]);
+  const { user, openPricingDrawer } = useUserContext();
 
   const handleModelCreated = () => {
     getModelsListMutation();
@@ -80,6 +61,22 @@ export default function Home() {
   const handleFocus = () => setIsTextAreaFocused(isMobile && true);
   const handleBlur = () => setIsTextAreaFocused(isMobile && false);
 
+  useEffect(() => {
+    getModelsListMutation();
+  }, []);
+  useEffect(() => {
+    if (activeModel) {
+      setResultUrl(null);
+      form.resetFields();
+
+      if (activeModel.is_ready) {
+        listenResultMutation(activeModel.id);
+      } else {
+        listenReadinessMutation(activeModel.id);
+      }
+    }
+  }, [activeModel, listenResultMutation, listenReadinessMutation, form]);
+
   return (
     <ContentSection>
       <Space direction="vertical" size="large" className='relative' style={{ width: '100%' }}>
@@ -92,15 +89,15 @@ export default function Home() {
               onModelCreated={handleModelCreated}
             />
           <div ref={parent}>
-            {models.length > 0 && (
-              <div className="flex gap-2 min-w-fit justify-between items-center w-full px-10">
-                <Text type="secondary">∞ generations</Text>
-                <Button type="primary" size="middle" onClick={openPricing}>
-                  Buy more
-                </Button>
-                <PricingDrawer onClose={closePricing} open={isPricingOpen} />
+            <div className="flex gap-2 min-w-fit justify-between items-center w-full px-10">
+              <div className="flex flex-col">
+                <Text type="secondary">{user?.models_left || 0} models</Text>
+                <Text type="secondary">{user?.generations_left || 0} generations</Text>
               </div>
-            )}
+              <Button type="primary" size="middle" onClick={openPricingDrawer}>
+                Buy more
+              </Button>
+            </div>
           </div>     
         </div>
 

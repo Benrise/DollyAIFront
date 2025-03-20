@@ -11,7 +11,7 @@ export function useLoginMutation() {
         const { signIn } = useAuthStore();
 
     const {mutate: loginMutation, isPending: isLoadingLogin} = useMutation({
-        mutationKey: ['login user'],
+        mutationKey: ['login'],
         mutationFn: (values: TypeLoginSchema) => signIn(values.email, values.password),
         onSuccess(data: FetchError | ILoginResponse) {
             if ('detail' in data) {

@@ -2,12 +2,10 @@ import '@/app/tailwind.css';
 import '@/app/style.scss';
 
 import { type Metadata } from "next";
-import { ConfigProvider } from 'antd';
 import { Toaster } from 'sonner';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 
 import { MainProvider } from '@/app/providers';
-import { theme } from '@/app/theme.config';
 
 export const metadata: Metadata = {
   title: 'AI Love Photo',
@@ -36,12 +34,10 @@ export default function RootLayout({
       <body>
           <AntdRegistry>
             <MainProvider>
-              <ConfigProvider theme={theme}>
                 <div className="flex flex-col items-center justify-center min-h-screen">
                   {children}
                 </div>
                 <Toaster/>
-              </ConfigProvider>
             </MainProvider>
           </AntdRegistry>
       </body>

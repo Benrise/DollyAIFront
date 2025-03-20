@@ -12,15 +12,15 @@ interface ISubscriptionCardProps {
     isActive: boolean;
     className?: string
     actionLabel?: string
+    disabled?: boolean
 }
 
 const { Title } = Typography;
 
-export const SubscriptionCard: React.FC<ISubscriptionCardProps> = ({ subscription, onSelect, isActive, isPriority, className, actionLabel }) => {
+export const SubscriptionCard: React.FC<ISubscriptionCardProps> = ({ subscription, onSelect, isActive, isPriority, className, actionLabel, disabled }) => {
     return (
         <>
             <div
-              onClick={() => onSelect(subscription)}
               className={`${className} ${
                 isActive ? 'border-2 border-indigo-500' : 'border-2 border-indigo-100'
               } p-6 ${isPriority ? 'bg-indigo-50' : 'bg-grey-100'} rounded-2xl flex flex-col justify-between gap-14 min-w-[200px]`}
@@ -42,9 +42,11 @@ export const SubscriptionCard: React.FC<ISubscriptionCardProps> = ({ subscriptio
                     </ul>
                 </div>
                 <Button
+                    disabled={disabled}
                     type="primary"
                     size='large'
                     className={`w-full py-2 rounded`}
+                    onClick={() => onSelect(subscription)}
                 >
                     {actionLabel || "Subscribe"}
                 </Button>

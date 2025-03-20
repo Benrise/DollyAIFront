@@ -1,9 +1,11 @@
 import { Button, Skeleton } from 'antd';
 import { LogOut } from 'lucide-react'
 import { useAuthStore } from "@/app/entities/auth";
+import { useUserStore } from '../model';
 
 export const UserBadge = () => {
-  const { user, signOut } = useAuthStore();
+  const { signOut } = useAuthStore();
+  const { user } = useUserStore();
 
   if (user === null) {
     return (

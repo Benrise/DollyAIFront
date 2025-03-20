@@ -12,7 +12,7 @@ export function useRegisterMutation() {
     const { signUp } = useAuthStore();
 
     const {mutate: registerMutation, isPending: isLoadingRegister} = useMutation({
-        mutationKey: ['register user'],
+        mutationKey: ['register'],
         mutationFn: (values: TypeRegisterSchema) => signUp(values.email, values.password, values.password_confirm),
         onSuccess(data: FetchError | IRegisterResponse) {
             if ('detail' in data) {
@@ -20,7 +20,6 @@ export function useRegisterMutation() {
             } 
             else {
                 toast.success('Success registration! Welcome to AI Love Photo!');
-                router.push('/auth/login')
             }
         },
         onError(error: FetchError) {

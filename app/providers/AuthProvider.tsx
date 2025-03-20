@@ -5,7 +5,7 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { user, setUser, refresh } = useAuthStore();
+  const { session, setSession, refresh } = useAuthStore();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams()
@@ -13,14 +13,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const initializeAuth = async () => {
-      if (user && !user.access) {
+      if (session && !session.access) {
         await refresh();
       }
       setIsLoading(false);
     };
 
     initializeAuth();
-  }, [user, refresh]);
+  }, [session, refresh]);
 
   useEffect(() => {
     if (isLoading) return;
@@ -30,30 +30,30 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const access = searchParams.get("access");
     const access_type = searchParams.get("access_type");
 
-    if (user && pathname === "/auth/login") {
+    if (session && pathname === "/auth/login") {
       router.replace("/");
       return;
     }
 
-    if (user && pathname === "/auth/register") {
+    if (session && pathname === "/auth/register") {
       router.replace("/");
       return;
     }
 
-    if (!user && id && email && access && access_type) {
-      setUser({ id, email, access, access_type });
+    if (!session && id && email && access && access_type) {
+      setSession({ id, email, access, access_type });
       router.replace(pathname);
     }
-    else if (user) {
+    else if (session) {
       router.replace(pathname);
       return
     }
 
 
-    if (!user && pathname !== "/auth/login" && pathname !== "/auth/register" && pathname !== "/auth/recover") {
+    if (!session && pathname !== "/auth/login" && pathname !== "/auth/register" && pathname !== "/auth/recover") {
       router.push(`/auth/login?redirect_to=${pathname}`);
     }
-  }, [isLoading, pathname, router, searchParams, setUser, user]);
+  }, [isLoading, pathname, router, searchParams, setSession, session]);
 
   if (isLoading) {
     return null;

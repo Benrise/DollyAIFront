@@ -11,6 +11,7 @@ import { ProtectedImage } from '@/app/shared/ui/protected-image';
 import { CreateModelDrawer } from '@/app/features/model/create';
 import { type IModel } from '@/app/entities/model';
 import { UpdateModelDrawer } from '@/app/features/model/update/ui/UpdateModelDrawer';
+import { useUserContext } from '@/app/providers';
 
 const { Text } = Typography;
 
@@ -31,6 +32,9 @@ interface ModelsListProps {
     const openUpdateDrawer = () => setIsUpdateDrawerOpen(true);
     const onCloseUpdateDrawer = () => setIsUpdateDrawerOpen(false);
 
+    const { user, openPricingDrawer } = useUserContext();
+
+    const isCreatingAvailable = user?.models_left !== 0;
     const handleModelClick = (model: IModel) => {
         if (model.id === activeModel?.id) {
             openUpdateDrawer();
@@ -44,7 +48,7 @@ interface ModelsListProps {
             <CreateModelDrawer open={isCreateDrawerOpen} onClose={onCloseCreateDrawer} onModelCreated={onModelCreated}/>
             {activeModel && <UpdateModelDrawer open={isUpdateDrawerOpen} onClose={onCloseUpdateDrawer} onAfterAction={onModelCreated} model={activeModel}/>}
             <div className="flex flex-col gap-1 items-center">
-                <Button onClick={openCreateDrawer} type="primary" shape="circle" size="large" style={{width: 64, height: 64, minWidth: 64}} block><Plus/></Button>
+                <Button onClick={isCreatingAvailable ? openCreateDrawer : openPricingDrawer} type="primary" shape="circle" size="large" style={{width: 64, height: 64, minWidth: 64}} block><Plus/></Button>
                 <Text className='align-middle w-fit text-[12px]!'>Create</Text>
             </div>
             {models.map((model) => (
