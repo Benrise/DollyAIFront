@@ -13,7 +13,6 @@ import { useUserContext } from '@/app/providers';
 
 const { Title } = Typography;
 
-
 export function RegisterForm() {
     const { checkoutMutation } = useCheckoutMutation();
     const { disableDrawerWatching } = useUserContext();

@@ -1,10 +1,8 @@
-import { useAuthStore, type IRegisterResponse, type TypeRegisterSchema } from '@/app/entities/auth';
-import { FetchError } from "@/app/api";
+import { useMutation } from '@tanstack/react-query';
 
 import { toastErrorHandler } from '@/app/shared/utils';
-
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'sonner';
+import { useAuthStore, type IRegisterResponse, type TypeRegisterSchema } from '@/app/entities/auth';
+import { FetchError } from "@/app/api";
 
 export function useRegisterMutation() {
     const { signUp } = useAuthStore();
@@ -15,9 +13,6 @@ export function useRegisterMutation() {
         onSuccess(data: FetchError | IRegisterResponse) {
             if ('detail' in data) {
                 toastErrorHandler(data);
-            } 
-            else {
-                toast.success('Success registration! Welcome to AI Love Photo!');
             }
         },
         onError(error: FetchError) {
