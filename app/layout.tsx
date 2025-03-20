@@ -37,7 +37,9 @@ export default function RootLayout({
           <AntdRegistry>
             <MainProvider>
               <ConfigProvider theme={theme}>
-                {children}
+                <div className="flex flex-col items-center justify-center min-h-screen">
+                  {children}
+                </div>
                 <Toaster/>
               </ConfigProvider>
             </MainProvider>

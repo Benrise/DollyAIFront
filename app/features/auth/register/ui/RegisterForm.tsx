@@ -1,18 +1,34 @@
-import { Button, Form, Input, Typography } from 'antd';
-import { Terms } from '@/app/entities/terms'
+import { Button, Form, Input, Typography, Checkbox } from 'antd';
+import { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
+
+import { Terms } from '@/app/entities/terms'
 import { type TypeRegisterSchema, RegisterSchema } from '@/app/entities/auth';
 import { useRegisterMutation } from '@/app/features/auth/register';
+import { SubscriptionsList, useGetSubscriptionsListMutation } from '@/app/widgets/subscription/list';
+import { ISubscriptionProduct } from '@/app/entities/subscription';
 
 const { Title } = Typography;
 
 
 export function RegisterForm() {
     const { registerMutation, isLoadingRegister } = useRegisterMutation();
+    const [ parent ] = useAutoAnimate();
+    const [ isPlansHidden, setIsPlansHidden ] = useState<boolean>(false);
+    const { subscriptions, getSubscriptionsListMutation } = useGetSubscriptionsListMutation();
     const { control, handleSubmit, formState: { errors } } = useForm<TypeRegisterSchema>({
       resolver: zodResolver(RegisterSchema),
     });
+
+    const handleSelectPlan = (subscription: ISubscriptionProduct) => {
+      console.log(subscription);
+    };
+
+    useEffect(() => {
+      getSubscriptionsListMutation();
+    }, []);
 
     return (
       <div className="flex flex-col gap-4 h-full">
@@ -60,11 +76,17 @@ export function RegisterForm() {
                       render={({ field }) => <Input.Password size="large" placeholder="Repeat password" {...field} />}
                     />
               </Form.Item>
-              <Form.Item className="mb-2!">
+              {!isPlansHidden && <Form.Item label="Plan">
+                <SubscriptionsList subscriptions={subscriptions} onSubscriptionSelect={handleSelectPlan} actionLabel="Continue" className='flex md:flex-nowrap flex-wrap gap-4'/>
+              </Form.Item>}
+              <Form.Item>
+                <Checkbox onChange={() => setIsPlansHidden(!isPlansHidden)}>Register without payment</Checkbox>
+              </Form.Item>
+              {isPlansHidden && <Form.Item className="mb-2!">
                 <Button type="primary" size="large" htmlType="submit" loading={isLoadingRegister} block>
                   Register
                 </Button>
-              </Form.Item>
+              </Form.Item>}
               <Form.Item>
                 <Button type="link" href="/auth/login" className="text-[14px]!" block>
                   Already have an account? Login

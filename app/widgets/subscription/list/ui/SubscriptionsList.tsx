@@ -1,24 +1,27 @@
 import { ISubscriptionProduct, SubscriptionCard } from "@/app/entities/subscription";
 
 interface SubscriptionsListProps {
-    subscriptions: ISubscriptionProduct[]
-    onSubscriptionSelect: (subscription: ISubscriptionProduct) => void
+    subscriptions: ISubscriptionProduct[];
+    onSubscriptionSelect: (subscription: ISubscriptionProduct) => void;
+    className?: string
+    actionLabel?: string
 }
 
-export function SubscriptionsList({subscriptions, onSubscriptionSelect}: SubscriptionsListProps) {
+export function SubscriptionsList({subscriptions, onSubscriptionSelect, className, actionLabel}: SubscriptionsListProps) {
     const handleSelectPlan = (subscription: ISubscriptionProduct) => {
         onSubscriptionSelect(subscription);
       };
 
     return (
-        <div className="grid md:grid-cols-3 md:max-w-[960px] grid-cols-1 gap-4 w-full h-full">
+        <div className={`w-full h-full ${className}`}>
             {subscriptions.map((subscribtion, index) => (
-                <SubscriptionCard 
+                <SubscriptionCard
+                    actionLabel={actionLabel}
                     subscription={subscribtion} 
                     key={index} 
                     onSelect={handleSelectPlan} 
-                    isActive={subscribtion.nickname === "Pro"}
-                    isPriority={subscribtion.nickname === "Pro"}
+                    isActive={subscribtion.nickname === "Premium"}
+                    isPriority={subscribtion.nickname === "Premium"}
                     className="w-full h-fit"/>
             ))}
         </div>

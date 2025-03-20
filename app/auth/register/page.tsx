@@ -1,12 +1,12 @@
 "use client";
 
 import { RegisterForm } from '@/app/features/auth/register';
-import { AuthWrapper } from '@/app/widgets/auth/wrapper';
+import { ContentSection } from '@/app/shared/ui/content-section';
 
 export default function RegisterPage() {
   return (
-   <AuthWrapper>
+   <ContentSection className='max-w-fit!'>
       <RegisterForm/>
-   </AuthWrapper>
+   </ContentSection>
   );
 }

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Drawer, Typography } from 'antd';
 
 import { SubscriptionsList } from '@/app/widgets/subscription/list/ui/SubscriptionsList';
-import { useGetSubscriptionsListMutation } from '@/app/widgets/subscription/list/hooks';
+import { useGetSubscriptionsListMutation } from '@/app/widgets/subscription/list';
 import { ISubscriptionProduct } from '@/app/entities/subscription';
 
 interface PricingDrawerProps {
@@ -33,8 +33,7 @@ export const PricingDrawer: React.FC<PricingDrawerProps> = ({ open, onClose }) =
     >
       <div className="flex flex-col items-center text-center p-10 gap-6 h-full">
         <Title level={3}>Compare our plans to find what suits you best</Title>
-
-        <SubscriptionsList subscriptions={subscriptions} onSubscriptionSelect={handleSelectPlan}/>
+        <SubscriptionsList subscriptions={subscriptions} onSubscriptionSelect={handleSelectPlan} className='grid md:grid-cols-3 md:max-w-[960px] grid-cols-1 gap-4'/>
       </div>
     </Drawer>
   );

@@ -1,12 +1,12 @@
 "use client";
 
 import { RecoverForm } from '@/app/features/auth/recover';
-import { AuthWrapper } from '@/app/widgets/auth/wrapper';
+import { ContentSection } from '@/app/shared/ui/content-section';
 
 export default function RecoverPage() {
   return (
-   <AuthWrapper>
+   <ContentSection>
       <RecoverForm/>
-   </AuthWrapper>
+   </ContentSection>
   );
 }

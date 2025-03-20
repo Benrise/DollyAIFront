@@ -11,18 +11,19 @@ interface ISubscriptionCardProps {
     isPriority?: boolean;
     isActive: boolean;
     className?: string
+    actionLabel?: string
 }
 
 const { Title } = Typography;
 
-export const SubscriptionCard: React.FC<ISubscriptionCardProps> = ({ subscription, onSelect, isActive, isPriority, className }) => {
+export const SubscriptionCard: React.FC<ISubscriptionCardProps> = ({ subscription, onSelect, isActive, isPriority, className, actionLabel }) => {
     return (
         <>
             <div
               onClick={() => onSelect(subscription)}
               className={`${className} ${
                 isActive ? 'border-2 border-indigo-500' : 'border-2 border-indigo-100'
-              } p-6 ${isPriority ? 'bg-indigo-50' : 'bg-grey-100'} rounded-2xl flex flex-col justify-between gap-14`}
+              } p-6 ${isPriority ? 'bg-indigo-50' : 'bg-grey-100'} rounded-2xl flex flex-col justify-between gap-14 min-w-[200px]`}
             >
                 <div className="flex flex-col">
                     {isPriority ? <Tag bordered={false} style={styles} className={styles.tag}>Most popular</Tag> : <div className='w-full h-[32px]'></div>}
@@ -32,10 +33,10 @@ export const SubscriptionCard: React.FC<ISubscriptionCardProps> = ({ subscriptio
                         <p className='font-bold leading-[28px]'>{subscription.recurring.interval}</p>
                     </div>
                     <ul className="text-left text-[16px] mt-4">
-                        <li className="flex items-center">
+                        <li className="flex items-center text-nowrap">
                             <CheckOutlined className="mr-2 text-green-500!" /> Generations: {subscription.metadata.generations_count}
                         </li>
-                        <li className="flex items-center">
+                        <li className="flex items-center text-nowrap">
                             <CheckOutlined className="mr-2 text-green-500!" /> Models: {subscription.metadata.models_count}
                         </li>
                     </ul>
@@ -43,9 +44,9 @@ export const SubscriptionCard: React.FC<ISubscriptionCardProps> = ({ subscriptio
                 <Button
                     type="primary"
                     size='large'
-                    className={`w-full ${isActive ? 'pointer-events-none' : ''} py-2 rounded`}
+                    className={`w-full py-2 rounded`}
                 >
-                    Subscribe
+                    {actionLabel || "Subscribe"}
                 </Button>
             </div>
         </>

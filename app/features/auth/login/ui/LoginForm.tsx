@@ -10,13 +10,13 @@ import { HighlightedText } from "@/app/shared/ui/highlighted-text";
 import { Terms } from '@/app/entities/terms';
 import { type TypeLoginSchema, LoginSchema } from '@/app/entities/auth';
 import { ExampleGallery, useLoginMutation } from '@/app/features/auth/login';
-import { fetchImages } from '@/app/widgets/auth/wrapper/lib';
+import { fetchImages } from '@/app/widgets/auth/images';
 
 const { Title } = Typography;
 
 
 export function LoginForm() {
-    const OAUTH_LINK = process.env.NEXT_OAUTH_LINK
+    const OAUTH_LINK = process.env.NEXT_OAUTH_LINK;
 
     const { loginMutation, isLoadingLogin } = useLoginMutation();
     const { control, handleSubmit, formState: { errors } } = useForm<TypeLoginSchema>({
@@ -27,12 +27,12 @@ export function LoginForm() {
     const [isInputFocused, setIsInputFocused] = useState(false);
     const { isMobile } = useMobileDetect();
 
-    useEffect(() => {
-        fetchImages().then(setImages);
-    }, [])
-
     const handleFocus = () => setIsInputFocused(isMobile && true);
     const handleBlur = () => setIsInputFocused(isMobile && false);
+
+    useEffect(() => {
+      fetchImages().then(setImages);
+    }, [])
 
     return (
       <div className="flex flex-col gap-4 h-full">
