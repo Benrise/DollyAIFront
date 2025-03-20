@@ -34,7 +34,7 @@ interface ModelsListProps {
 
     const { user, openPricingDrawer } = useUserContext();
 
-    const isCreatingAvailable = user?.models_left !== 0;
+    const isCreatingAvailable = !!user?.models_left;
     const handleModelClick = (model: IModel) => {
         if (model.id === activeModel?.id) {
             openUpdateDrawer();

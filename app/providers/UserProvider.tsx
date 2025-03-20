@@ -26,7 +26,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [session, me]);
 
   useEffect(() => {
-    if (user && user.generations_left === 0 && isDrawerWatching) {
+    if (user && !user.generations_left && isDrawerWatching) {
       setIsDrawerOpen(true);
     }
   }, [user]);
