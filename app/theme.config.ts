@@ -22,6 +22,9 @@ export const theme: ThemeConfig = {
       borderRadiusLG: 16,
       defaultHoverBorderColor: '',
       defaultHoverColor: '',
+    },
+    Tag: {
+      borderRadiusSM: 16,
     }
   }
 };
