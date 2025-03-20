@@ -10,7 +10,7 @@ interface UserState {
 
 
 export const useUserStore = create<UserState>()(
-    (set, get) => ({
+    (set) => ({
         user: null,
         me: async () => {
             const response = await userService.me();
