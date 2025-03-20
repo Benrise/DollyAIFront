@@ -10,7 +10,7 @@ export function AuthWrapper({ children }: PropsWithChildren) {
                 className="
                     w-full sm:max-w-lg sm:py-10 bg-white rounded-none sm:rounded-4xl 
                     shadow-none sm:shadow-xl sm:shadow-indigo-50 overflow-hidden
-                    h-screen sm:h-auto pt-16
+                    h-screen sm:h-auto pt-16 pb-8
                 "
             >
                 {children}
