@@ -48,7 +48,7 @@ export default function Home() {
 
   useEffect(() => {
     getModelsListMutation();
-  }, [getModelsListMutation]);
+  }, []);
   useEffect(() => {
     if (activeModel) {
       setResultUrl(null);

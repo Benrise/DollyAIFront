@@ -13,7 +13,7 @@ interface ISubscriptionCardProps {
     className?: string
 }
 
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 
 export const SubscriptionCard: React.FC<ISubscriptionCardProps> = ({ subscription, onSelect, isActive, isPriority, className }) => {
     return (

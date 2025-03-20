@@ -5,7 +5,7 @@ export interface ISubscriptionProduct {
     billing_scheme: string;
     created: number;
     currency: string;
-    custom_unit_amount: null | any;
+    custom_unit_amount: null | string;
     livemode: boolean;
     lookup_key: null | string;
     metadata: {
@@ -15,16 +15,16 @@ export interface ISubscriptionProduct {
     nickname: string;
     product: string;
     recurring: {
-      aggregate_usage: null | any;
+      aggregate_usage: null | string;
       interval: string;
       interval_count: number;
-      meter: null | any;
+      meter: null | string;
       trial_period_days: null | number;
       usage_type: string;
     };
     tax_behavior: string;
-    tiers_mode: null | any;
-    transform_quantity: null | any
+    tiers_mode: null | string;
+    transform_quantity: null | string
     type: string;
     unit_amount: number;
     unit_amount_decimal: string;
