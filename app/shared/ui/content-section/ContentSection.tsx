@@ -10,7 +10,7 @@ export function ContentSection({ children, className }: PropsWithChildren<Conten
                 className={`
                     w-full sm:max-w-lg sm:py-10 bg-white rounded-none sm:rounded-4xl 
                     shadow-none sm:shadow-xl sm:shadow-indigo-50
-                    sm:h-auto pt-16 pb-8
+                    sm:h-auto pt-8 pb-8
                     overflow-y-auto
                     ${className}
                 `}

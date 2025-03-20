@@ -1,6 +1,5 @@
 import styles from './styles.module.scss';
 
-import React from "react";
 import { Button, Typography, Tag } from 'antd';
 import { ISubscriptionProduct } from "../model";
 import { CheckOutlined } from '@ant-design/icons';
@@ -12,12 +11,13 @@ interface ISubscriptionCardProps {
     isActive: boolean;
     className?: string
     actionLabel?: string
-    disabled?: boolean
+    isDisabled?: boolean
+    isLoading?: boolean
 }
 
 const { Title } = Typography;
 
-export const SubscriptionCard: React.FC<ISubscriptionCardProps> = ({ subscription, onSelect, isActive, isPriority, className, actionLabel, disabled }) => {
+export const SubscriptionCard: React.FC<ISubscriptionCardProps> = ({ subscription, onSelect, isActive, isPriority, className, actionLabel, isDisabled, isLoading }) => {
     return (
         <>
             <div
@@ -42,11 +42,12 @@ export const SubscriptionCard: React.FC<ISubscriptionCardProps> = ({ subscriptio
                     </ul>
                 </div>
                 <Button
-                    disabled={disabled}
+                    disabled={isDisabled}
                     type="primary"
                     size='large'
                     className={`w-full py-2 rounded`}
                     onClick={() => onSelect(subscription)}
+                    loading={isLoading}
                 >
                     {actionLabel || "Subscribe"}
                 </Button>

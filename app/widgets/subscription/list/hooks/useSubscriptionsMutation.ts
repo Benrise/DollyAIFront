@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { FetchError } from "@/app/api";
 import { toastErrorHandler } from "@/app/shared/utils";
-import { ISubscriptionProduct, ISubscriptionsResponse, subscriptionsService } from "@/app/entities/subscription";
+import { ISubscriptionProduct, ISubscriptionsResponse, subscriptionsService } from "@/app/entities/subscription/card";
 
 export function useGetSubscriptionsListMutation() {
     const [subscriptions, setSubscriptions] = useState<ISubscriptionProduct[]>([]);

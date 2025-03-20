@@ -7,17 +7,17 @@ import { Form, Button, Input, Typography, Space, Image, Tooltip } from 'antd';
 import { ChevronDown } from 'lucide-react'
 import { DownloadOutlined } from '@ant-design/icons';
 
+import { downloadBlob } from '@/app/shared/utils/download';
+import { useMobileDetect } from '@/app/shared/lib';
+import { ContentSection } from '@/app/shared/ui/content-section';
 import { GeneratingAnimation } from '@/app/shared/ui/generation-animation';
+import { SubscriptionBadge } from '@/app/entities/subscription/badge';
 import { UserBadge } from '@/app/entities/user';
 import { type IModel } from '@/app/entities/model';
 import { ModelsList, useGetModelsListMutation } from '@/app/widgets/model/list';
-import { useListenToResultMutation } from './features/model/create';
-import { useListenToReadinessMutation } from './features/model/create';
-import { useGenerateModelMutation } from './features/model/create';
-import { downloadBlob } from './shared/utils/download';
-import { useMobileDetect } from './shared/lib';
-import { ContentSection } from './shared/ui/content-section';
-import { useUserContext } from './providers';
+import { useListenToResultMutation } from '@/app/features/model/create';
+import { useListenToReadinessMutation } from '@/app/features/model/create';
+import { useGenerateModelMutation } from '@/app/features/model/create';
 
 const { Text } = Typography;
 
@@ -42,7 +42,6 @@ export default function Home() {
   const { listenReadinessMutation, isListeningReadiness } = useListenToReadinessMutation((model_id) => {
     listenResultMutation(model_id)
   });
-  const { user, openPricingDrawer } = useUserContext();
 
   const handleModelCreated = () => {
     getModelsListMutation();
@@ -88,17 +87,7 @@ export default function Home() {
               activeModel={activeModel}
               onModelCreated={handleModelCreated}
             />
-          <div ref={parent}>
-            <div className="flex gap-2 min-w-fit justify-between items-center w-full px-10">
-              <div className="flex flex-col">
-                <Text type="secondary">{user?.models_left || 0} models</Text>
-                <Text type="secondary">{user?.generations_left || 0} generations</Text>
-              </div>
-              <Button type="primary" size="middle" onClick={openPricingDrawer}>
-                Buy more
-              </Button>
-            </div>
-          </div>     
+            <SubscriptionBadge/>
         </div>
 
         <div ref={parent} className="px-10 flex flex-col gap-8 items-center">

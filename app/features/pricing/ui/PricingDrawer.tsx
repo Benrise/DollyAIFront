@@ -5,7 +5,7 @@ import { Drawer, Typography } from 'antd';
 
 import { SubscriptionsList } from '@/app/widgets/subscription/list/ui/SubscriptionsList';
 import { useGetSubscriptionsListMutation } from '@/app/widgets/subscription/list';
-import { ISubscriptionProduct } from '@/app/entities/subscription';
+import { ISubscriptionProduct } from '@/app/entities/subscription/card';
 import { useCheckoutMutation } from '../hooks';
 
 interface PricingDrawerProps {
@@ -19,7 +19,7 @@ export const PricingDrawer: React.FC<PricingDrawerProps> = ({ open, onClose }) =
   const { subscriptions, getSubscriptionsListMutation } = useGetSubscriptionsListMutation();
   const { checkoutMutation } = useCheckoutMutation();
 
-  const handleSelectPlan = (subscription: ISubscriptionProduct) => {
+  const handleSelectPlan = async (subscription: ISubscriptionProduct) => {
     checkoutMutation(subscription.id);
   };
 

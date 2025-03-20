@@ -1,29 +1,33 @@
-import { ISubscriptionProduct, SubscriptionCard } from "@/app/entities/subscription";
+import { ISubscriptionProduct, SubscriptionCard } from "@/app/entities/subscription/card";
+import { useState } from "react";
 
 interface SubscriptionsListProps {
     subscriptions: ISubscriptionProduct[];
-    onSubscriptionSelect: (subscription: ISubscriptionProduct) => void;
+    onSubscriptionSelect: (subscription: ISubscriptionProduct) => Promise<void>;
     className?: string
     actionLabel?: string
     isActionsDisabled?: boolean
 }
 
 export function SubscriptionsList({subscriptions, onSubscriptionSelect, className, actionLabel, isActionsDisabled}: SubscriptionsListProps) {
-    const handleSelectPlan = (subscription: ISubscriptionProduct) => {
-        onSubscriptionSelect(subscription);
+    const [loadingSubscriptionId, setLoadingSubscriptionId] = useState<string | null>(null);
+    const handleSelectPlan = async (subscription: ISubscriptionProduct) => {
+        setLoadingSubscriptionId(subscription.id);
+        await onSubscriptionSelect(subscription);
       };
 
     return (
         <div className={`w-full h-full ${className}`}>
-            {subscriptions.map((subscribtion, index) => (
+            {subscriptions.map((subscription, index) => (
                 <SubscriptionCard
-                    disabled={isActionsDisabled}
+                    isDisabled={isActionsDisabled}
+                    isLoading={loadingSubscriptionId === subscription.id}
                     actionLabel={actionLabel}
-                    subscription={subscribtion} 
+                    subscription={subscription} 
                     key={index} 
                     onSelect={handleSelectPlan} 
-                    isActive={subscribtion.nickname === "Premium"}
-                    isPriority={subscribtion.nickname === "Premium"}
+                    isActive={subscription.nickname === "Premium"}
+                    isPriority={subscription.nickname === "Premium"}
                     className="w-full h-fit"/>
             ))}
         </div>

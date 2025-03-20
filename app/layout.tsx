@@ -34,7 +34,7 @@ export default function RootLayout({
       <body>
           <AntdRegistry>
             <MainProvider>
-                <div className="flex flex-col items-center justify-center min-h-screen">
+                <div className="flex flex-col sm:items-center sm:justify-center h-full">
                   {children}
                 </div>
                 <Toaster/>

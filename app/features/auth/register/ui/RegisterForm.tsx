@@ -7,7 +7,7 @@ import { Terms } from '@/app/entities/terms'
 import { type TypeRegisterSchema, RegisterSchema } from '@/app/entities/auth';
 import { useRegisterMutation } from '@/app/features/auth/register';
 import { SubscriptionsList, useGetSubscriptionsListMutation } from '@/app/widgets/subscription/list';
-import { ISubscriptionProduct } from '@/app/entities/subscription';
+import { ISubscriptionProduct } from '@/app/entities/subscription/card';
 import { useCheckoutMutation } from '@/app/features/pricing/hooks';
 import { useUserContext } from '@/app/providers';
 
