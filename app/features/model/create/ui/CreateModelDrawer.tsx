@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Drawer, Button, Input, Form, Upload, Typography, Space, Select, Tooltip } from 'antd';
+import { Drawer, Button, Input, Form, Upload, Typography, Space, Select, Tooltip, Alert } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { HighlightedText } from '@/app/shared/ui/highlighted-text';
 import { useCreateModelMutation } from '../hooks';
@@ -122,25 +122,42 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
             size='large'
           />
         </Form.Item>
-        <Space direction="vertical" size="middle" className='bg-indigo-50 border-2 border-indigo-400 rounded-xl p-6 mb-6 w-full'>
-          <Paragraph className='mb-0!'>
-            To achieve maximum accuracy, it is recommended to <HighlightedText>upload 10-15 photos.</HighlightedText> The <HighlightedText>more</HighlightedText> pictures there are, the <HighlightedText>better</HighlightedText> the neural network will be able to understand your <HighlightedText>unique</HighlightedText> features.
-          </Paragraph>
-          <ul>
-            <li>
-              <Text><HighlightedText>•</HighlightedText> Use photos from different angles (front, side, half-turn).</Text>
-            </li>
-            <li>
-              <Text><HighlightedText>•</HighlightedText> Include full-length and portrait shots.</Text>
-            </li>
-            <li>
-              <Text><HighlightedText>•</HighlightedText> Add photos with different emotions (smile, serious expression, etc.).</Text>
-            </li>
-          </ul>
-          <Paragraph className='mb-0!'>
-            The more <HighlightedText>diverse your</HighlightedText> pictures are, the <HighlightedText>more realistic</HighlightedText> and <HighlightedText>accurate</HighlightedText> the result.
-          </Paragraph>
-        </Space>
+        <Form.Item>
+          <Alert description={
+                <Space direction="vertical" size="middle" className="w-full">
+                  <Paragraph className="mb-0!">
+                    To achieve maximum accuracy, it is recommended to{' '}
+                    <HighlightedText>upload 10-15 photos.</HighlightedText> The{' '}
+                    <HighlightedText>more</HighlightedText> pictures there are, the{' '}
+                    <HighlightedText>better</HighlightedText> the neural network will be able to understand your{' '}
+                    <HighlightedText>unique</HighlightedText> features.
+                  </Paragraph>
+                  <ul>
+                    <li>
+                      <Text>
+                        <HighlightedText>•</HighlightedText> Use photos from different angles (front, side, half-turn).
+                      </Text>
+                    </li>
+                    <li>
+                      <Text>
+                        <HighlightedText>•</HighlightedText> Include full-length and portrait shots.
+                      </Text>
+                    </li>
+                    <li>
+                      <Text>
+                        <HighlightedText>•</HighlightedText> Add photos with different emotions (smile, serious expression, etc.).
+                      </Text>
+                    </li>
+                  </ul>
+                  <Paragraph className="mb-0!">
+                    The more <HighlightedText>diverse your</HighlightedText> pictures are, the{' '}
+                    <HighlightedText>more realistic</HighlightedText> and <HighlightedText>accurate</HighlightedText> the result.
+                  </Paragraph>
+                </Space>
+              }
+              type="info"
+          />
+        </Form.Item>
         <Form.Item
           label="Upload Photos"
           rules={[{ required: true, message: 'Please upload between 10 to 15 photos!' }]}
