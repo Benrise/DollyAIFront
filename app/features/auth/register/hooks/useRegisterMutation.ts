@@ -4,11 +4,9 @@ import { FetchError } from "@/app/api";
 import { toastErrorHandler } from '@/app/shared/utils';
 
 import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 export function useRegisterMutation() {
-    const router = useRouter()
     const { signUp } = useAuthStore();
 
     const {mutate: registerMutation, isPending: isLoadingRegister} = useMutation({

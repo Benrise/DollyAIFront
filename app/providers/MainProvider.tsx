@@ -12,11 +12,11 @@ export function MainProvider({ children }: PropsWithChildren) {
         <Suspense fallback={null}>
             <AuthProvider>
                     <TanstackQueryProvider>
-                    <ConfigProvider theme={theme}>
-                        <UserProvider>
-                            {children}
-                        </UserProvider>
-                    </ConfigProvider>
+                        <ConfigProvider theme={theme}>
+                            <UserProvider>
+                                {children}
+                            </UserProvider>
+                        </ConfigProvider>
                     </TanstackQueryProvider>
             </AuthProvider>
         </Suspense>

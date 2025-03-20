@@ -8,25 +8,35 @@ import { type TypeRegisterSchema, RegisterSchema } from '@/app/entities/auth';
 import { useRegisterMutation } from '@/app/features/auth/register';
 import { SubscriptionsList, useGetSubscriptionsListMutation } from '@/app/widgets/subscription/list';
 import { ISubscriptionProduct } from '@/app/entities/subscription';
+import { useCheckoutMutation } from '@/app/features/pricing/hooks';
+import { useUserContext } from '@/app/providers';
 
 const { Title } = Typography;
 
 
 export function RegisterForm() {
+    const { checkoutMutation } = useCheckoutMutation();
+    const { disableDrawerWatching } = useUserContext();
     const { registerMutation, isLoadingRegister } = useRegisterMutation();
     const [ isPlansHidden, setIsPlansHidden ] = useState<boolean>(false);
     const { subscriptions, getSubscriptionsListMutation } = useGetSubscriptionsListMutation();
-    const { control, handleSubmit, formState: { errors }, trigger } = useForm<TypeRegisterSchema>({
+    const { control, handleSubmit, formState: { errors } } = useForm<TypeRegisterSchema>({
       resolver: zodResolver(RegisterSchema),
     });
 
     const handleSelectPlan = async (subscription: ISubscriptionProduct) => {
-      const isFormValid = await trigger();
-
-      if (isFormValid) {
-          handleSubmit((values) => registerMutation(values))();
-      }
+      await disableDrawerWatching();
+      handleSubmit((values) => {
+          registerMutation(values, {
+              onSuccess: () => {
+                  checkoutMutation(subscription.id);
+              }
+          });
+      })();
     };
+    const handleRegisterWithoutPayment = handleSubmit((values) => {
+      registerMutation(values);
+    });
 
     useEffect(() => {
       getSubscriptionsListMutation();
@@ -41,7 +51,7 @@ export function RegisterForm() {
           name="register"
           layout="vertical"
           className="flex flex-col gap-12 px-10! justify-between h-full"
-          onFinish={handleSubmit((values) => registerMutation(values))}
+          onFinish={handleRegisterWithoutPayment}
         >
           <div className="flex flex-col gap-6">
             <div className="flex flex-col">
@@ -79,7 +89,7 @@ export function RegisterForm() {
                     />
               </Form.Item>
               {!isPlansHidden && <Form.Item label="Plan">
-                <SubscriptionsList isActionsDisabled={Object.keys(errors).length > 0} subscriptions={subscriptions} onSubscriptionSelect={handleSelectPlan} actionLabel="Continue" className='flex md:flex-nowrap flex-wrap gap-4'/>
+                <SubscriptionsList subscriptions={subscriptions} onSubscriptionSelect={handleSelectPlan} actionLabel="Continue" className='flex md:flex-nowrap flex-wrap gap-4'/>
               </Form.Item>}
               <Form.Item>
                 <Checkbox onChange={() => setIsPlansHidden(!isPlansHidden)}>Register without payment</Checkbox>

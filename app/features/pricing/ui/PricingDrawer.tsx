@@ -6,6 +6,7 @@ import { Drawer, Typography } from 'antd';
 import { SubscriptionsList } from '@/app/widgets/subscription/list/ui/SubscriptionsList';
 import { useGetSubscriptionsListMutation } from '@/app/widgets/subscription/list';
 import { ISubscriptionProduct } from '@/app/entities/subscription';
+import { useCheckoutMutation } from '../hooks';
 
 interface PricingDrawerProps {
   open: boolean;
@@ -16,9 +17,10 @@ const { Title } = Typography;
 
 export const PricingDrawer: React.FC<PricingDrawerProps> = ({ open, onClose }) => {
   const { subscriptions, getSubscriptionsListMutation } = useGetSubscriptionsListMutation();
+  const { checkoutMutation } = useCheckoutMutation();
 
   const handleSelectPlan = (subscription: ISubscriptionProduct) => {
-    console.log(subscription);
+    checkoutMutation(subscription.id);
   };
 
   useEffect(() => {

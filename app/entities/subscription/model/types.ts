@@ -33,3 +33,7 @@ export interface ISubscriptionProduct {
   export interface ISubscriptionsResponse {
       prices: ISubscriptionProduct[];
   }
+
+  export interface ICheckoutResponse {
+    url: string;
+  }
