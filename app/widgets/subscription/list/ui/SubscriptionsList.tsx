@@ -1,5 +1,5 @@
 import { ISubscriptionProduct, SubscriptionCard } from "@/app/entities/subscription/card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface SubscriptionsListProps {
     subscriptions: ISubscriptionProduct[];
@@ -7,13 +7,14 @@ interface SubscriptionsListProps {
     className?: string
     actionLabel?: string
     isActionsDisabled?: boolean
+    isActionsLoading?: boolean
 }
 
-export function SubscriptionsList({subscriptions, onSubscriptionSelect, className, actionLabel, isActionsDisabled}: SubscriptionsListProps) {
+export function SubscriptionsList({subscriptions, onSubscriptionSelect, className, actionLabel, isActionsDisabled, isActionsLoading}: SubscriptionsListProps) {
     const [loadingSubscriptionId, setLoadingSubscriptionId] = useState<string | null>(null);
     const handleSelectPlan = async (subscription: ISubscriptionProduct) => {
-        setLoadingSubscriptionId(subscription.id);
         await onSubscriptionSelect(subscription);
+        setLoadingSubscriptionId(subscription.id);
       };
 
     return (
@@ -21,7 +22,7 @@ export function SubscriptionsList({subscriptions, onSubscriptionSelect, classNam
             {subscriptions.map((subscription, index) => (
                 <SubscriptionCard
                     isDisabled={isActionsDisabled}
-                    isLoading={loadingSubscriptionId === subscription.id}
+                    isLoading={isActionsLoading && loadingSubscriptionId === subscription.id}
                     actionLabel={actionLabel}
                     subscription={subscription} 
                     key={index} 

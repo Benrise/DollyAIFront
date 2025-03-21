@@ -45,14 +45,14 @@ export function LoginForm() {
                 <ExampleGallery images={images}/>
               ) : null}
           </div>
-          <Title onClick={handleBlur} level={3} className="text-center text-base sm:text-xl px-10! mb-8!">
+          <Title onClick={handleBlur} level={3} className="px-4! md:px-10! text-center text-base sm:text-xl mb-8!">
             <div>
               <HighlightedText> AI Love Photo</HighlightedText> - your personal photoclone
             </div>
           </Title>
           <Form
             layout="vertical"
-            className="flex flex-col gap-12 px-10! h-full justify-between"
+            className="px-4! md:px-10! flex flex-col gap-12 h-full justify-between"
             onFinish={handleSubmit((values) => loginMutation(values))}
           >
             <div className="flex flex-col gap-6">

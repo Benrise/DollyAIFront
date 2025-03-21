@@ -14,7 +14,7 @@ import { useUserContext } from '@/app/providers';
 const { Title } = Typography;
 
 export function RegisterForm() {
-    const { checkoutMutation } = useCheckoutMutation();
+    const { checkoutMutation, isLoadingcheckout } = useCheckoutMutation();
     const { disableDrawerWatching } = useUserContext();
     const { registerMutation, isLoadingRegister } = useRegisterMutation();
     const [ isPlansHidden, setIsPlansHidden ] = useState<boolean>(false);
@@ -49,12 +49,11 @@ export function RegisterForm() {
         <Form
           name="register"
           layout="vertical"
-          className="flex flex-col gap-12 px-10! justify-between h-full"
+          className="px-4! md:px-10! flex flex-col gap-12 justify-between h-full"
           onFinish={handleRegisterWithoutPayment}
         >
-          <div className="flex flex-col gap-6">
             <div className="flex flex-col">
-            <Form.Item
+              <Form.Item
                     label="Email"
                     validateStatus={errors.email ? "error" : ""}
                     help={errors.email?.message}
@@ -87,12 +86,12 @@ export function RegisterForm() {
                       render={({ field }) => <Input.Password size="large" placeholder="Repeat password" {...field} />}
                     />
               </Form.Item>
-              {!isPlansHidden && <Form.Item label="Plan">
-                <SubscriptionsList subscriptions={subscriptions} onSubscriptionSelect={handleSelectPlan} actionLabel="Continue" className='flex md:flex-nowrap flex-wrap gap-4'/>
-              </Form.Item>}
               <Form.Item>
                 <Checkbox onChange={() => setIsPlansHidden(!isPlansHidden)}>Register without payment</Checkbox>
               </Form.Item>
+              {!isPlansHidden && <Form.Item label="Plan">
+                <SubscriptionsList isActionsLoading={isLoadingRegister || isLoadingcheckout} subscriptions={subscriptions} onSubscriptionSelect={handleSelectPlan} actionLabel="Continue" className='flex md:flex-nowrap flex-wrap gap-4'/>
+              </Form.Item>}
               {isPlansHidden && <Form.Item className="mb-2!">
                 <Button type="primary" size="large" htmlType="submit" loading={isLoadingRegister} block>
                   Register
@@ -104,7 +103,6 @@ export function RegisterForm() {
                 </Button>
               </Form.Item>
             </div>
-          </div>
           <Terms/>
         </Form>
       </div>
