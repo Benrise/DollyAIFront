@@ -36,7 +36,7 @@ export const PricingDrawer: React.FC<PricingDrawerProps> = ({ open, onClose }) =
       placement="bottom"
       height="100vh"
     >
-      <div className="flex flex-col items-center text-center md:p-10 p-2 gap-6">
+      <div className="flex flex-col items-center text-center md:p-10 p-2 gap-4">
         <Title level={3}>Compare our plans to find what suits you best</Title>
         <SubscriptionsList subscriptions={subscriptions} onSubscriptionSelect={handleSelectPlan} className='grid md:grid-cols-3 md:max-w-[960px] grid-cols-1 gap-4'/>
         <Alert className='w-full max-w-[960px]' 

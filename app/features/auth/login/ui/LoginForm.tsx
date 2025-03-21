@@ -55,7 +55,7 @@ export function LoginForm() {
             className="px-4! md:px-10! flex flex-col gap-12 h-full justify-between"
             onFinish={handleSubmit((values) => loginMutation(values))}
           >
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-3">
                 <Form.Item
                   validateStatus={errors.email ? "error" : ""}

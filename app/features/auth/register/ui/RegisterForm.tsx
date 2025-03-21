@@ -42,14 +42,14 @@ export function RegisterForm() {
     }, []);
 
     return (
-      <div className="flex flex-col gap-4 h-full">
+      <div className="flex flex-col gap-4 h-fit">
         <Title level={3} className="text-center text-base sm:text-xl">
           Registration
         </Title>
         <Form
           name="register"
           layout="vertical"
-          className="px-4! md:px-10! flex flex-col gap-12 justify-between h-full"
+          className="px-4! md:px-10! flex flex-col gap-12 justify-between"
           onFinish={handleRegisterWithoutPayment}
         >
             <div className="flex flex-col">
