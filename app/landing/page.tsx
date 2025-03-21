@@ -89,24 +89,23 @@ export default function LandingPage() {
                     </div>
                     <Button type="primary" href="/auth/login" className="rounded-full! h-[64px]! text-xl! w-full! max-w-[528px]" size="large">Try in now</Button>
                 </section>
-                <section className="flex w-full bg-blue-50 p-16 rounded-4xl">
+                <section className="flex w-full bg-blue-50 p-16 rounded-4xl relative gap-8">
                     {/* left */}
                     <div className="flex flex-col w-full items-center gap-8">
                         <h2 className="text-5xl font-bold">
                             <HighlightedText>How does</HighlightedText> it work
                         </h2>
                         <Image
-                        width={328}
-                        height={700}
-                        alt="Also available in telegram"
-                        src="/images/landing/section_3.1.png"
+                            width={316}
+                            height={674}
+                            alt="Also available in telegram"
+                            src="/images/landing/section_3.1.png"
                         />
                     </div>
-
                     {/* right */}
-                    <div className="flex flex-col gap-12 justify-center">
+                    <div className="flex flex-col gap-12 justify-center w-full">
                         {/* feature */}
-                        <div className="flex items-start relative">
+                        <div className="flex items-center relative">
                         <div className="flex-shrink-0 w-16 h-16 p-4 bg-blue-100 rounded-2xl flex items-center justify-center">
                             <DownloadOutlined className="text-3xl text-indigo-500!" />
                         </div>
@@ -116,7 +115,7 @@ export default function LandingPage() {
                         <div className="absolute left-8 top-16 h-20 w-0.5 bg-indigo-500"></div>
                         </div>
                         {/* feature */}
-                        <div className="flex items-start relative">
+                        <div className="flex items-center relative">
                         <div className="flex-shrink-0 w-16 h-16 p-4 bg-blue-100 rounded-2xl flex items-center justify-center">
                             <StarOutlined className="text-3xl text-indigo-500!" />
                         </div>
@@ -126,7 +125,7 @@ export default function LandingPage() {
                         <div className="absolute left-8 top-16 h-20 w-0.5 bg-indigo-500"></div>
                         </div>
                         {/* feature */}
-                        <div className="flex items-start relative">
+                        <div className="flex items-center relative">
                         <div className="flex-shrink-0 w-16 h-16 p-4 bg-blue-100 rounded-2xl flex items-center justify-center">
                             <EditOutlined className="text-3xl text-indigo-500!" />
                         </div>
@@ -135,6 +134,7 @@ export default function LandingPage() {
                         </div>
                         </div>
                     </div>
+                    <Button type="primary" href="/auth/login" className="rounded-full! h-[64px]! text-xl! w-full max-w-[528px] absolute! bottom-12 left-1/2 transform -translate-x-1/2" size="large">Get the best and fastest photo shoot of your life</Button>
                     </section>
                 <section className="flex flex-col w-fit gap-8 items-center">
                     {/* header */}
