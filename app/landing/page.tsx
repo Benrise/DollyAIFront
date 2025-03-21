@@ -5,18 +5,17 @@ import { Button, Carousel } from "antd";
 import { HighlightedText } from "@/app/shared/ui/highlighted-text";
 import Image from "next/image";
 import { FeatureCard } from "./components";
-import { DownloadOutlined, EditOutlined, InstagramOutlined, StarOutlined } from "@ant-design/icons";
+import { DownloadOutlined, EditOutlined, StarOutlined } from "@ant-design/icons";
 import { SubscriptionsList, useGetSubscriptionsListMutation } from "@/app/widgets/subscription/list";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { ISubscriptionProduct } from "@/app/entities/subscription/card";
 import { Instagram, Send } from "lucide-react";
 
 export default function LandingPage() {
     const { subscriptions, getSubscriptionsListMutation } = useGetSubscriptionsListMutation();
     const router = useRouter()
 
-    const handleSubscriptionSelect = async (_: ISubscriptionProduct) => {
+    const handleSubscriptionSelect = async () => {
         router.push('/auth/register')
     }
 
@@ -27,14 +26,14 @@ export default function LandingPage() {
     return (
         <div className="h-full w-full flex flex-col items-center">
             {/* wrapper */}
-            <div className="flex flex-col max-w-[1200px] items-center gap-16 px-4">
+            <div className="flex flex-col max-w-[1200px] items-center gap-24 px-4">
                 <section className="flex gap-8 w-fit mt-24">
                     {/* left */}
                     <div className="flex flex-col p-16 gap-8 bg-blue-50 rounded-4xl min-w-[60%]">
                         <h1 className="text-4xl font-bold">Create <HighlightedText>realistic and beatutiful photos</HighlightedText> of yourself</h1>
                         <div className="font-bold text-2xl px-4 py-2 bg-blue-100 w-fit rounded-full">in 2 minutes</div>
                         <p className="text-xl">Upload a photo and get the best and fastest photo shoot of your life with <HighlightedText>ai_love_photo</HighlightedText></p>
-                        <Button type="primary" className="rounded-full! h-[64px]! text-xl!" size="large">Try in now</Button>
+                        <Button type="primary" href="/auth/login" className="rounded-full! h-[64px]! text-xl!" size="large">Try in now</Button>
                     </div>
                     {/* right */}
                     <Carousel className="h-[512px] w-[512px]" autoplay fade>
@@ -60,41 +59,41 @@ export default function LandingPage() {
                         <FeatureCard
                             title="Create unique content"
                             description="Everyone will be shocked by your photos"
-                            image_url="/images/landing/section_1.1.jpeg"
+                            image_url="/images/landing/section_2.1.jpg"
                         />
                         <FeatureCard
                             title="Realistic photos"
                             description="No one will know it's an AI photo"
-                            image_url="/images/landing/section_1.1.jpeg"
+                            image_url="/images/landing/section_2.2.jpg"
                         />
                         <FeatureCard
                             title="Save time and money"
                             description="High quality for a minimum resource"
-                            image_url="/images/landing/section_1.1.jpeg"
+                            image_url="/images/landing/section_2.3.jpg"
                         />
                         <FeatureCard
                             title="The perfect tool for bloggers and creators"
                             description="Stay one step ahead of the competition"
-                            image_url="/images/landing/section_1.1.jpeg"
+                            image_url="/images/landing/section_2.4.jpg"
                         />
                         <FeatureCard
                             title="It always looks perfect in the frame"
                             description="The perfect angle for everyone"
-                            image_url="/images/landing/section_1.1.jpeg"
+                            image_url="/images/landing/section_2.5.jpg"
                         />
                          <FeatureCard
                             title="Original gift for friends and family"
                             description="Inpiration in every time"
-                            image_url="/images/landing/section_1.1.jpeg"
+                            image_url="/images/landing/section_2.6.jpg"
                         />
                     </div>
-                    <Button type="primary" className="rounded-full! h-[64px]! text-xl! w-full! max-w-[528px]" size="large">Try in now</Button>
+                    <Button type="primary" href="/auth/login" className="rounded-full! h-[64px]! text-xl! w-full! max-w-[528px]" size="large">Try in now</Button>
                 </section>
                 <section className="flex w-full bg-blue-50 p-16 rounded-4xl">
                     {/* left */}
                     <div className="flex flex-col w-full items-center gap-8">
-                        <h2 className="text-4xl font-bold">
-                        <HighlightedText>How does</HighlightedText> it work
+                        <h2 className="text-5xl font-bold">
+                            <HighlightedText>How does</HighlightedText> it work
                         </h2>
                         <Image
                         width={328}
@@ -150,10 +149,10 @@ export default function LandingPage() {
                         <div className="text-2xl font-bold">ailovephoto.official@gmail.com</div>
                     </div>
                     <div className="flex gap-2">
-                        <Button size="large" type="primary" shape="circle">
+                        <Button href="https://t.me/ai_love_photo_bot" target="_blank" size="large" type="primary" shape="circle">
                             <Send size={21}/>
                         </Button>
-                        <Button size="large" type="primary" shape="circle">
+                        <Button href="https://instagram.com/ailovephoto_" target="_blank" size="large" type="primary" shape="circle">
                             <Instagram/>
                         </Button>
                     </div>
