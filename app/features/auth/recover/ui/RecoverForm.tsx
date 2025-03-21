@@ -104,7 +104,7 @@ export function RecoverForm() {
                           }}
                       />
                   </Form.Item>
-                  <Form.Item>
+                  <div className='flex flex-col gap-2'>
                       <Button 
                           type="primary" 
                           size="large" 
@@ -114,7 +114,10 @@ export function RecoverForm() {
                       >
                           Send Code
                       </Button>
-                  </Form.Item>
+                      <Button type='link' href="/auth/login" block className="px-4! sm:px-10!">
+                        Back to Login Page
+                       </Button>
+                  </div>
               </Form>
           )}
           {currentStep === 1 && (
@@ -138,7 +141,7 @@ export function RecoverForm() {
                         }}
                       />
                   </Form.Item>
-                  <Form.Item>
+                  <div className='flex flex-col gap-2'>
                       <Button 
                           type="primary" 
                           size="large" 
@@ -148,7 +151,10 @@ export function RecoverForm() {
                       >
                           Verify Code
                       </Button>
-                  </Form.Item>
+                      <Button type='link' href="/auth/login" block className="px-4! sm:px-10!">
+                        Back to Login Page
+                        </Button>
+                  </div>
               </Form>
           )
           )}
@@ -181,7 +187,7 @@ export function RecoverForm() {
                           render={({ field }) => <Input.Password size="large" placeholder="Confirm new password" {...field} />}
                       />
                   </Form.Item>
-                  <Form.Item>
+                  <div className='flex flex-col gap-2'>
                       <Button 
                           type="primary" 
                           size="large" 
@@ -191,12 +197,12 @@ export function RecoverForm() {
                       >
                           Change Password
                       </Button>
-                  </Form.Item>
+                      <Button type='link' href="/auth/login" block className="px-4! sm:px-10!">
+                        Back to Login Page
+                      </Button>
+                  </div>
               </Form>
           )}
-          <Button type='link' href="/auth/login" block className="px-4! sm:px-10!">
-              Back to Login Page
-          </Button>
           <Divider plain className="px-4! sm:px-10!">or</Divider>
           <div className="px-4! sm:px-10!">
               <a href={OAUTH_LINK}>

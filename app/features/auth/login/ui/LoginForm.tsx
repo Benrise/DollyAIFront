@@ -55,7 +55,7 @@ export function LoginForm() {
             className="px-4! sm:px-10! flex flex-col gap-4 justify-between"
             onFinish={handleSubmit((values) => loginMutation(values))}
           >
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-8">
               <div className="flex flex-col gap-3">
                 <Form.Item
                   validateStatus={errors.email ? "error" : ""}
@@ -81,12 +81,12 @@ export function LoginForm() {
                   <Button type="link" href='/auth/recover' size="small" className='text-[14px]! mt-2! justify-end!' block>Forgot password</Button>
                 </Form.Item>
               </div>
-              <div className="mb-2 flex flex-col">
+              <div className="mb-2 flex flex-col gap-2">
                 <Button type="primary" size="large" onClick={handleBlur} htmlType="submit" loading={isLoadingLogin} block>
                   Login
                 </Button>
                 <div className="flex">
-                <Button type="link" href='/auth/register' size="small" className='text-[14px]! mt-2!' block>No account? Register</Button>
+                <Button type="link" href='/auth/register' size="small" className='text-[14px]!' block>No account? Register</Button>
                 </div>
                 <Divider plain>or</Divider>
                 <a href={OAUTH_LINK}>

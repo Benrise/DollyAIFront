@@ -92,16 +92,14 @@ export function RegisterForm() {
               <Form.Item>
                 <Checkbox onChange={() => setIsPlansHidden(!isPlansHidden)}>Register without payment</Checkbox>
               </Form.Item>
-              {isPlansHidden && <Form.Item className="mb-2!">
+              {isPlansHidden && <div className="flex flex-col gap-2">
                 <Button type="primary" size="large" htmlType="submit" loading={isLoadingRegister} block>
                   Register
                 </Button>
-              </Form.Item>}
-              <Form.Item>
                 <Button type="link" href="/auth/login" className="text-[14px]!" block>
                   Already have an account? Login
                 </Button>
-              </Form.Item>
+              </div>}
             </div>
           <Terms/>
         </Form>
