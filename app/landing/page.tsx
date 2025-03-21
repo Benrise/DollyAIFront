@@ -39,7 +39,7 @@ export default function LandingPage() {
                     <Button
                         type="primary"
                         href="/auth/login"
-                        className="rounded-full h-[56px] sm:h-[64px] text-lg w-full sm:w-auto"
+                        className="rounded-full! min-h-[64px]! h-fit! text-lg! w-full max-w-[528px]"
                         size="large"
                     >
                         Try it now
