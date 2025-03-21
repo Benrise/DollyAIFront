@@ -1,8 +1,8 @@
 "use client"
-import Image from "next/image";
 import { useRouter } from "next/navigation";
+import NextImage from "next/image";
 import { useEffect } from "react";
-import { Button, Carousel } from "antd";
+import { Button, Carousel, Image } from "antd";
 import { Download, Instagram, Pencil, Send, Sparkles } from "lucide-react";
 
 import { FeatureCard } from "./components";
@@ -24,32 +24,57 @@ export default function LandingPage() {
     return (
         <div className="h-full w-full flex flex-col items-center">
             {/* wrapper */}
-            <div className="flex flex-col max-w-[1200px] items-center gap-24 px-4">
-                <section className="flex gap-8 w-fit mt-24">
-                    {/* left */}
-                    <div className="flex flex-col p-16 gap-8 bg-blue-50 rounded-4xl min-w-[60%]">
-                        <h1 className="text-4xl font-bold">Create <HighlightedText>realistic and beatutiful photos</HighlightedText> of yourself</h1>
-                        <div className="font-bold text-2xl px-4 py-2 bg-blue-100 w-fit rounded-full">in 2 minutes</div>
-                        <p className="text-xl">Upload a photo and get the best and fastest photo shoot of your life with <HighlightedText>ai_love_photo</HighlightedText></p>
-                        <Button type="primary" href="/auth/login" className="rounded-full! h-[64px]! text-xl!" size="large">Try in now</Button>
+            <div className="flex flex-col max-w-[1200px] w-full items-center gap-24 px-4 mt-24">
+            <section className="flex lg:flex-row flex-col-reverse gap-8 w-full items-center px-4 sm:px-0">
+                {/* left */}
+                <div className="flex flex-col p-8 sm:p-16 gap-8 bg-blue-50 rounded-4xl w-full max-w-[600px]">
+                    <h1 className="text-3xl sm:text-4xl font-bold">
+                        Create <HighlightedText>realistic and beautiful photos</HighlightedText> of yourself
+                    </h1>
+                    <div className="font-bold text-xl sm:text-2xl px-4 py-2 bg-blue-100 w-fit rounded-full">
+                        in 2 minutes
                     </div>
-                    {/* right */}
-                    <Carousel className="h-[512px] w-[512px]" autoplay fade>
-                        <div className="rounded-3xl overflow-hidden">
-                            <Image width={512} height={512} alt="Realistic woman photo" src="/images/landing/section_1.1.jpeg"/>
-                        </div>
-                        <div className="rounded-3xl overflow-hidden">
-                            <Image width={512} height={512} alt="Realistic woman photo" src="/images/landing/section_1.2.jpeg"/>
-                        </div>
-                        <div className="rounded-3xl overflow-hidden">
-                            <Image width={512} height={512} alt="Realistic woman photo" src="/images/landing/section_1.3.jpeg"/>
-                        </div>
+                    <p className="text-lg sm:text-xl">Upload a photo and get the best and fastest photo shoot of your life with{" "}
+                        <HighlightedText>ai_love_photo</HighlightedText>
+                    </p>
+                    <Button
+                        type="primary"
+                        href="/auth/login"
+                        className="rounded-full h-[56px] sm:h-[64px] text-lg w-full sm:w-auto"
+                        size="large"
+                    >
+                        Try it now
+                    </Button>
+                </div>
+
+                {/* right */}
+                <div className="w-full max-w-[512px]">
+                    <Carousel autoplay fade className="w-full">
+                        <Image
+                            preview={false}
+                            alt="Realistic woman photo"
+                            src="/images/landing/section_1.1.jpeg"
+                            className="w-full h-full object-cover rounded-3xl"
+                        />
+                        <Image
+                            preview={false}
+                            alt="Realistic woman photo"
+                            src="/images/landing/section_1.2.jpeg"
+                            className="w-full h-full object-cover rounded-3xl"
+                        />
+                        <Image
+                            preview={false}
+                            alt="Realistic woman photo"
+                            src="/images/landing/section_1.3.jpeg"
+                            className="w-full h-full object-cover rounded-3xl"
+                        />
                     </Carousel>
-                </section>  
+                </div>
+                </section>
                 <section className="flex flex-col w-fit gap-8 items-center">
                     {/* header */}
                     <div className="flex flex-col gap-2 items-center">
-                        <h2 className="text-4xl font-bold">Make your <HighlightedText>dreams come true!</HighlightedText></h2>
+                        <h2 className="text-4xl font-bold text-center">Make your <HighlightedText>dreams come true!</HighlightedText></h2>
                         <p className="text-xl">No more expensive photo shoots!</p>
                     </div>
                     {/* features */}
@@ -85,19 +110,18 @@ export default function LandingPage() {
                             image_url="/images/landing/section_2.6.jpg"
                         />
                     </div>
-                    <Button type="primary" href="/auth/login" className="rounded-full! h-[64px]! text-xl! w-full! max-w-[528px]" size="large">Try in now</Button>
+                    <Button type="primary" href="/auth/login" className="rounded-full! h-[64px]! text-lg! w-full! max-w-[528px]" size="large">Try in now</Button>
                 </section>
-                <section className="flex w-full bg-blue-50 p-16 rounded-4xl gap-8">
+                <section className="flex lg:flex-row flex-col w-full bg-blue-50 p-8 sm:p-16 rounded-4xl gap-8">
                     {/* left */}
                     <div className="flex flex-col w-full items-center gap-8">
                         <h2 className="text-5xl font-bold">
                             <HighlightedText>How does</HighlightedText> it work
                         </h2>
                         <Image
-                            width={1040}
-                            height={1100}
-                            alt="Also available in telegram"
+                            alt="Screens app example photos"
                             src="/images/landing/section_3.1.png"
+                            preview={false}
                         />
                     </div>
                     {/* right */}
@@ -118,7 +142,7 @@ export default function LandingPage() {
                             <Sparkles className="text-3xl text-indigo-500!" />
                         </div>
                         <div className="ml-4">
-                            <h3 className="text-lg font-semibold">You are waiting for your personal neural network to learn</h3>
+                            <h3 className="text-lg font-semibold">You are waiting for your personal AI to learn</h3>
                         </div>
                         <div className="absolute left-8 top-16 h-20 w-0.5 bg-indigo-500"></div>
                         </div>
@@ -131,17 +155,19 @@ export default function LandingPage() {
                             <h3 className="text-lg font-semibold">Write any descriptions of the desired photos</h3>
                         </div>
                         </div>
-                        <Button type="primary" href="/auth/login" className="rounded-full! h-[64px]! text-xl! w-full max-w-[528px]" size="large">Get the best and fastest photo shoot of your life</Button>
+                        <Button type="primary" href="/auth/login" className="rounded-full! min-h-[64px]! h-fit! text-lg! w-full max-w-[528px] text-wrap!" size="large">
+                            Get the best photo shoot
+                        </Button>
                     </div>
                     </section>
                 <section className="flex flex-col w-fit gap-8 items-center">
                     {/* header */}
                     <div className="flex flex-col gap-8 items-center">
-                        <h2 className="text-4xl font-bold"><HighlightedText>Compare out plans</HighlightedText> to find what suits you best</h2>
+                        <h2 className="text-4xl font-bold text-center"><HighlightedText>Compare out plans</HighlightedText> to find what suits you best</h2>
                         <SubscriptionsList subscriptions={subscriptions} onSubscriptionSelect={handleSubscriptionSelect} actionLabel="Select" className='flex md:flex-nowrap flex-wrap gap-4'/>
                     </div>
                 </section>
-                <footer className="flex flex-col p-16 items-center gap-4">
+                <footer className="flex flex-col p-8 sm:p-16 items-center gap-4">
                     <div className="flex flex-col items-center">
                         <div className="text-2xl font-bold">+1 424 2985059</div>
                         <div className="text-2xl font-bold">ailovephoto.official@gmail.com</div>
