@@ -12,6 +12,7 @@ export function ContentSection({ children, className }: PropsWithChildren<Conten
                     shadow-none sm:shadow-xl sm:shadow-indigo-50
                     sm:h-auto pt-8 pb-8
                     overflow-y-auto
+                    h-full
                     ${className}
                 `}
             >
