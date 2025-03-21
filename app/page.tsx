@@ -86,7 +86,7 @@ export default function Home() {
   }, [activeModel, listenResultMutation, listenReadinessMutation, form]);
 
   return (
-    <ContentSection className='sm:max-w-lg sm:rounded-4xl min-w-lg'>
+    <ContentSection className='sm:max-w-lg sm:rounded-4xl sm:min-w-lg'>
       <Space direction="vertical" size="large" className='relative' style={{ width: '100%' }}>
         <UserBadge/>
         <div className='flex flex-col gap-2 '>
@@ -99,7 +99,7 @@ export default function Home() {
             <SubscriptionBadge/>
         </div>
 
-        <div ref={parent} className="px-4 md:px-10 flex flex-col gap-8 items-center">
+        <div ref={parent} className="px-4 sm:px-10 flex flex-col gap-8 items-center">
             { !isTextAreaFocused ? <div ref={parent} className={`flex flex-col rounded-[24px] overflow-hidden max-w-[512px] items-center justify-center relative`}>
                 {!isListeningReadiness && isListeningResult && activeModel?.is_ready ? (
                   <GeneratingAnimation />
@@ -141,7 +141,7 @@ export default function Home() {
                   <ChevronDown/>
               </Button>
             )}
-          <Form form={form} onFinish={handleGenerate} className="px-4 md:px-10 flex flex-col gap-4 w-full">
+          <Form form={form} onFinish={handleGenerate} className="px-4 sm:px-10 flex flex-col gap-4 w-full">
             <Form.Item className='mb-0!' name="prompt" rules={[{ required: true, message: 'Enter a prompt' }]}>
               <Input.TextArea onClick={handleFocus} disabled={!!activeModel && !activeModel.is_ready || isListeningResult} placeholder="Imagine me as an astronaut in outer space" style={{ height: 80, resize: "none" }} />
             </Form.Item>
