@@ -12,7 +12,7 @@ import { useMobileDetect } from '@/app/shared/lib';
 import { ContentSection } from '@/app/shared/ui/content-section';
 import { GeneratingAnimation } from '@/app/shared/ui/generation-animation';
 import { SubscriptionBadge } from '@/app/entities/subscription/badge';
-import { UserBadge } from '@/app/entities/user';
+import { UserBadge, useUserStore } from '@/app/entities/user';
 import { type IModel } from '@/app/entities/model';
 import { ModelsList, useGetModelsListMutation } from '@/app/widgets/model/list';
 import { useListenToResultMutation } from '@/app/features/model/create';
@@ -25,6 +25,7 @@ export default function Home() {
   const [ parent ] = useAutoAnimate();
   const [ activeModel, setActiveModel ] = useState<IModel | undefined>(undefined);
   const [ resultUrl, setResultUrl ] = useState<string | null>(null);
+  const { me } = useUserStore();
   const [ form ] = Form.useForm();
   const [ isTextAreaFocused, setIsTextAreaFocused ] = useState(false);
   const { isMobile } = useMobileDetect();
@@ -44,12 +45,20 @@ export default function Home() {
   });
 
   const handleModelCreated = () => {
-    getModelsListMutation();
+    getModelsListMutation(undefined, {
+      onSuccess: async () => {
+        await me();
+      }
+    });
   };
-  const handleGenerate = (values: { prompt: string }) => {
+  const handleGenerate = async (values: { prompt: string }) => {
     if (activeModel) {
       setResultUrl(null); 
-      generateModelMutation({ model_id: activeModel.id, prompt: values.prompt });
+      generateModelMutation({ model_id: activeModel.id, prompt: values.prompt }, {
+        onSuccess: async () => {
+          await me();
+        }
+      });
     }
   };
   const handleDownload = (result_url: string | null, name='result.png') => {
@@ -77,7 +86,7 @@ export default function Home() {
   }, [activeModel, listenResultMutation, listenReadinessMutation, form]);
 
   return (
-    <ContentSection>
+    <ContentSection className='sm:max-w-lg sm:rounded-4xl min-w-lg'>
       <Space direction="vertical" size="large" className='relative' style={{ width: '100%' }}>
         <UserBadge/>
         <div className='flex flex-col gap-2 '>

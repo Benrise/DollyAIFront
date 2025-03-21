@@ -36,7 +36,7 @@ export function useListenToResultMutation(onCompleted: (url: string | null) => v
                     }
                 }
             });
-            return controller ;
+            return controller;
         },
         onError(error) {
             console.error('Error while listening for result', error);

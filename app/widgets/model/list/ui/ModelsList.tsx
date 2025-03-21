@@ -44,7 +44,7 @@ interface ModelsListProps {
     };
 
     return (
-        <div className='flex gap-2 w-max-[80%] overflow-x-auto pb-2 pl-10'>
+        <div className='flex gap-2 w-max-[80%] overflow-x-auto pb-2 md:pl-10 pl-4'>
             <CreateModelDrawer open={isCreateDrawerOpen} onClose={onCloseCreateDrawer} onModelCreated={onModelCreated}/>
             {activeModel && <UpdateModelDrawer open={isUpdateDrawerOpen} onClose={onCloseUpdateDrawer} onAfterAction={onModelCreated} model={activeModel}/>}
             <div className="flex flex-col gap-1 items-center">

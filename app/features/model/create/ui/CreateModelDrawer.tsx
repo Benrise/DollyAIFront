@@ -156,6 +156,7 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({ open, onCl
                 </Space>
               }
               type="info"
+              showIcon
           />
         </Form.Item>
         <Form.Item
