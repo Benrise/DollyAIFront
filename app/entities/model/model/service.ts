@@ -1,22 +1,32 @@
 import { api } from "@/app/api";
-import { IModelsReadinessResponse, IModelsResponse, IModelsListeningResponse } from "./types";
-import { FetchError } from "@/app/shared/lib";
+import { IModelsReadinessResponse, IModelsResponse, IModelsListeningResponse, IModel } from "./types";
+import { FetchError } from "@/app/api";
 import { fetchEventSource } from '@microsoft/fetch-event-source';
 
 class ModelsService {
     public async list() {
         const response = await api.get<IModelsResponse>('/models');
-        return response
+        return response.data
     }
 
     public async create(body: FormData) {
-        const response = await api.post<IModelsResponse>('/models', body)
-        return response;
+        const response = await api.post<IModelsResponse>('/models', body, { headers: { 'Content-Type': 'multipart/form-data' } });
+        return response.data;
+    }
+
+    public async update(model_id: number, { name }: { name: string }) {
+        const response = await api.put<Pick<IModel, 'id' | 'name'>>(`/models/${model_id}`, { name: name });
+        return response.data
+    }
+
+    public async delete(model_id: number) {
+        const response = await api.delete<null>(`/models/${model_id}`);
+        return response.data
     }
 
     public async generate(model_id: number, prompt: string) {
         const response = await api.post<null>(`/models/${model_id}/generate`, { promt: prompt  });
-        return response;
+        return response.data;
     }
 
     public async listen_status(
@@ -61,7 +71,7 @@ class ModelsService {
 
     public async get_result_url(model_id: number, result_id: number) {
         const response = await api.get<Blob>( `/models/${model_id}/results/${result_id}`, {responseType: 'blob'});
-        return URL.createObjectURL(response);
+        return URL.createObjectURL(response.data);
     }
 }
 

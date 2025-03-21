@@ -1,35 +1,41 @@
-import Image from 'next/image';
+import NextImage from 'next/image';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
+import { useMobileDetect } from '@/app/shared/lib';
 
 interface ExampleGalleryProps {
     images: string[];
+    className?: string
 }
 
-export function ExampleGallery ({ images }: ExampleGalleryProps) {
+export function ExampleGallery ({ images, className }: ExampleGalleryProps) {
+    const { isMobile } = useMobileDetect();
+
     return (
         <Swiper
         modules={[Autoplay]}
-        spaceBetween={16}
         navigation={false}
+        spaceBetween={16}
         allowTouchMove={false}
         noSwiping={true}
-        slidesPerView={1.4}
         speed={1000}
         centeredSlides={true} 
+        slidesPerView={isMobile ? 2 : 1.5}
         loop={true}
         autoplay={{ delay: 3000, disableOnInteraction: false }}
+        className={className}
     >
         {images.map((image, index) => (
-            <SwiperSlide key={index} className="flex justify-center items-center">
-                <Image
-                    src={`/images/examples/${image}`}
-                    alt={`Slide ${index}`}
-                    width={1024}
-                    height={1024}
-                    className="rounded-4xl select-none"
-                />
+            <SwiperSlide key={index}>
+                <NextImage
+                        src={`/images/examples/${image}`}
+                        alt={`Slide ${index}`}
+                        className="select-none rounded-4xl object-cover"
+                        width={1024}
+                        height={1024}
+                        lazyBoundary='200px'
+                    />
             </SwiperSlide>
         ))}
     </Swiper>

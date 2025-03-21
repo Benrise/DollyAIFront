@@ -3,13 +3,13 @@ import type { ThemeConfig } from 'antd';
 export const theme: ThemeConfig = {
   token: {
     fontSize: 14,
-    colorPrimary: "#7559ff",
-    colorInfo: "#7559ff",
+    colorPrimary: "#615fff",
+    colorInfo: "#615fff",
     borderRadiusLG: 12,
     fontSizeLG: 14,
     lineWidth: 2,
     fontFamily: '"Rubik", sans-serif',
-    colorBgSpotlight: '#7559ff',
+    colorBgSpotlight: '#615fff',
     controlHeightLG: 48,
   },
   components: {
@@ -20,7 +20,11 @@ export const theme: ThemeConfig = {
     Button: {
       onlyIconSizeLG: 24,
       borderRadiusLG: 16,
-      defaultBorderColor: '',
+      defaultHoverBorderColor: '',
+      defaultHoverColor: '',
+    },
+    Tag: {
+      borderRadiusSM: 16,
     }
   }
 };

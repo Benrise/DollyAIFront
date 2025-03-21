@@ -1,5 +1,5 @@
 import { toast } from 'sonner'
-import { FetchError } from '../lib'
+import { FetchError } from '@/app/api'
 
 export function toastErrorHandler(error: FetchError) {
     if (error.detail) {

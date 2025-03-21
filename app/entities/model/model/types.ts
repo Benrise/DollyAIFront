@@ -6,6 +6,7 @@ export interface IModel {
     updated_at: string;
     gender: string;
     is_ready: boolean;
+    is_train_failed: boolean;
   }
 
 export interface IModelsResponse {
@@ -30,6 +31,7 @@ export interface IModelsListeningResponse {
 export interface IModelsReadinessResponse {
     id: number;
     is_ready: boolean;
+    is_train_failed: boolean;
 }
 
 export const enum ModelsListeningStatusEnum {
