@@ -24,9 +24,9 @@ export default function LandingPage() {
         <div className="h-full w-full flex flex-col items-center">
             {/* wrapper */}
             <div className="flex flex-col max-w-[1200px] w-full items-center gap-24 px-4 p-8 lg:pt-24">
-            <section className="flex lg:flex-row flex-col-reverse gap-8 w-full items-center px-4 sm:px-0">
+            <section className="flex lg:flex-row flex-col-reverse gap-4 lg:gap-8 w-full items-center px-4 sm:px-0">
                 {/* left */}
-                <div className="flex flex-col p-8 sm:p-16 gap-8 bg-blue-50 rounded-4xl w-full max-w-[600px]">
+                <div className="flex flex-col p-8 sm:p-16 gap-4 lg:gap-8 bg-blue-50 rounded-4xl w-full max-w-[600px]">
                     <h1 className="text-3xl sm:text-4xl font-bold">
                         Create <HighlightedText>realistic and beautiful photos</HighlightedText> of yourself
                     </h1>
@@ -70,7 +70,7 @@ export default function LandingPage() {
                     </Carousel>
                 </div>
                 </section>
-                <section className="flex flex-col w-fit gap-8 items-center">
+                <section className="flex flex-col w-fit gap-4 lg:gap-8 items-center">
                     {/* header */}
                     <div className="flex flex-col gap-2 items-center">
                         <h2 className="text-4xl font-bold text-center">Make your <HighlightedText>dreams come true!</HighlightedText></h2>
@@ -111,7 +111,7 @@ export default function LandingPage() {
                     </div>
                     <Button type="primary" href="/auth/login" className="rounded-full! h-[64px]! text-lg! w-full! max-w-[528px]" size="large">Try in now</Button>
                 </section>
-                <section className="flex lg:flex-row flex-col w-full bg-blue-50 p-8 sm:p-16 rounded-4xl gap-8">
+                <section className="flex lg:flex-row flex-col w-full bg-blue-50 p-8 sm:p-16 rounded-4xl gap-4 lg:gap-8">
                     {/* left */}
                     <div className="flex flex-col w-full items-center gap-8">
                         <h2 className="text-5xl font-bold">
@@ -168,8 +168,8 @@ export default function LandingPage() {
                 </section>
                 <footer className="flex flex-col p-8 sm:p-16 items-center gap-4">
                     <div className="flex flex-col items-center">
-                        <div className="text-2xl font-bold">+1 424 2985059</div>
-                        <div className="text-2xl font-bold">ailovephoto.official@gmail.com</div>
+                        <div className="text-xl font-bold">+1 424 2985059</div>
+                        <div className="text-xl font-bold">ailovephoto.official@gmail.com</div>
                     </div>
                     <div className="flex gap-2">
                         <Button href="https://t.me/ai_love_photo_bot" target="_blank" size="large" type="primary" shape="circle">
