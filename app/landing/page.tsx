@@ -166,18 +166,38 @@ export default function LandingPage() {
                         <SubscriptionsList subscriptions={subscriptions} onSubscriptionSelect={handleSubscriptionSelect} actionLabel="Select" className='flex md:flex-nowrap flex-wrap gap-4'/>
                     </div>
                 </section>
-                <footer className="flex flex-col p-8 sm:p-16 items-center gap-4">
-                    <div className="flex flex-col items-center">
-                        <div className="text-xl font-bold">+1 424 2985059</div>
-                        <div className="text-xl font-bold">ailovephoto.official@gmail.com</div>
-                    </div>
-                    <div className="flex gap-2">
-                        <Button href="https://t.me/ai_love_photo_bot" target="_blank" size="large" type="primary" shape="circle">
-                            <Send size={21}/>
-                        </Button>
-                        <Button href="https://instagram.com/ailovephoto_" target="_blank" size="large" type="primary" shape="circle">
-                            <Instagram/>
-                        </Button>
+                <footer className="bg-blue-50 py-12 rounded-4xl w-full">
+                    <div className="container mx-auto px-4">
+                        <div className="flex flex-col items-center text-center space-y-6">
+                        <div className="flex flex-col gap-4">
+                            <div className="text-2xl font-bold">+1 424 2985059</div>
+                            <div className="text-2xl font-bold">biovitalabinc@gmail.com</div>
+                            <div className="text-2xl font-bold">30 N GOULD ST, STE R, SHERIDAN WY 82801</div>
+                            <div className="text-lg text-gray-400">BioVia Lab Inc. © 2025. All Rights Reserved.</div>
+                        </div>
+                        <div className="flex space-x-4">
+                            <Button
+                                href="https://t.me/ai_love_photo_bot"
+                                target="_blank"
+                                size="large"
+                                type="primary"
+                                shape="circle"
+                                className="flex items-center justify-center"
+                            >
+                                <Send />
+                            </Button>
+                            <Button
+                                href="https://instagram.com/ailovephoto_"
+                                target="_blank"
+                                size="large"
+                                type="primary"
+                                shape="circle"
+                                className="flex items-center justify-center"
+                            >
+                                <Instagram />
+                            </Button>
+                        </div>
+                        </div>
                     </div>
                 </footer>
             </div>
