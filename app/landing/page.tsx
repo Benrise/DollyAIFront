@@ -23,7 +23,7 @@ export default function LandingPage() {
     return (
         <div className="h-full w-full flex flex-col items-center">
             {/* wrapper */}
-            <div className="flex flex-col max-w-[1200px] w-full items-center gap-24 px-4 mt-24">
+            <div className="flex flex-col max-w-[1200px] w-full items-center gap-24 px-4 p-8 lg:pt-24">
             <section className="flex lg:flex-row flex-col-reverse gap-8 w-full items-center px-4 sm:px-0">
                 {/* left */}
                 <div className="flex flex-col p-8 sm:p-16 gap-8 bg-blue-50 rounded-4xl w-full max-w-[600px]">
