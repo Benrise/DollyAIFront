@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
 
-    if (!session && !["/auth/login", "/auth/register", "/auth/recover"].includes(pathname)) {
+    if (!session && !["/auth/login", "/auth/register", "/auth/recover", '/landing'].includes(pathname)) {
       router.push(`/auth/login?redirect_to=${pathname}`);
     }
   }, [isLoading, pathname, router, searchParams, setSession, session]);
