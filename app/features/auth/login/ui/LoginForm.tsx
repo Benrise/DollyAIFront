@@ -35,24 +35,24 @@ export function LoginForm() {
     }, [])
 
     return (
-      <div className="flex flex-col gap-4 h-full">
+      <div className="flex flex-col gap-4 h-fit sm:min-h-fit">
           <div ref={parent} className={`flex w-full ${isInputFocused ? "scale-0" : ""}`}>
               {!images.length ? (
-                  <div className="flex justify-center items-center w-full h-full">
+                  <div className="flex justify-center items-center w-full">
                       <Spin size="large" />
                   </div>
               ) : !isInputFocused ? (
                 <ExampleGallery images={images}/>
               ) : null}
           </div>
-          <Title onClick={handleBlur} level={3} className="px-4! md:px-10! text-center text-base sm:text-xl mb-8!">
+          <Title onClick={handleBlur} level={3} className="px-4! sm:px-10! text-center text-base sm:text-xl mb-8!">
             <div>
               <HighlightedText> AI Love Photo</HighlightedText> - your personal photoclone
             </div>
           </Title>
           <Form
             layout="vertical"
-            className="px-4! md:px-10! flex flex-col gap-12 h-full justify-between"
+            className="px-4! sm:px-10! flex flex-col gap-4 justify-between"
             onFinish={handleSubmit((values) => loginMutation(values))}
           >
             <div className="flex flex-col gap-4">

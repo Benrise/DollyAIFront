@@ -79,7 +79,7 @@ export function RecoverForm() {
           <Steps
               responsive={false}
               type={isMobile ? 'inline' : 'default'}
-              className={`px-4! md:px-10! mb-4! ${isMobile && 'justify-center'}`} 
+              className={`px-4! sm:px-10! mb-4! ${isMobile && 'justify-center'}`} 
               size='small' 
               current={currentStep}
               items={steps.map(item => ({ title: item.title }))}
@@ -88,7 +88,7 @@ export function RecoverForm() {
               <Form
                   name="sendCode"
                   layout="vertical"
-                  className="px-4! md:px-10! space-y-4"
+                  className="px-4! sm:px-10! space-y-4"
                   onFinish={sendCodeForm.handleSubmit(onSendCode)}
               >
                   <Form.Item
@@ -122,7 +122,7 @@ export function RecoverForm() {
               <Form
                   name="verifyCode"
                   layout="vertical"
-                  className="px-4! md:px-10! space-y-4"
+                  className="px-4! sm:px-10! space-y-4"
                   onFinish={verifyCodeForm.handleSubmit(onVerifyCode)}
               >
                   <Form.Item
@@ -156,7 +156,7 @@ export function RecoverForm() {
               <Form
                   name="changePassword"
                   layout="vertical"
-                  className="px-4! md:px-10! space-y-4"
+                  className="px-4! sm:px-10! space-y-4"
                   onFinish={changePasswordForm.handleSubmit(onChangePassword)}
               >
                   <Form.Item
@@ -194,11 +194,11 @@ export function RecoverForm() {
                   </Form.Item>
               </Form>
           )}
-          <Button type='link' href="/auth/login" block className="px-4! md:px-10!">
+          <Button type='link' href="/auth/login" block className="px-4! sm:px-10!">
               Back to Login Page
           </Button>
-          <Divider plain className="px-4! md:px-10!">or</Divider>
-          <div className="px-4! md:px-10!">
+          <Divider plain className="px-4! sm:px-10!">or</Divider>
+          <div className="px-4! sm:px-10!">
               <a href={OAUTH_LINK}>
                   <Button 
                       type="default" 

@@ -5,7 +5,7 @@ import { ContentSection } from '@/app/shared/ui/content-section';
 
 export default function RecoverPage() {
   return (
-   <ContentSection>
+   <ContentSection className='sm:max-w-lg sm:rounded-4xl'>
       <RecoverForm/>
    </ContentSection>
   );

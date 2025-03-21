@@ -5,7 +5,7 @@ import { ContentSection } from '@/app/shared/ui/content-section';
 
 export default function RegisterPage() {
   return (
-   <ContentSection className='max-w-fit!'>
+   <ContentSection className='md:rounded-4xl'>
       <RegisterForm/>
    </ContentSection>
   );

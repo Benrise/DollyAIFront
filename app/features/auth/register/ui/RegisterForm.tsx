@@ -42,14 +42,14 @@ export function RegisterForm() {
     }, []);
 
     return (
-      <div className="flex flex-col gap-4 h-fit">
-        <Title level={3} className="text-center text-base sm:text-xl">
+      <div className="flex flex-col gap-4 h-fit md:min-h-fit">
+        <Title level={3} className="text-center text-base md:text-xl">
           Registration
         </Title>
         <Form
           name="register"
           layout="vertical"
-          className="px-4! md:px-10! flex flex-col gap-12 justify-between"
+          className="px-4! md:px-10! flex flex-col gap-4 justify-between"
           onFinish={handleRegisterWithoutPayment}
         >
             <div className="flex flex-col">
@@ -86,12 +86,12 @@ export function RegisterForm() {
                       render={({ field }) => <Input.Password size="large" placeholder="Repeat password" {...field} />}
                     />
               </Form.Item>
-              <Form.Item>
-                <Checkbox onChange={() => setIsPlansHidden(!isPlansHidden)}>Register without payment</Checkbox>
-              </Form.Item>
               {!isPlansHidden && <Form.Item label="Plan">
                 <SubscriptionsList isActionsLoading={isLoadingRegister || isLoadingcheckout} subscriptions={subscriptions} onSubscriptionSelect={handleSelectPlan} actionLabel="Continue" className='flex md:flex-nowrap flex-wrap gap-4'/>
               </Form.Item>}
+              <Form.Item>
+                <Checkbox onChange={() => setIsPlansHidden(!isPlansHidden)}>Register without payment</Checkbox>
+              </Form.Item>
               {isPlansHidden && <Form.Item className="mb-2!">
                 <Button type="primary" size="large" htmlType="submit" loading={isLoadingRegister} block>
                   Register
