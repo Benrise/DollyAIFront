@@ -1,5 +1,5 @@
 import { ISubscriptionProduct, SubscriptionCard } from "@/app/entities/subscription/card";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface SubscriptionsListProps {
     subscriptions: ISubscriptionProduct[];
