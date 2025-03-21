@@ -1,15 +1,13 @@
 "use client"
-
-import { Button, Carousel } from "antd";
-
-import { HighlightedText } from "@/app/shared/ui/highlighted-text";
 import Image from "next/image";
-import { FeatureCard } from "./components";
-import { DownloadOutlined, EditOutlined, StarOutlined } from "@ant-design/icons";
-import { SubscriptionsList, useGetSubscriptionsListMutation } from "@/app/widgets/subscription/list";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { Instagram, Send } from "lucide-react";
+import { Button, Carousel } from "antd";
+import { Download, Instagram, Pencil, Send, Sparkles } from "lucide-react";
+
+import { FeatureCard } from "./components";
+import { HighlightedText } from "@/app/shared/ui/highlighted-text";
+import { SubscriptionsList, useGetSubscriptionsListMutation } from "@/app/widgets/subscription/list";
 
 export default function LandingPage() {
     const { subscriptions, getSubscriptionsListMutation } = useGetSubscriptionsListMutation();
@@ -89,15 +87,15 @@ export default function LandingPage() {
                     </div>
                     <Button type="primary" href="/auth/login" className="rounded-full! h-[64px]! text-xl! w-full! max-w-[528px]" size="large">Try in now</Button>
                 </section>
-                <section className="flex w-full bg-blue-50 p-16 rounded-4xl relative gap-8">
+                <section className="flex w-full bg-blue-50 p-16 rounded-4xl gap-8">
                     {/* left */}
                     <div className="flex flex-col w-full items-center gap-8">
                         <h2 className="text-5xl font-bold">
                             <HighlightedText>How does</HighlightedText> it work
                         </h2>
                         <Image
-                            width={316}
-                            height={674}
+                            width={1040}
+                            height={1100}
                             alt="Also available in telegram"
                             src="/images/landing/section_3.1.png"
                         />
@@ -107,7 +105,7 @@ export default function LandingPage() {
                         {/* feature */}
                         <div className="flex items-center relative">
                         <div className="flex-shrink-0 w-16 h-16 p-4 bg-blue-100 rounded-2xl flex items-center justify-center">
-                            <DownloadOutlined className="text-3xl text-indigo-500!" />
+                            <Download className="text-3xl text-indigo-500!" />
                         </div>
                         <div className="ml-4">
                             <h3 className="text-lg font-semibold">Upload 10-15 photos for better generation</h3>
@@ -117,7 +115,7 @@ export default function LandingPage() {
                         {/* feature */}
                         <div className="flex items-center relative">
                         <div className="flex-shrink-0 w-16 h-16 p-4 bg-blue-100 rounded-2xl flex items-center justify-center">
-                            <StarOutlined className="text-3xl text-indigo-500!" />
+                            <Sparkles className="text-3xl text-indigo-500!" />
                         </div>
                         <div className="ml-4">
                             <h3 className="text-lg font-semibold">You are waiting for your personal neural network to learn</h3>
@@ -127,14 +125,14 @@ export default function LandingPage() {
                         {/* feature */}
                         <div className="flex items-center relative">
                         <div className="flex-shrink-0 w-16 h-16 p-4 bg-blue-100 rounded-2xl flex items-center justify-center">
-                            <EditOutlined className="text-3xl text-indigo-500!" />
+                            <Pencil className="text-3xl text-indigo-500!" />
                         </div>
                         <div className="ml-4">
                             <h3 className="text-lg font-semibold">Write any descriptions of the desired photos</h3>
                         </div>
                         </div>
+                        <Button type="primary" href="/auth/login" className="rounded-full! h-[64px]! text-xl! w-full max-w-[528px]" size="large">Get the best and fastest photo shoot of your life</Button>
                     </div>
-                    <Button type="primary" href="/auth/login" className="rounded-full! h-[64px]! text-xl! w-full max-w-[528px] absolute! bottom-12 left-1/2 transform -translate-x-1/2" size="large">Get the best and fastest photo shoot of your life</Button>
                     </section>
                 <section className="flex flex-col w-fit gap-8 items-center">
                     {/* header */}
