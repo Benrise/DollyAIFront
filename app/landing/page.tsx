@@ -1,6 +1,5 @@
 "use client"
 import { useRouter } from "next/navigation";
-import NextImage from "next/image";
 import { useEffect } from "react";
 import { Button, Carousel, Image } from "antd";
 import { Download, Instagram, Pencil, Send, Sparkles } from "lucide-react";
