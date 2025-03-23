@@ -1,4 +1,4 @@
-import { Button, Form, Input, Typography, Checkbox, Divider } from 'antd';
+import { Button, Form, Input, Typography, Checkbox } from 'antd';
 import { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -15,6 +15,7 @@ const { Title } = Typography;
 
 export function RegisterForm() {
     const OAUTH_LINK = process.env.NEXT_OAUTH_LINK;
+    const LOGIN_URL = "/app/auth/login";
 
     const { checkoutMutation, isLoadingcheckout } = useCheckoutMutation();
     const { disableDrawerWatching } = useUserContext();
@@ -108,7 +109,7 @@ export function RegisterForm() {
                           Sign up with Google
                       </Button>
                 </a>
-                <Button type="link" href="/auth/login" className="text-[14px]!" block>
+                <Button type="link" href={LOGIN_URL} className="text-[14px]!" block>
                   Already have an account? Login
                 </Button>
               </div>
