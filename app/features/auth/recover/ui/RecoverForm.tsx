@@ -14,6 +14,7 @@ const { Title } = Typography;
 
 export function RecoverForm() {
     const OAUTH_LINK = process.env.NEXT_OAUTH_LINK
+    const LOGIN_URL = "/app/auth/login"
 
     const { 
       sendCodeMutation, 
@@ -56,7 +57,7 @@ export function RecoverForm() {
     };
     const changePasswordCallback = () => {
       changePasswordForm.reset();
-      router.push('/auth/login')
+      router.push(LOGIN_URL)
     };
 
     const steps = [
@@ -114,7 +115,7 @@ export function RecoverForm() {
                       >
                           Send Code
                       </Button>
-                      <Button type='link' href="/auth/login" block className="px-4! sm:px-10!">
+                      <Button type='link' href={LOGIN_URL} block className="px-4! sm:px-10!">
                         Back to Login Page
                        </Button>
                   </div>
@@ -151,7 +152,7 @@ export function RecoverForm() {
                       >
                           Verify Code
                       </Button>
-                      <Button type='link' href="/auth/login" block className="px-4! sm:px-10!">
+                      <Button type='link' href={LOGIN_URL} block className="px-4! sm:px-10!">
                         Back to Login Page
                         </Button>
                   </div>
@@ -197,7 +198,7 @@ export function RecoverForm() {
                       >
                           Change Password
                       </Button>
-                      <Button type='link' href="/auth/login" block className="px-4! sm:px-10!">
+                      <Button type='link' href={LOGIN_URL} block className="px-4! sm:px-10!">
                         Back to Login Page
                       </Button>
                   </div>

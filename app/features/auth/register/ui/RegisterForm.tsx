@@ -14,6 +14,9 @@ import { useUserContext } from '@/app/providers';
 const { Title } = Typography;
 
 export function RegisterForm() {
+    const OAUTH_LINK = process.env.NEXT_OAUTH_LINK;
+    const LOGIN_URL = "/app/auth/login";
+
     const { checkoutMutation, isLoadingcheckout } = useCheckoutMutation();
     const { disableDrawerWatching } = useUserContext();
     const { registerMutation, isLoadingRegister } = useRegisterMutation();
@@ -94,9 +97,19 @@ export function RegisterForm() {
               </Form.Item>
               <div className="flex flex-col gap-2">
                 {isPlansHidden && <Button type="primary" size="large" htmlType="submit" loading={isLoadingRegister} block>
-                  Register
+                  Sign Up
                 </Button>}
-                <Button type="link" href="/auth/login" className="text-[14px]!" block>
+                <a href={OAUTH_LINK}>
+                      <Button 
+                          type="default" 
+                          icon={<img src="/images/svg/oauth_google.svg" alt="google" />} 
+                          size="large" 
+                          block
+                      >
+                          Sign up with Google
+                      </Button>
+                </a>
+                <Button type="link" href={LOGIN_URL} className="text-[14px]!" block>
                   Already have an account? Login
                 </Button>
               </div>
