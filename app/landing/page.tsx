@@ -38,7 +38,7 @@ export default function LandingPage() {
                     </p>
                     <Button
                         type="primary"
-                        href="/auth/login"
+                        href="/auth/register"
                         className="rounded-full! min-h-[64px]! h-fit! text-lg! w-full max-w-[528px]"
                         size="large"
                     >
@@ -109,7 +109,7 @@ export default function LandingPage() {
                             image_url="/images/landing/section_2.6.jpg"
                         />
                     </div>
-                    <Button type="primary" href="/auth/login" className="rounded-full! h-[64px]! text-lg! w-full! max-w-[528px]" size="large">Try in now</Button>
+                    <Button type="primary" href="/auth/register" className="rounded-full! h-[64px]! text-lg! w-full! max-w-[528px]" size="large">Try in now</Button>
                 </section>
                 <section className="flex lg:flex-row flex-col w-full bg-blue-50 p-8 sm:p-16 rounded-4xl gap-4 lg:gap-8">
                     {/* left */}
@@ -154,7 +154,7 @@ export default function LandingPage() {
                             <h3 className="text-lg font-semibold">Write any descriptions of the desired photos</h3>
                         </div>
                         </div>
-                        <Button type="primary" href="/auth/login" className="rounded-full! min-h-[64px]! h-fit! text-lg! w-full max-w-[528px] text-wrap!" size="large">
+                        <Button type="primary" href="/auth/register" className="rounded-full! min-h-[64px]! h-fit! text-lg! w-full max-w-[528px] text-wrap!" size="large">
                             Get the best photo shoot
                         </Button>
                     </div>
