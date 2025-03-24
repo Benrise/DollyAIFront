@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         } catch (error) {
           console.error(error);
           await signOut();
+          router.push(LOGIN_URL);
         }
       }
       setIsLoading(false);
