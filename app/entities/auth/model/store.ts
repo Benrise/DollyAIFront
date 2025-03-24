@@ -2,7 +2,6 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { authService } from "@/app/entities/auth";
 import { ILoginResponse, IRefreshResponse, IRegisterResponse } from "./types";
-import { stat } from "fs";
 
 interface IAuthData {
   id: number,
@@ -15,12 +14,13 @@ interface AuthState {
   session: IAuthData | null;
   signIn: (email: string, password: string) => Promise<ILoginResponse>;
   signUp: (email: string, password: string, password_confirm: string) => Promise<IRegisterResponse>;
-  signOut: () => Promise<void>;
+  signOut: (on_refresh?: boolean) => Promise<void>;
   sendCode: (email: string) => Promise<null>;
   verifyCode: (code: string) => Promise<null>;
   changePassword: (password: string, password_confirm: string) => Promise<null>;
   refresh: () => Promise<IRefreshResponse>;
   setSession: (session: IAuthData) => void;
+  setAccessToken: (access: string) => void;
   getAccessToken: () => string;
 }
 
@@ -50,9 +50,9 @@ export const useAuthStore = create<AuthState>()(
         const response = await authService.changePassword(password, password_confirm);
         return response
       },
-      signOut: async () => {
+      signOut: async (on_refresh?: boolean) => {
         try {
-          if (get().session) {
+          if (get().session && !on_refresh) {
             await authService.logout();
           }
         } catch (error) {
@@ -62,16 +62,11 @@ export const useAuthStore = create<AuthState>()(
         }
       },
       refresh: async () => {
-        try {
-          const response = await authService.refresh();
+        const response = await authService.refresh();
           set((state) => ({
             session: state.session ? { ...state.session, access: response.access } : null,
           }));
           return response
-        } catch (error) {
-          set({ session: null });
-          throw error;
-        }
       },
       setSession(session) {
         set({ session });
@@ -80,6 +75,12 @@ export const useAuthStore = create<AuthState>()(
         const session = get().session;
         return session ? session.access : "";
       },
+      setAccessToken(access: string) {
+        const session = get().session;
+        if (session) {
+          set({ session: { ...session, access } });
+        }
+      }
     }),
     {
       name: "auth-storage",

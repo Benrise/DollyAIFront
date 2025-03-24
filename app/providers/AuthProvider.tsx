@@ -21,6 +21,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         try {
           await refresh();
         } catch (error) {
+          console.error(error);
           await signOut();
         }
       }
@@ -28,7 +29,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     initializeAuth();
-  }, []);
+  }, [session]);
 
   useEffect(() => {
     if (isLoading) return;
@@ -52,7 +53,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (!session && ![LOGIN_URL, REGISTER_URL, RECOVER_URL, '/'].includes(pathname)) {
       router.push(`${LOGIN_URL}?redirect_to=${pathname}`);
     }
-  }, [session]);
+  }, [session, pathname, searchParams]);
 
   if (isLoading) {
     return null;
