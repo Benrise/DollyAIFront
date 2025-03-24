@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
-import { useAuthStore } from "@/app/entities/auth";
+import { IRefreshResponse, useAuthStore } from "@/app/entities/auth";
 
 export class FetchError extends Error {
   public constructor(
@@ -45,11 +45,12 @@ api.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._isRetry) {
       originalRequest._isRetry = true;
       try {
-        await authStore.refresh();
+        const response = await axios.post<IRefreshResponse>(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`, {}, { withCredentials: true });
+        authStore.setAccessToken(response.data.access);
         return api.request(originalRequest);
       } catch (refreshError) {
         console.error("Ошибка обновления токена:", refreshError);
-        authStore.signOut();
+        await authStore.signOut(true);
       }
     }
 

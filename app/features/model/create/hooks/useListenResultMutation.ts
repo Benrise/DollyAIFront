@@ -6,7 +6,7 @@ import { useRef } from 'react';
 
 
 export function useListenToResultMutation(onCompleted: (url: string | null) => void) {
-    const { getAccessToken } = useAuthStore();
+    const { getAccessToken, refresh, signOut } = useAuthStore();
     const token = getAccessToken();
 
     const previousControllerRef = useRef<AbortController | null>(null);
@@ -16,7 +16,6 @@ export function useListenToResultMutation(onCompleted: (url: string | null) => v
         mutationFn: async (model_id: number) => {
             if (previousControllerRef.current) {
                 previousControllerRef.current.abort();
-            
             }
             const controller = new AbortController();
             previousControllerRef.current = controller;
@@ -35,7 +34,7 @@ export function useListenToResultMutation(onCompleted: (url: string | null) => v
                         controller.abort();
                     }
                 }
-            });
+            }, refresh, signOut);
             return controller;
         },
         onError(error) {

@@ -14,12 +14,13 @@ interface AuthState {
   session: IAuthData | null;
   signIn: (email: string, password: string) => Promise<ILoginResponse>;
   signUp: (email: string, password: string, password_confirm: string) => Promise<IRegisterResponse>;
-  signOut: () => Promise<null>;
+  signOut: (on_refresh?: boolean) => Promise<void>;
   sendCode: (email: string) => Promise<null>;
   verifyCode: (code: string) => Promise<null>;
   changePassword: (password: string, password_confirm: string) => Promise<null>;
   refresh: () => Promise<IRefreshResponse>;
   setSession: (session: IAuthData) => void;
+  setAccessToken: (access: string) => void;
   getAccessToken: () => string;
 }
 
@@ -49,10 +50,16 @@ export const useAuthStore = create<AuthState>()(
         const response = await authService.changePassword(password, password_confirm);
         return response
       },
-      signOut: async () => {
-        const response = await authService.logout();
-        set({ session: null });
-        return response
+      signOut: async (on_refresh?: boolean) => {
+        try {
+          if (get().session && !on_refresh) {
+            await authService.logout();
+          }
+        } catch (error) {
+          throw error;
+        } finally {
+          set({ session: null });
+        }
       },
       refresh: async () => {
         const response = await authService.refresh();
@@ -68,6 +75,12 @@ export const useAuthStore = create<AuthState>()(
         const session = get().session;
         return session ? session.access : "";
       },
+      setAccessToken(access: string) {
+        const session = get().session;
+        if (session) {
+          set({ session: { ...session, access } });
+        }
+      }
     }),
     {
       name: "auth-storage",

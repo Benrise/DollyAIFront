@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const LOGIN_URL = "/app/auth/login";
   const REGISTER_URL = "/app/auth/register";
   const RECOVER_URL = "/app/auth/recover";
-
+  
   const { session, setSession, refresh, signOut } = useAuthStore();
   const router = useRouter();
   const pathname = usePathname();
@@ -21,15 +21,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         try {
           await refresh();
         } catch (error) {
-          console.error("Ошибка обновления токена:", error);
-          signOut();
+          console.error(error);
+          await signOut();
         }
       }
       setIsLoading(false);
     };
 
     initializeAuth();
-  }, [session, refresh, signOut]);
+  }, [session]);
 
   useEffect(() => {
     if (isLoading) return;
@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (!session && ![LOGIN_URL, REGISTER_URL, RECOVER_URL, '/'].includes(pathname)) {
       router.push(`${LOGIN_URL}?redirect_to=${pathname}`);
     }
-  }, [isLoading, pathname, router, searchParams, setSession, session]);
+  }, [session, pathname, searchParams]);
 
   if (isLoading) {
     return null;
