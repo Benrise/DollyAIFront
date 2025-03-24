@@ -17,8 +17,8 @@ const { Title } = Typography;
 
 export function LoginForm() {
     const OAUTH_LINK = process.env.NEXT_OAUTH_LINK;
-    const REGISTER_URL = "/app/auth/register"
-    const RECOVER_URL = "/app/auth/recover"
+    const REGISTER_URL = "/pages/auth/register"
+    const RECOVER_URL = "/pages/auth/recover"
 
     const { loginMutation, isLoadingLogin } = useLoginMutation();
     const { control, handleSubmit, formState: { errors } } = useForm<TypeLoginSchema>({

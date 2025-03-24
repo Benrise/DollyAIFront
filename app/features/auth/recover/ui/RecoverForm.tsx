@@ -14,7 +14,7 @@ const { Title } = Typography;
 
 export function RecoverForm() {
     const OAUTH_LINK = process.env.NEXT_OAUTH_LINK
-    const LOGIN_URL = "/app/auth/login"
+    const LOGIN_URL = "/pages/auth/login"
 
     const { 
       sendCodeMutation, 

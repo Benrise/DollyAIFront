@@ -18,7 +18,7 @@ export function useLoginMutation() {
                 toastErrorHandler(data);
             } 
             else {
-                router.push('/app');
+                router.push("/pages");
             }
         },
         onError(error: FetchError) {
