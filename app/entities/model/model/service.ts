@@ -2,6 +2,7 @@ import { api } from "@/app/api";
 import { IModelsReadinessResponse, IModelsResponse, IModelsListeningResponse, IModel } from "./types";
 import { FetchError } from "@/app/api";
 import { fetchEventSource } from '@microsoft/fetch-event-source';
+import { IRefreshResponse } from "@/app/entities/auth";
 
 class ModelsService {
     public async list() {
@@ -34,9 +35,11 @@ class ModelsService {
         token: string,
         type: 'training' | 'result',
         controller: AbortController,
-        callback: (data: IModelsReadinessResponse | IModelsListeningResponse | FetchError) => void
+        callback: (data: IModelsReadinessResponse | IModelsListeningResponse | FetchError) => void,
+        refresh: () => Promise<IRefreshResponse>,
+        signOut: () => Promise<void>,
     ) {
-        const base_url = process.env.NEXT_PUBLIC_API_URL;
+        const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
         const { signal } = controller;
     
         const headers = {
@@ -44,25 +47,31 @@ class ModelsService {
         };
     
         const url = type === 'training'
-            ? `${base_url}/models/${model_id}/readiness`
-            : `${base_url}/models/${model_id}/last-result`;
+            ? `${BASE_URL}/models/${model_id}/readiness`
+            : `${BASE_URL}/models/${model_id}/last-result`;
 
         await fetchEventSource(url, {
             headers,
             signal,
+            async onopen(response) {
+                if (response.status === 403) {
+                    controller.abort();
+                    await signOut();
+                }
+                else if (response.status === 401) {
+                    const { access: new_token } = await refresh();
+                    await modelsService.listen_status(model_id, new_token, type, controller, callback, refresh, signOut);
+                }
+            },
             onmessage(event) {
                 if (!event.data) return;
-        
+
                 try {
                     const data = JSON.parse(event.data);
                     callback(data);
                 } catch (error) {
                     console.error("Failed to parse JSON:", event.data, error);
                 }
-            },
-            onerror(error) {
-                console.error(`Error in ${type} event:`, error);
-                callback(error);
             },
         });
 

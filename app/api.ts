@@ -49,7 +49,7 @@ api.interceptors.response.use(
         return api.request(originalRequest);
       } catch (refreshError) {
         console.error("Ошибка обновления токена:", refreshError);
-        authStore.signOut();
+        await authStore.signOut();
       }
     }
 

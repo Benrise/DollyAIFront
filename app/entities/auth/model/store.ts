@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { authService } from "@/app/entities/auth";
 import { ILoginResponse, IRefreshResponse, IRegisterResponse } from "./types";
+import { stat } from "fs";
 
 interface IAuthData {
   id: number,
@@ -14,7 +15,7 @@ interface AuthState {
   session: IAuthData | null;
   signIn: (email: string, password: string) => Promise<ILoginResponse>;
   signUp: (email: string, password: string, password_confirm: string) => Promise<IRegisterResponse>;
-  signOut: () => Promise<null>;
+  signOut: () => Promise<void>;
   sendCode: (email: string) => Promise<null>;
   verifyCode: (code: string) => Promise<null>;
   changePassword: (password: string, password_confirm: string) => Promise<null>;
@@ -50,16 +51,27 @@ export const useAuthStore = create<AuthState>()(
         return response
       },
       signOut: async () => {
-        const response = await authService.logout();
-        set({ session: null });
-        return response
+        try {
+          if (get().session) {
+            await authService.logout();
+          }
+        } catch (error) {
+          throw error;
+        } finally {
+          set({ session: null });
+        }
       },
       refresh: async () => {
-        const response = await authService.refresh();
+        try {
+          const response = await authService.refresh();
           set((state) => ({
             session: state.session ? { ...state.session, access: response.access } : null,
           }));
           return response
+        } catch (error) {
+          set({ session: null });
+          throw error;
+        }
       },
       setSession(session) {
         set({ session });
