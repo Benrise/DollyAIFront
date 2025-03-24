@@ -5,9 +5,9 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const LOGIN_URL = "/app/auth/login";
-  const REGISTER_URL = "/app/auth/register";
-  const RECOVER_URL = "/app/auth/recover";
+  const LOGIN_URL = "/pages/auth/login";
+  const REGISTER_URL = "/pages/auth/register";
+  const RECOVER_URL = "/pages/auth/recover";
   
   const { session, setSession, refresh, signOut } = useAuthStore();
   const router = useRouter();
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const access_type = searchParams.get("access_type");
 
     if (session && (pathname === LOGIN_URL || pathname === REGISTER_URL)) {
-      router.replace("/app");
+      router.replace("/pages");
       return;
     }
 

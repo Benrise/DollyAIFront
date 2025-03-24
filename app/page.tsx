@@ -9,7 +9,7 @@ import { HighlightedText } from "@/app/shared/ui/highlighted-text";
 import { SubscriptionsList, useGetSubscriptionsListMutation } from "@/app/widgets/subscription/list";
 
 export default function LandingPage() {
-    const REGISTER_URL = '/app/auth/register'
+    const REGISTER_URL = "/pages/auth/register"
 
     const { subscriptions, getSubscriptionsListMutation } = useGetSubscriptionsListMutation();
     const router = useRouter()
