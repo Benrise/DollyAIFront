@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, [session]);
 
   useEffect(() => {
-    if (isLoading) return;
+    if (isLoading) return
 
     const id = Number(searchParams.get("id"));
     const email = searchParams.get("email");
@@ -54,10 +54,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (!session && ![LOGIN_URL, REGISTER_URL, RECOVER_URL, '/'].includes(pathname)) {
       router.push(`${LOGIN_URL}?redirect_to=${pathname}`);
     }
-  }, [session, pathname, searchParams]);
+  }, [session, pathname, searchParams, isLoading]);
 
   if (isLoading) {
-    return null;
+    return null
   }
 
   return <>{children}</>;
