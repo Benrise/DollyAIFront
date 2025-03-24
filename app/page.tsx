@@ -175,7 +175,7 @@ export default function LandingPage() {
                             <div className="text-2xl font-bold">+1 424 2985059</div>
                             <div className="text-2xl font-bold">biovitalabinc@gmail.com</div>
                             <div className="text-2xl font-bold">30 N GOULD ST, STE R, SHERIDAN WY 82801</div>
-                            <div className="text-lg text-gray-400">BioVia Lab Inc. © 2025. All Rights Reserved.</div>
+                            <div className="text-lg text-gray-400">BioVita Lab Inc. © 2025. All Rights Reserved.</div>
                         </div>
                         <div className="flex space-x-4">
                             <Button
