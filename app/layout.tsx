@@ -3,7 +3,9 @@ import '@/app/style.scss';
 
 import { type Metadata } from "next";
 import { Toaster } from 'sonner';
+
 import { AntdRegistry } from '@ant-design/nextjs-registry';
+import { GoogleTagManager } from '@next/third-parties/google';
 
 import { MainProvider } from '@/app/providers';
 
@@ -32,14 +34,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-          <AntdRegistry>
-            <MainProvider>
-                <div className="flex flex-col sm:items-center sm:justify-center h-full">
-                  {children}
-                </div>
-                <Toaster/>
-            </MainProvider>
-          </AntdRegistry>
+        <AntdRegistry>
+          <MainProvider>
+            <div className="flex flex-col sm:items-center sm:justify-center h-full">
+              {children}
+            </div>
+            <Toaster/>
+          </MainProvider>
+        </AntdRegistry>
+        <GoogleTagManager gtmId="GTM-NM76B9RL" />
       </body>
     </html>
   );
