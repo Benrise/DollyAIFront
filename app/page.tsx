@@ -140,25 +140,25 @@ export default function LandingPage() {
                 </section>
                 <section className="flex lg:flex-row flex-col gap-4 lg:gap-8 w-full items-center">
                     {/* left */}
-                    <div className="w-full flex flex-col gap-4 max-w-[456]">
-                        <div ref={parent} className="flex w-fit h-fit rounded-4xl overflow-hidden">
+                    <div className="w-full flex flex-col gap-4 max-w-[456px]">
+                        <div ref={parent} className="relative w-full aspect-square max-w-[456px] overflow-hidden rounded-4xl">
                             {isGenerating ? (
-                                <div className="flex w-full h-full p-23 items-center justify-center">
+                                <div className="absolute inset-0 flex items-center justify-center">
                                     <GeneratingAnimation/>
                                 </div>
                             ) : generatedImage ? (
                                 <Image
                                     alt="Generated photo"
                                     src={generatedImage}
-                                    width={456}
-                                    height={456}
+                                    fill
+                                    className="object-cover"
                                 />
                             ) : (
                                 <Image
-                                    alt="Example of generated photo"
+                                    alt="Example photo"
                                     src={DEFAULT_RESULT_IMAGE}
-                                    width={456}
-                                    height={456}
+                                    fill
+                                    className="object-cover"
                                 />
                             )}
                         </div>
@@ -166,30 +166,30 @@ export default function LandingPage() {
                         <Button type="primary" size="large" shape="round" onClick={handleGenerate} loading={isGenerating} block>Generate</Button>
                     </div>
                     {/* right */}
-                    <div className="w-full flex flex-col lg:gap-8 gap-4 p-8 sm:p-16 bg-blue-50 rounded-4xl h-full justify-center">
+                    <div className="w-full flex flex-col gap-8 p-8 sm:p-16 bg-blue-50 rounded-4xl h-full justify-center max-w-[600px]">
                         <h2 className="lg:text-4xl text-2xl font-bold text-center"><HighlightedText>Personalized</HighlightedText> AI-powered generations</h2>
                         <div className="flex gap-2 justify-center">
                             {MODELS.map(model => (
                                 <Avatar
-                                key={model.id}
-                                size={92}
-                                src={model.src}
-                                className={`cursor-pointer transition-all ${
-                                    selectedAvatar === model.id ? 'ring-4 ring-fuchsia-500 scale-105' : 'opacity-80 hover:opacity-100'
-                                }`}
-                                onClick={() => setSelectedAvatar(model.id)}
+                                    key={model.id}
+                                    size={{ xs: 64, sm: 64, md: 64, lg: 64, xl: 92, xxl: 92 }}
+                                    src={model.src}
+                                    className={`cursor-pointer transition-all ${
+                                        selectedAvatar === model.id ? 'ring-4 ring-fuchsia-500 scale-105' : 'opacity-80 hover:opacity-100'
+                                    }`}
+                                    onClick={() => setSelectedAvatar(model.id)}
                                 />
                             ))}
                         </div>
                         <div className="flex gap-2 flex-wrap justify-center">
                             {CATEGORIES.map(category => (
                                 <Button
-                                key={category.id}
-                                type={selectedCategory === category.id ? 'primary' : 'default'}
-                                onClick={() => setSelectedCategory(category.id)}
-                                className="transition-all"
-                                >
-                                {category.name}
+                                    key={category.id}
+                                    type={selectedCategory === category.id ? 'primary' : 'default'}
+                                    onClick={() => setSelectedCategory(category.id)}
+                                    className="transition-all"
+                                    >
+                                    {category.name}
                                 </Button>
                             ))}
                         </div>
