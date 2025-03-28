@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Button, Carousel, Image } from "antd";
 import { Download, Instagram, Pencil, Send, Sparkles } from "lucide-react";
 
+import { useUserContext } from "@/app/providers";
 import { FeatureCard } from "@/app/entities/landing";
 import { HighlightedText } from "@/app/shared/ui/highlighted-text";
 import { SubscriptionsList, useGetSubscriptionsListMutation } from "@/app/widgets/subscription/list";
@@ -12,6 +13,7 @@ export default function LandingPage() {
     const REGISTER_URL = "/pages/auth/register"
 
     const { subscriptions, getSubscriptionsListMutation } = useGetSubscriptionsListMutation();
+    const { disableDrawerWatching } = useUserContext();
     const router = useRouter()
 
     const handleSubscriptionSelect = async () => {
@@ -19,6 +21,7 @@ export default function LandingPage() {
     }
 
     useEffect(() => {
+        disableDrawerWatching();
         getSubscriptionsListMutation();
     }, []);
 
