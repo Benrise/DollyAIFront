@@ -20,8 +20,12 @@ export const theme: ThemeConfig = {
     Button: {
       onlyIconSizeLG: 24,
       borderRadiusLG: 16,
-      defaultHoverBorderColor: '',
+      defaultBg: '#FFFFFF',
+      defaultHoverBorderColor: '#FAFAFA',
       defaultHoverColor: '',
+      colorBorder: '',
+      colorBgContainerDisabled: '#B0AFFF',
+      colorTextDisabled: '#FFFFFF',
     },
     Tag: {
       borderRadiusSM: 16,

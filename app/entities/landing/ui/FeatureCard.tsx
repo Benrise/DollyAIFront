@@ -10,7 +10,7 @@ interface FeatureCardProps {
 export function FeatureCard({title, image_url, description} : FeatureCardProps) {
     return (
         <div className="flex flex-col gap-4 bg-blue-50 p-6 pb-0 rounded-4xl relative">
-            <h2 className="text-2xl font-bold">{title}</h2>
+            <h2 className="lg:text-2xl text-xl font-bold">{title}</h2>
             <div className="flex w-full justify-center">
                 <Image width={512} height={512} className="rounded-4xl rounded-b-none max-w-[90%]" alt="Feature photo" src={image_url}/>
             </div>
