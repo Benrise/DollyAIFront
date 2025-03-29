@@ -10,7 +10,7 @@ build:test:
       when: always
   before_script:
     - echo "$CI_BUILD_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
-    - cat "$ENV_FILE_TEST" > .env
+    - cat "$ENV_FILE_WITH_SEARCH_TEST" > .env
   script:
     - docker build -t "$CI_REGISTRY_IMAGE:with-search:test" . || { echo 'Build failed'; exit 1; }
 
