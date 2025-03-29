@@ -6,60 +6,29 @@ stages:
 build:test:
   stage: build
   rules:
-    - if: '$CI_COMMIT_BRANCH == "dev"'
+    - if: '$CI_COMMIT_BRANCH == "search"'
       when: always
   before_script:
     - echo "$CI_BUILD_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
-    - cat "$ENV_FILE_TEST" > .env
+    - cat "$ENV_FILE_WITH_SEARCH_TEST" > .env
   script:
-    - docker build -t "$CI_REGISTRY_IMAGE:test" . || { echo 'Build failed'; exit 1; }
-
-
-build:prod:
-  stage: build
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'
-      when: always
-  before_script:
-    - echo "$CI_BUILD_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
-    - cat "$ENV_FILE_PROD" > .env
-  script:
-    - docker build -t "$CI_REGISTRY_IMAGE:latest" . || { echo 'Build failed'; exit 1; }
+    - docker build -t "$CI_REGISTRY_IMAGE:with-search-test" . || { echo 'Build failed'; exit 1; }
 
 
 deploy:test:
   stage: deploy
   rules:
-    - if: '$CI_COMMIT_BRANCH == "dev"'
+    - if: '$CI_COMMIT_BRANCH == "search"'
       when: on_success
   before_script:
     - echo "$CI_BUILD_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
   script:
-    - docker push "$CI_REGISTRY_IMAGE:test"
+    - docker push "$CI_REGISTRY_IMAGE:with-search-test"
     - apk update && apk add openssh-client
     - chmod 600 $ID_RSA
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP -p 228 "
       docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY &&
-      docker pull $CI_REGISTRY_IMAGE:test &&
-      cd /home/love/test/app &&
-      docker compose up -d test-frontend
-      " || { echo 'Deploy failed'; exit 1; }
-
-
-deploy:prod:
-  stage: deploy
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'
-      when: on_success
-  before_script:
-    - echo "$CI_BUILD_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
-  script:
-    - docker push "$CI_REGISTRY_IMAGE:latest"
-    - apk update && apk add openssh-client
-    - chmod 600 $ID_RSA
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP -p 228 "
-      docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY &&
-      docker pull $CI_REGISTRY_IMAGE:latest &&
-      cd /home/love/prod/app &&
-      docker compose up -d frontend
+      docker pull $CI_REGISTRY_IMAGE:with-search-test &&
+      cd /home/love/test/app_with_search &&
+      docker compose up -d test-frontend-with-search
       " || { echo 'Deploy failed'; exit 1; }
