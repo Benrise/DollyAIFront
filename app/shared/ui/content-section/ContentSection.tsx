@@ -8,11 +8,11 @@ export function ContentSection({ children, className }: PropsWithChildren<Conten
     return (
         <div 
                 className={`
-                    sm:py-10 bg-white rounded-none 
+                    sm:pt-8 bg-white rounded-none 
                     shadow-none sm:shadow-xl sm:shadow-indigo-50
-                    sm:h-auto pt-8 pb-8
+                    sm:h-auto pt-6
                     flex flex-col
-                    overflow-auto
+                    lg:max-h-[75vh]
                     ${className}
                 `}
             >

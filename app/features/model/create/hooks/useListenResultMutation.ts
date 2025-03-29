@@ -1,11 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
-import { modelsService, ModelsListeningStatusEnum } from '@/app/entities/model';
+import { modelsService, ModelsListeningStatusEnum, IModelResult } from '@/app/entities/model';
 import { toastErrorHandler } from '@/app/shared/utils';
 import { useAuthStore } from '@/app/entities/auth';
 import { useRef } from 'react';
 
 
-export function useListenToResultMutation(onCompleted: (url: string | null) => void) {
+export function useListenToResultMutation(onCompleted: (result: IModelResult | null) => void) {
     const { getAccessToken, refresh, signOut } = useAuthStore();
     const token = getAccessToken();
 
@@ -26,7 +26,7 @@ export function useListenToResultMutation(onCompleted: (url: string | null) => v
                     controller.abort();
                 } else if ('status' in data) {
                     if (data.status === ModelsListeningStatusEnum.COMPLETED) {
-                        modelsService.get_result_url(model_id, data.id).then(imageUrl => onCompleted(imageUrl));
+                        modelsService.get_result_url(model_id, data.id).then(imageUrl => onCompleted({ id: data.id, result_url: imageUrl }));
                         controller.abort();
                     } else if (data.status === ModelsListeningStatusEnum.ERROR) {
                         console.error("Generation failed");

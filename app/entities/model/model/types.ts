@@ -39,3 +39,20 @@ export const enum ModelsListeningStatusEnum {
     COMPLETED = 'completed',
     ERROR = 'error'
 }
+
+export interface IModelResult {
+    id: number;
+    result_url: string;
+}
+
+export interface IModelResultMatch {
+    title: string;
+    link: string;
+    source: string;
+    source_icon: string;
+    image: string;
+}
+
+export interface IModelResultMatchesResponse {
+    matches: IModelResultMatch[];
+}

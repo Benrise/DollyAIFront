@@ -1,5 +1,5 @@
 import { api } from "@/app/api";
-import { IModelsReadinessResponse, IModelsResponse, IModelsListeningResponse, IModel } from "./types";
+import { IModelsReadinessResponse, IModelsResponse, IModelsListeningResponse, IModel, IResultMatchesResponse } from "./types";
 import { FetchError } from "@/app/api";
 import { fetchEventSource } from '@microsoft/fetch-event-source';
 import { IRefreshResponse } from "@/app/entities/auth";
@@ -81,6 +81,11 @@ class ModelsService {
     public async get_result_url(model_id: number, result_id: number) {
         const response = await api.get<Blob>( `/models/${model_id}/results/${result_id}`, {responseType: 'blob'});
         return URL.createObjectURL(response.data);
+    }
+
+    public async get_reuslt_matches(model_id: number, result_id: number) {
+        const response = await api.get<IResultMatchesResponse>( `/models/${model_id}/results/${result_id}/matches`);
+        return response.data;
     }
 }
 

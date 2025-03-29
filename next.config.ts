@@ -13,6 +13,14 @@ const nextConfig: NextConfig = {
     NEXT_TERMS_LINK: process.env.NEXT_TERMS_LINK,
     NEXT_OAUTH_LINK: process.env.NEXT_OAUTH_LINK
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ]
+  }
 };
 
 export default nextConfig;
