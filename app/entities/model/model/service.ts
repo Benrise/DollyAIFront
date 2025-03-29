@@ -1,8 +1,9 @@
-import { api } from "@/app/api";
-import { IModelsReadinessResponse, IModelsResponse, IModelsListeningResponse, IModel, IResultMatchesResponse } from "./types";
-import { FetchError } from "@/app/api";
 import { fetchEventSource } from '@microsoft/fetch-event-source';
+
+import { api, FetchError } from "@/app/api";
 import { IRefreshResponse } from "@/app/entities/auth";
+
+import { IModelsReadinessResponse, IModelsResponse, IModelsListeningResponse, IModel, IModelResultMatchesResponse } from "./types";
 
 class ModelsService {
     public async list() {
@@ -84,7 +85,7 @@ class ModelsService {
     }
 
     public async get_reuslt_matches(model_id: number, result_id: number) {
-        const response = await api.get<IResultMatchesResponse>( `/models/${model_id}/results/${result_id}/matches`);
+        const response = await api.get<IModelResultMatchesResponse>( `/models/${model_id}/results/${result_id}/matches`);
         return response.data;
     }
 }
