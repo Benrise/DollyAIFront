@@ -86,7 +86,7 @@ export default function Home() {
   }, [activeModel, listenResultMutation, listenReadinessMutation, form]);
 
   return (
-    <ContentSection className='sm:max-w-lg sm:rounded-4xl sm:min-w-lg'>
+    <ContentSection className='sm:max-w-lg sm:rounded-4xl sm:min-w-lg max-h-none md:max-h-[80vh] pb-'>
       <div className="flex flex-col gap-4 lg:gap-8 relative overflow-y-auto w-full">
         <UserBadge/>
         <div className='flex flex-col gap-2 '>

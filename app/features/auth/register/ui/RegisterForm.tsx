@@ -52,7 +52,7 @@ export function RegisterForm() {
         <Form
           name="register"
           layout="vertical"
-          className="px-4! md:px-10! flex flex-col gap-4 justify-between"
+          className="px-4! sm:px-10! flex flex-col gap-4 justify-between"
           onFinish={handleRegisterWithoutPayment}
         >
             <div className="flex flex-col">
