@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { Form, Button, Input, Typography, Space, Image, Tooltip } from 'antd';
+import { Form, Button, Input, Typography, Image, Tooltip } from 'antd';
 
 import { ChevronDown } from 'lucide-react'
 import { DownloadOutlined } from '@ant-design/icons';
@@ -93,7 +93,7 @@ export default function Home() {
 
   return (
     <ContentSection className='sm:max-w-lg sm:rounded-4xl sm:min-w-lg'>
-      <Space direction="vertical" size="large" className="relative overflow-y-auto w-full">
+      <div className="flex flex-col gap-4 lg:gap-8 relative overflow-y-auto w-full">
         <UserBadge/>
         <div className='flex flex-col gap-2 '>
             <ModelsList
@@ -104,7 +104,7 @@ export default function Home() {
             />
             <SubscriptionBadge/>
         </div>
-        <div ref={parent} className="px-4 sm:px-10 pb-4 sm:pb-10 flex flex-col gap-8 items-center">
+        <div ref={parent} className="px-4 sm:px-10 pb-4 sm:pb-10 flex flex-col gap-4 lg:gap-8 items-center">
             { !isTextAreaFocused ? <div ref={parent} className={`flex flex-col rounded-[24px] overflow-hidden max-w-[512px] items-center justify-center relative`}>
                 {!isListeningReadiness && isListeningResult && activeModel?.is_ready ? (
                   <GeneratingAnimation />
@@ -189,7 +189,7 @@ export default function Home() {
           </Form>
           <ProductsList products={modelMatchesToProductsMapping(matches)}/>
         </div>
-      </Space>
+      </div>
     </ContentSection>
   );
 }
