@@ -12,7 +12,7 @@ build:test:
     - echo "$CI_BUILD_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
     - cat "$ENV_FILE_WITH_SEARCH_TEST" > .env
   script:
-    - docker build -t "$CI_REGISTRY_IMAGE:with-search:test" . || { echo 'Build failed'; exit 1; }
+    - docker build -t "$CI_REGISTRY_IMAGE:with-search-test" . || { echo 'Build failed'; exit 1; }
 
 
 deploy:test:
@@ -23,12 +23,12 @@ deploy:test:
   before_script:
     - echo "$CI_BUILD_TOKEN" | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
   script:
-    - docker push "$CI_REGISTRY_IMAGE:with-search:test"
+    - docker push "$CI_REGISTRY_IMAGE:with-search-test"
     - apk update && apk add openssh-client
     - chmod 600 $ID_RSA
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP -p 228 "
       docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY &&
-      docker pull $CI_REGISTRY_IMAGE:test &&
+      docker pull $CI_REGISTRY_IMAGE:with-search-test &&
       cd /home/love/test/app_with_search &&
       docker compose up -d test-frontend-with-search
       " || { echo 'Deploy failed'; exit 1; }
