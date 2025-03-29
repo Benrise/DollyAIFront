@@ -2,7 +2,6 @@ import { fetchEventSource } from '@microsoft/fetch-event-source';
 
 import { api, FetchError } from "@/app/api";
 import { IRefreshResponse } from "@/app/entities/auth";
-
 import { IModelsReadinessResponse, IModelsResponse, IModelsListeningResponse, IModel, IModelResultMatchesResponse } from "./types";
 
 class ModelsService {
