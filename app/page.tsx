@@ -91,7 +91,7 @@ export default function LandingPage() {
             <div className="flex flex-col max-w-[1200px] w-full items-center gap-24 px-4 p-8 lg:pt-24">
                 <section className="flex lg:flex-row flex-col-reverse gap-4 lg:gap-8 w-full items-center">
                     {/* left */}
-                    <div className="flex flex-col p-8 sm:p-16 gap-4 lg:gap-8 bg-blue-50 rounded-4xl w-full max-w-[600px]">
+                    <div className="flex flex-col p-8 sm:p-16 gap-4 lg:gap-8 bg-blue-50 rounded-4xl w-full">
                         <h1 className="lg:text-4xl text-3xl font-bold">
                             Create <HighlightedText>realistic and beautiful photos</HighlightedText> of yourself
                         </h1>
