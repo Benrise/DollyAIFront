@@ -91,7 +91,7 @@ export default function LandingPage() {
             <div className="flex flex-col max-w-[1200px] w-full items-center gap-24 px-4 p-8 lg:pt-24">
                 <section className="flex lg:flex-row flex-col-reverse gap-4 lg:gap-8 w-full items-center">
                     {/* left */}
-                    <div className="flex flex-col p-8 sm:p-16 gap-4 lg:gap-8 bg-blue-50 rounded-4xl w-full">
+                    <div className="flex flex-col p-8 sm:p-16 gap-4 lg:gap-8 bg-blue-50 rounded-4xl w-full max-w-[600px]">
                         <h1 className="lg:text-4xl text-3xl font-bold">
                             Create <HighlightedText>realistic and beautiful photos</HighlightedText> of yourself
                         </h1>
@@ -166,7 +166,7 @@ export default function LandingPage() {
                         <Button type="primary" size="large" shape="round" onClick={handleGenerate} loading={isGenerating} block>Generate</Button>
                     </div>
                     {/* right */}
-                    <div className="w-full flex flex-col gap-8 p-8 sm:p-16 bg-blue-50 rounded-4xl h-full justify-center max-w-[600px]">
+                    <div className="w-full h-full flex flex-col gap-8 p-8 sm:p-16 bg-blue-50 rounded-4xl justify-center">
                         <h2 className="lg:text-4xl text-2xl font-bold text-center"><HighlightedText>Personalized</HighlightedText> AI-powered generations</h2>
                         <div className="flex gap-2 justify-center">
                             {MODELS.map(model => (
