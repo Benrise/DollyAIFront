@@ -8,6 +8,7 @@ import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { GoogleTagManager } from '@next/third-parties/google';
 
 import { MainProvider } from '@/app/providers';
+import { FacebookPixel } from '@/app/widgets/facebook';
 
 export const metadata: Metadata = {
   title: 'AI Love Photo',
@@ -43,6 +44,7 @@ export default function RootLayout({
           </MainProvider>
         </AntdRegistry>
         <GoogleTagManager gtmId="GTM-NM76B9RL" />
+        <FacebookPixel pixelId="1826949551477772"/>
       </body>
     </html>
   );
