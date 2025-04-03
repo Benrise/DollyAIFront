@@ -23,7 +23,6 @@ export const theme: ThemeConfig = {
       defaultBg: '#FFFFFF',
       defaultHoverBorderColor: '#FAFAFA',
       defaultHoverColor: '',
-      colorBorder: '',
       colorBgContainerDisabled: '#B0AFFF',
       colorTextDisabled: '#FFFFFF',
     },
