@@ -4,25 +4,22 @@ import { Button } from "@/app/shared/ui/button";
 import { ThemeToggle } from "@/app/shared/ui/theme-toggle";
 import { Separator } from "@/app/shared/ui/separator"
 import { Link } from "@/app/shared/ui/link/Link";
-import { useTheme } from "next-themes";
+import { Logo } from "@/app/shared/ui/logo";
 
 
 export function LandingHeader() {
-
-    const { theme } = useTheme();
-
     return (
         <header className="w-full flex items-center justify-between">
             {/* left */}
             <div className="flex items-center gap-8">
-                <NextLink href="/">
-                    <img src={`/images/logo/${theme === "dark" ? "dark" : "light"}.svg`} alt="Snuppy Logo" className="max-h-6" />
+                <NextLink className="flex items-center" href="/">
+                    <Logo/>
                 </NextLink>
                 <nav className="hidden md:flex items-center gap-8">
-                    <Link label="Use cases"/>
-                    <Link label="Demo"/>
-                    <Link label="Pricing"/>
-                    <Link label="FAQ"/>
+                    <Link href="#">Use cases</Link>
+                    <Link href="#">Demo</Link>
+                    <Link href="#">Pricing</Link>
+                    <Link href="#">FAQ</Link>
                 </nav>
             </div>
             {/* right */}
