@@ -2,7 +2,7 @@ import { IModel, modelsService } from '@/app/entities/model/model';
 import { FetchError } from '@/app/api';
 
 import { toast } from 'sonner';
-import { toastErrorHandler } from '@/app/shared/utils';
+import { toastErrorHandler } from '@/app/shared/lib';
 
 import { useMutation } from '@tanstack/react-query';
 

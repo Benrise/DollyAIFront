@@ -2,23 +2,30 @@
 
 import { Suspense, type PropsWithChildren } from "react";
 import { ConfigProvider } from 'antd';
-import { theme } from '@/app/theme.config';
 import { TanstackQueryProvider } from "./TanstackQueryProvider";
 import { AuthProvider } from "./AuthProvider";
 import { UserProvider } from "./UserProvider";
+import { ThemeProvider } from "./ThemeProvider";
 
 export function MainProvider({ children }: PropsWithChildren) {
     return (
         <Suspense fallback={null}>
-            <AuthProvider>
+            <ThemeProvider 
+                attribute="class"
+                defaultTheme="dark"
+                enableSystem
+                disableTransitionOnChange
+            >
+                <AuthProvider>
                     <TanstackQueryProvider>
-                        <ConfigProvider theme={theme}>
+                        <ConfigProvider>
                             <UserProvider>
                                 {children}
                             </UserProvider>
                         </ConfigProvider>
                     </TanstackQueryProvider>
-            </AuthProvider>
-        </Suspense>
+                </AuthProvider>
+            </ThemeProvider>
+        </Suspense>  
     )
 }

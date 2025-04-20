@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { toastErrorHandler } from '@/app/shared/utils';
+import { toastErrorHandler } from '@/app/shared/lib';
 import { ICheckoutResponse, subscriptionsService } from '@/app/entities/subscription/card';
 import { FetchError } from "@/app/api";
 import { useRouter } from 'next/navigation';

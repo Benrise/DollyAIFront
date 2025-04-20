@@ -7,7 +7,7 @@ import { TypeSendCodeSchema, VerifyCodeSchema, ChangePasswordSchema, SendCodeSch
 import { useRecoverMutation } from '../hooks';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useMobileDetect } from '@/app/shared/lib';
+import { useMobileDetect } from '@/app/shared/hooks';
 
 const { Title } = Typography;
 

@@ -1,7 +1,7 @@
 import { useAuthStore } from '@/app/entities/auth';
 import { FetchError } from "@/app/api";
 
-import { toastErrorHandler } from '@/app/shared/utils';
+import { toastErrorHandler } from '@/app/shared/lib';
 
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';

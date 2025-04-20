@@ -7,8 +7,8 @@ import { Form, Button, Input, Typography, Image, Tooltip } from 'antd';
 import { ChevronDown } from 'lucide-react'
 import { DownloadOutlined } from '@ant-design/icons';
 
-import { downloadBlob } from '@/app/shared/utils/download';
-import { useMobileDetect } from '@/app/shared/lib';
+import { downloadBlob } from '@/app/shared/lib/download';
+import { useMobileDetect } from '@/app/shared/hooks';
 import { ContentSection } from '@/app/shared/ui/content-section';
 import { GeneratingAnimation } from '@/app/shared/ui/generation-animation';
 import { SubscriptionBadge } from '@/app/entities/subscription/badge';

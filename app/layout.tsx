@@ -11,8 +11,8 @@ import { MainProvider } from '@/app/providers';
 import { FacebookPixel } from '@/app/widgets/facebook';
 
 export const metadata: Metadata = {
-  title: 'AI Love Photo',
-  description: "AI Love Photo - your personal photoclone",
+  title: 'Snuppy',
+  description: "Snuppy - your personal photoclone",
   icons: {
     icon: [
       { url: '/favicon/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
   manifest: '/favicon/site.webmanifest',
   appleWebApp: {
-    title: 'AI Love Photo',
+    title: 'Snuppy',
   },
 };
  
@@ -33,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
         <AntdRegistry>
           <MainProvider>

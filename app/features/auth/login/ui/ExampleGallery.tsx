@@ -2,7 +2,7 @@ import NextImage from 'next/image';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
-import { useMobileDetect } from '@/app/shared/lib';
+import { useMobileDetect } from '@/app/shared/hooks';
 
 interface ExampleGalleryProps {
     images: string[];

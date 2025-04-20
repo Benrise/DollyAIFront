@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { modelsService, ModelsListeningStatusEnum } from '@/app/entities/model';
-import { toastErrorHandler } from '@/app/shared/utils';
+import { toastErrorHandler } from '@/app/shared/lib';
 import { useAuthStore } from '@/app/entities/auth';
 import { useRef } from 'react';
 

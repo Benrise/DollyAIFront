@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { toastErrorHandler } from '@/app/shared/utils';
+import { toastErrorHandler } from '@/app/shared/lib';
 import { useAuthStore, type IRegisterResponse, type TypeRegisterSchema } from '@/app/entities/auth';
 import { FetchError } from "@/app/api";
 

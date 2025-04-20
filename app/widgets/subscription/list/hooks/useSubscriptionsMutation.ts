@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
 import { FetchError } from "@/app/api";
-import { toastErrorHandler } from "@/app/shared/utils";
+import { toastErrorHandler } from "@/app/shared/lib";
 import { ISubscriptionProduct, ISubscriptionsResponse, subscriptionsService } from "@/app/entities/subscription/card";
 
 export function useGetSubscriptionsListMutation() {

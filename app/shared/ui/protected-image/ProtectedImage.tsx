@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Image, ImageProps } from 'antd';
 
-import { fetchProtectedImage } from "@/app/shared/utils";
+import { fetchProtectedImage } from "@/app/shared/lib";
 
 const FALLBACK_IMAGE = "/images/etc/spheric-vortex.png";
 

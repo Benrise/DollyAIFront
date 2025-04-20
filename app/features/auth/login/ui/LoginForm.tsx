@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from 'react-hook-form';
 import { Divider } from 'antd';
 
-import { useMobileDetect } from '@/app/shared/lib/hooks';
+import { useMobileDetect } from '@/app/shared/hooks';
 import { HighlightedText } from "@/app/shared/ui/highlighted-text";
 import { Terms } from '@/app/entities/terms';
 import { type TypeLoginSchema, LoginSchema } from '@/app/entities/auth';
@@ -49,7 +49,7 @@ export function LoginForm() {
           </div>
           <Title onClick={handleBlur} level={3} className="px-4! sm:px-10! text-center text-base sm:text-xl mb-8!">
             <div>
-              <HighlightedText> AI Love Photo</HighlightedText> - your personal photoclone
+              <HighlightedText> Snuppy</HighlightedText> - your personal photoclone
             </div>
           </Title>
           <Form
