@@ -5,7 +5,7 @@ import { Button } from "@/app/shared/ui/button";
 import { Logo } from "@/app/shared/ui/logo"
 import { Link } from "@/app/shared/ui/link";
 import { Separator } from "@/app/shared/ui/separator";
-import { USE_CASES, SOCIALS, RESOURCES, CONTACTS } from "../lib";
+import { USE_CASES, SOCIALS, RESOURCES, CONTACTS } from "../constants";
 
 
 export function LandingFooter() {
