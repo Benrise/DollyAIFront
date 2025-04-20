@@ -10,7 +10,6 @@ import { HighlightedText } from "@/app/shared/ui/highlighted-text";
 import { Terms } from '@/app/entities/terms';
 import { type TypeLoginSchema, LoginSchema } from '@/app/entities/auth';
 import { ExampleGallery, useLoginMutation } from '@/app/features/auth/login';
-import { fetchImages } from '@/app/widgets/auth/images';
 
 const { Title } = Typography;
 
@@ -25,27 +24,16 @@ export function LoginForm() {
       resolver: zodResolver(LoginSchema),
     });
     const [parent] = useAutoAnimate();
-    const [images, setImages] = useState<string[]>([]);
     const [isInputFocused, setIsInputFocused] = useState(false);
     const { isMobile } = useMobileDetect();
 
     const handleFocus = () => setIsInputFocused(isMobile && true);
     const handleBlur = () => setIsInputFocused(isMobile && false);
 
-    useEffect(() => {
-      fetchImages().then(setImages);
-    }, [])
-
     return (
       <div className="flex flex-col gap-4 h-fit sm:min-h-fit">
           <div ref={parent} className={`flex w-full ${isInputFocused ? "scale-0" : ""}`}>
-              {!images.length ? (
-                  <div className="flex justify-center items-center w-full">
-                      <Spin size="large" />
-                  </div>
-              ) : !isInputFocused ? (
-                <ExampleGallery images={images}/>
-              ) : null}
+            <ExampleGallery/>
           </div>
           <Title onClick={handleBlur} level={3} className="px-4! sm:px-10! text-center text-base sm:text-xl mb-8!">
             <div>

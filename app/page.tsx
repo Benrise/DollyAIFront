@@ -14,6 +14,7 @@ import { SubscriptionsList, useGetSubscriptionsListMutation } from "@/app/widget
 import { useUserContext } from "@/app/providers";
 import { LandingHeader } from "@/app/widgets/landing/header";
 import { LandingFooter } from "@/app/widgets/landing/footer";
+import { LandingHead } from "@/app/widgets/landing/head";
 
 export default function LandingPage() {
     const REGISTER_URL = "/pages/auth/register"
@@ -34,30 +35,9 @@ export default function LandingPage() {
     return (
         <div className="h-full w-full flex flex-col items-center">
             {/* wrapper */}
-            <div className="flex flex-col max-w-[1200px] w-full items-center gap-24 px-4 p-8 lg:pt-24">
+            <div className="flex flex-col max-w-[1408px] w-full justify-center items-center gap-24 px-4 p-8">
                 <LandingHeader/>
-                <section className="flex lg:flex-row flex-col-reverse gap-4 lg:gap-8 w-full items-center">
-
-                </section>
-                <section className="flex lg:flex-row flex-col gap-4 lg:gap-8 w-full items-center">
-
-                </section>
-                <section className="flex flex-col w-fit gap-4 lg:gap-8 items-center">
-
-                </section>
-                <section className="flex lg:flex-row flex-col w-full bg-blue-50 p-8 sm:p-16 rounded-4xl gap-4 lg:gap-8">
-
-                </section>
-                <section className="flex flex-col w-fit gap-8 items-center">
-                    {/* header */}
-                    <div className="flex flex-col gap-8 items-center">
-                        <h2 className="lg:text-4xl text-3xl font-bold text-center"><HighlightedText>Compare out plans</HighlightedText> to find what suits you best</h2>
-                        <SubscriptionsList subscriptions={subscriptions} onSubscriptionSelect={handleSubscriptionSelect} actionLabel="Select" className='flex md:flex-nowrap flex-wrap gap-4'/>
-                    </div>
-                </section>
-                <footer className="bg-blue-50 py-12 rounded-4xl w-full">
-
-                </footer>
+                <LandingHead/>
                 <LandingFooter/>
             </div>
         </div>

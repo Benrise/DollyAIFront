@@ -3,13 +3,13 @@ import NextImage from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import { useMobileDetect } from '@/app/shared/hooks';
+import { EXAMPLE_IMAGES } from '../constants';
 
 interface ExampleGalleryProps {
-    images: string[];
     className?: string
 }
 
-export function ExampleGallery ({ images, className }: ExampleGalleryProps) {
+export function ExampleGallery ({ className }: ExampleGalleryProps) {
     const { isMobile } = useMobileDetect();
 
     return (
@@ -26,10 +26,10 @@ export function ExampleGallery ({ images, className }: ExampleGalleryProps) {
         autoplay={{ delay: 3000, disableOnInteraction: false }}
         className={className}
     >
-        {images.map((image, index) => (
+        {EXAMPLE_IMAGES.map((image, index) => (
             <SwiperSlide key={index}>
                 <NextImage
-                        src={`/images/examples/${image}`}
+                        src={image}
                         alt={`Slide ${index}`}
                         className="select-none rounded-4xl object-cover"
                         width={1024}
