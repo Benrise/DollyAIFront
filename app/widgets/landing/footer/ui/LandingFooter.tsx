@@ -89,7 +89,7 @@ export function LandingFooter() {
       </div>
       <Separator className="my-4" />
       <div className="text-center text-sm opacity-50">
-        © 2025 BIOVita Lab Inc. All Rights Reserved.
+        © 2025 BioVita Lab Inc. All Rights Reserved.
       </div>
     </footer>
   );

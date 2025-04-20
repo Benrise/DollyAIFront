@@ -21,8 +21,8 @@ export function GeneratingAnimation() {
       const div = document.createElement("div");
       div.style.width = "1rem";
       div.style.height = "1rem";
-      div.style.border = "1px solid #7559ff";
-      div.style.background = "#7559ff";
+      div.style.border = "1px solid #A529C7";
+      div.style.background = "#A529C7";
       div.style.borderRadius = "999px";
       fragment.appendChild(div);
     }

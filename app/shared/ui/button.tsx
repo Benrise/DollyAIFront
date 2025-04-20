@@ -1,6 +1,8 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
+import { LoadingOutlined } from "@ant-design/icons"
+import { useAutoAnimate } from "@formkit/auto-animate/react"
 
 import { cn } from "@/app/shared/lib/utils"
 
@@ -24,7 +26,7 @@ const buttonVariants = cva(
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
         sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
+        lg: "h-12 rounded-xl px-6 has-[>svg]:px-4",
         icon: "size-9",
       },
     },
@@ -35,24 +37,41 @@ const buttonVariants = cva(
   }
 )
 
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
+  loading?: boolean;
+}
+
 function Button({
   className,
   variant,
   size,
+  isLoading = false,
+  children,
   asChild = false,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
+    isLoading?: boolean
   }) {
   const Comp = asChild ? Slot : "button"
+  const [parent] = useAutoAnimate();
 
   return (
     <Comp
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={`${cn(buttonVariants({ variant, size, className }))} cursor-pointer`}
+      disabled={isLoading || props.disabled}
       {...props}
-    />
+    >
+      <div ref={parent} className="flex items-center gap-2 flex-nowrap">
+        {isLoading && <LoadingOutlined className="animate-spin text-lg"/>}
+        {children}
+      </div>
+    </Comp>
   )
 }
 

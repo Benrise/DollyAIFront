@@ -29,7 +29,7 @@ export function LandingHead() {
   return (
     <div
       ref={parent}
-      className={`w-full flex items-center ${isFinished ? 'justify-between' : 'justify-center'}`}
+      className={`w-full flex flex-col md:flex-row items-center ${isFinished ? 'justify-between' : 'justify-center'}`}
     >
       {isFinished && (
         <div className="flex flex-col gap-12" >
