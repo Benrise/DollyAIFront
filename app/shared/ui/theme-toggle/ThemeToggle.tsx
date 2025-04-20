@@ -7,7 +7,7 @@ import { Button } from "@/app/shared/ui/button"
 
 const THEMES = ["light", "dark", "system"] as const
 
-export function ThemeToggle() {
+export function ThemeToggle({ className }: { className?: string }) {
   const { theme, setTheme } = useTheme()
 
   const getNextTheme = () => {
@@ -33,7 +33,7 @@ export function ThemeToggle() {
   }
 
   return (
-    <Button variant="outline" size="icon" onClick={handleToggle}>
+    <Button className={className} variant="ghost" size="icon" onClick={handleToggle}>
       {renderIcon()}
       <span className="sr-only">Toggle theme</span>
     </Button>
