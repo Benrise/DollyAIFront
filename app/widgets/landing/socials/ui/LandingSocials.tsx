@@ -14,7 +14,7 @@ export function LandingSocials() {
             <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-3 md:gap-6 w-full">
                     <H1>
-                        See Us in Action on Socials!
+                        See us in action on socials!
                     </H1>
                     <Body>We’re where the AI art revolution happens. Follow for daily inspo, wild photo challenges, and exclusive tools to make your content unstoppable</Body>
                 </div>
