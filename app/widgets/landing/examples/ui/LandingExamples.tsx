@@ -26,7 +26,7 @@ export function LandingExamples() {
             </NextLink>
             <GlowingBlob opacity={0.1} className="top-[-120px] left-[-10px]" />
         </div>
-        <div className="flex flex-col md:flex-row w-full justify-between gap-16 xl:gap-32 items-center">
+        <div className="flex flex-col md:flex-row w-full justify-between gap-6 xl:gap-32 items-center">
             <div className="flex flex-col gap-6 w-fit max-w-none xl:max-w-[392px]">
                 {prompts.map((prompt) => (
                     <Body
@@ -50,7 +50,7 @@ export function LandingExamples() {
                     className="rounded-2xl xl:rounded-4xl object-cover shadow-lg border border-gray-700 z-3"
                     />
                 </div>
-                <div className="flex" style={{ marginLeft: '-200px' }}>
+                <div className="flex ml-[-120px] sm:ml-[-160px]">
                     <NextImage
                     src={MAPPING[selectedPrompt][1]}
                     alt="Secondary image"
@@ -59,7 +59,7 @@ export function LandingExamples() {
                     className="rounded-2xl xl:rounded-4xl object-cover shadow-lg border border-gray-700 z-2"
                     />
                 </div>
-                <div className="hidden lg:flex" style={{ marginLeft: '-140px' }}>
+                <div className="hidden lg:flex ml-[-140px]">
                     <NextImage
                     src={MAPPING[selectedPrompt][2]}
                     alt="Tertiary image"

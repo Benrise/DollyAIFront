@@ -6,6 +6,7 @@ import { ArrowDown } from 'lucide-react';
 import { HEAD_IMAGES } from '../constants/head-images';
 import { Button } from '@/app/shared/ui/button';
 import { Body } from '@/app/shared/ui/typography';
+import { GlowingBlob } from '@/app/shared/ui/glowing-blob';
 
 
 export function LandingHead() {
@@ -83,6 +84,7 @@ export function LandingHead() {
               <ArrowDown className='ml-2'/>
           </Button>
         }
+        <GlowingBlob opacity={0.1} className="top-[150px] right-[150px]" />
       </div>
     );
 }

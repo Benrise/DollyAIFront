@@ -3,7 +3,7 @@ import './styles.scss';
 import NextImage from 'next/image';
 import { ChevronRight } from 'lucide-react';
 import { useRef } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 import { Autoplay, FreeMode, Grid } from 'swiper/modules';
 
 import { GALLERY_IMAGES } from '../constants';
@@ -11,7 +11,7 @@ import { H1 } from '@/app/shared/ui/typography';
 import { Button } from '@/app/shared/ui/button';
 
 export function LandingGallery() {
-  const swiperRef = useRef<any>(null);
+  const swiperRef = useRef<SwiperRef>(null);
 
   return (
     <div 
