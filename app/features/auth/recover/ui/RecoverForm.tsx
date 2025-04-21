@@ -209,7 +209,7 @@ export function RecoverForm() {
               <a href={OAUTH_LINK}>
                   <Button 
                       type="default" 
-                      icon={<img src="/images/svg/oauth_google.svg" alt="google" />} 
+                      icon={<img src="/images/svg/icons/flat-color-icons--google.svg" alt="google" />} 
                       size="large" 
                       block
                   >

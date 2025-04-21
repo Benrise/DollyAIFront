@@ -12,6 +12,7 @@ import { LandingExamples } from "@/app/widgets/landing/examples";
 import { LandingFashion } from "@/app/widgets/landing/fashion";
 import { SubscriptionsList, useGetSubscriptionsListMutation } from "@/app/widgets/subscription/list";
 import { useRouter } from "next/navigation";
+import { LandingSocials } from "@/app/widgets/landing/socials";
 
 
 export default function LandingPage() {
@@ -44,6 +45,7 @@ export default function LandingPage() {
                         onSubscriptionSelect={handleSubscriptionSelect}
                         className='flex md:flex-nowrap flex-wrap gap-4'
                     />
+                    <LandingSocials/>
                     <LandingFooter/>
                 </div>
             </div>

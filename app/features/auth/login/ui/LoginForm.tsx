@@ -78,7 +78,7 @@ export function LoginForm() {
                 </div>
                 <Divider plain>or</Divider>
                 <a href={OAUTH_LINK}>
-                  <Button type="default" icon={<img src="/images/svg/oauth_google.svg" alt="google"></img>} size="large" onClick={handleBlur} block>Sign in with Google</Button>
+                  <Button type="default" icon={<img src="/images/svg/icons/flat-color-icons--google.svg" alt="google"></img>} size="large" onClick={handleBlur} block>Sign in with Google</Button>
                 </a>
               </div>
             </div>
