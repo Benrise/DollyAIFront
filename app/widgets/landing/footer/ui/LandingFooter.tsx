@@ -9,19 +9,17 @@ import { USE_CASES, SOCIALS, RESOURCES, CONTACTS } from "../constants";
 
 
 export function LandingFooter() {
-
   const getUseCaseLink = (useCase: string) => `/use-cases/${useCase.toLowerCase().replace(/\s+/g, "-")}`
 
   return (
     <footer className="w-full flex flex-col gap-4">
       <div className="flex flex-wrap gap-12 md:gap-24">
-        <div className="flex md:flex-col flex-row gap-6 items-center h-fit">
+        <div className="flex md:flex-col flex-row gap-6 items-center h-fit w-full justify-between md:justify-start md:w-fit">
           <NextLink className="flex items-center" href="/">
             <Logo/>
           </NextLink>
           <Button
               variant="outline"
-              className="w-fit"
             >
               English
               <ChevronDown/>

@@ -1,4 +1,5 @@
 import { ISubscriptionProduct, SubscriptionCard } from "@/app/entities/subscription/card";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useState } from "react";
 
 interface SubscriptionsListProps {
@@ -12,13 +13,15 @@ interface SubscriptionsListProps {
 
 export function SubscriptionsList({subscriptions, onSubscriptionSelect, className, actionLabel, isActionsDisabled, isActionsLoading}: SubscriptionsListProps) {
     const [loadingSubscriptionId, setLoadingSubscriptionId] = useState<string | null>(null);
+      const [parent] = useAutoAnimate();
+      
     const handleSelectPlan = async (subscription: ISubscriptionProduct) => {
         await onSubscriptionSelect(subscription);
         setLoadingSubscriptionId(subscription.id);
       };
 
     return (
-        <div className={`w-full h-full ${className}`}>
+        <div ref={parent} className={`w-full h-fit ${className}`}>
             {subscriptions.map((subscription, index) => (
                 <SubscriptionCard
                     isDisabled={isActionsDisabled}
