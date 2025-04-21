@@ -7,6 +7,7 @@ import { useState } from "react";
 import { GlowingBlob } from "@/app/shared/ui/glowing-blob";
 import { HighlightedText } from "@/app/shared/ui/highlighted-text";
 import { Body, H1 } from "@/app/shared/ui/typography";
+import { Button } from "@/app/shared/ui/button";
 import { MAPPING } from "../constants/mapping";
 
 
@@ -21,9 +22,11 @@ export function LandingExamples() {
             <H1 className="lg:text-center xl:text-start">
                 Be <HighlightedText>anyone</HighlightedText> with face-swap and AI Avatars
             </H1>
-            <NextLink href={"/pages/auth/login"} className="w-fit flex text-primary font-semibold items-center hover:cursor-pointer">
-                Start creating now <ArrowRight className="ml-2 w-fit" />
-            </NextLink>
+            <Button asChild>
+                <NextLink href={"/pages/auth/login"} className="w-fit flex font-semibold items-center hover:cursor-pointer">
+                    Start creating now <ArrowRight className="ml-2 w-fit" />
+                </NextLink>
+            </Button>
             <GlowingBlob opacity={0.1} className="top-[-120px] left-[-10px]" />
         </div>
         <div className="flex flex-col md:flex-row w-full justify-between gap-6 xl:gap-32 items-center">
