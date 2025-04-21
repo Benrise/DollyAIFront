@@ -14,8 +14,8 @@ export function LandingFooter() {
 
   return (
     <footer className="w-full flex flex-col gap-4">
-      <div className="grid grid-cols-1 gap-12 md:flex md:gap-24">
-        <div className="flex md:flex-col flex-row gap-6">
+      <div className="flex flex-wrap gap-12 md:gap-24">
+        <div className="flex md:flex-col flex-row gap-6 items-center h-fit">
           <NextLink className="flex items-center" href="/">
             <Logo/>
           </NextLink>

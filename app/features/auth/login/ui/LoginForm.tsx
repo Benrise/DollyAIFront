@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Input, Button, Form, Spin, Typography } from 'antd';
+import { useState } from 'react';
+import { Input, Button, Form } from 'antd';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from 'react-hook-form';
@@ -10,8 +10,6 @@ import { HighlightedText } from "@/app/shared/ui/highlighted-text";
 import { Terms } from '@/app/entities/terms';
 import { type TypeLoginSchema, LoginSchema } from '@/app/entities/auth';
 import { ExampleGallery, useLoginMutation } from '@/app/features/auth/login';
-
-const { Title } = Typography;
 
 
 export function LoginForm() {
@@ -35,11 +33,11 @@ export function LoginForm() {
           <div ref={parent} className={`flex w-full ${isInputFocused ? "scale-0" : ""}`}>
             <ExampleGallery/>
           </div>
-          <Title onClick={handleBlur} level={3} className="px-4! sm:px-10! text-center text-base sm:text-xl mb-8!">
+          <h1 onClick={handleBlur} className="px-4 sm:px-10 text-center sm:text-2xl mb-8">
             <div>
               <HighlightedText> Snuppy</HighlightedText> - your personal photoclone
             </div>
-          </Title>
+          </h1>
           <Form
             layout="vertical"
             className="px-4! sm:px-10! flex flex-col gap-4 justify-between"

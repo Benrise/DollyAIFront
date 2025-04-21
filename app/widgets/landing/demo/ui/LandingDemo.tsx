@@ -3,7 +3,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import NextImage from "next/image"
 import { Download, Pencil, Sparkles } from "lucide-react";
 import { useState } from "react";
-import { Avatar } from "antd";
+import { Avatar, Image } from "antd";
 
 import { MODELS, RESULT_IMAGE_DEFAULT, RESULT_IMAGE_MOCK } from "../constants";
 import { Textarea } from "@/app/shared/ui/textarea"
@@ -11,6 +11,7 @@ import { GeneratingAnimation } from "@/app/shared/ui/generation-animation";
 import { Button } from "@/app/shared/ui/button";
 import { HighlightedText } from "@/app/shared/ui/highlighted-text";
 import { GlowingBlob } from "@/app/shared/ui/glowing-blob";
+import { Body, H1 } from "@/app/shared/ui/typography";
 
 
 export function LandingDemo() {
@@ -30,7 +31,7 @@ export function LandingDemo() {
     };
 
     return (
-        <section className="flex px-32 py-16 border border-secondary rounded-4xl lg:flex-row flex-col-reverse justify-between w-full items-center">
+        <section className="flex p-8 md:p-12 xl:px-24 xl:py-16 gap-6 md:gap-12 border overflow-hidden border-secondary rounded-4xl lg:flex-row flex-col-reverse justify-around w-full items-center">
             {/* left */}
             <div className="w-full flex flex-col gap-4 max-w-[456px]">
                 <div ref={parent} className="relative w-full aspect-square max-w-[456px] overflow-hidden rounded-4xl">
@@ -39,17 +40,17 @@ export function LandingDemo() {
                             <GeneratingAnimation/>
                         </div>
                     ) : generatedImage ? (
-                        <NextImage
+                        <Image
                             alt="Generated photo"
+                            preview={false}
                             src={generatedImage}
-                            fill
                             className="object-cover"
                         />
                     ) : (
-                        <NextImage
+                        <Image
                             alt="Example photo"
+                            preview={false}
                             src={RESULT_IMAGE_DEFAULT}
-                            fill
                             className="object-cover"
                         />
                     )}
@@ -73,34 +74,34 @@ export function LandingDemo() {
                 </Button>
             </div>
             {/* right */}
-            <div className="flex flex-col gap-12 relative">
-                <h2 className="text-[3rem] leading-[1.2] font-medium"><HighlightedText>Personalized</HighlightedText><br/>AI-powered generations</h2>
-                <div className="flex flex-col gap-12 justify-center w-full">
+            <div className="flex flex-col gap-6 md:gap-12 relative w-full sm:w-fit">
+                <H1><HighlightedText>Personalized</HighlightedText><br/>AI-powered generations</H1>
+                <div className="flex flex-col gap-6 sm:gap-12 justify-center w-full">
                     {/* step */}
                     <div className="flex items-center relative">
-                        <Download className="text-3xl text-primary" />
+                        <Download className="min-w-6 text-3xl text-primary" />
                         <div className="ml-4">
-                            <h3 className="text-lg">Upload 10+ photos for better generation</h3>
+                            <Body className="sm:text-nowrap">Upload 10+ photos for better generation</Body>
                         </div>
-                        <div className="absolute left-2.5 top-9 h-8 w-0.5 bg-primary"></div>
+                        <div className="hidden sm:block absolute left-2.5 top-9 h-8 w-0.5 bg-primary"></div>
                     </div>
                     {/* step */}
                     <div className="flex items-center relative">
-                        <Sparkles className="text-3xl text-primary" />
+                        <Sparkles className="min-w-6 text-3xl text-primary" />
                         <div className="ml-4">
-                            <h3 className="text-lg">Wait for your personal AI model to learn</h3>
+                            <Body className="sm:text-nowrap">Wait for your personal AI model to learn</Body>
                         </div>
-                        <div className="absolute left-2.5 top-9 h-8 w-0.5 bg-primary"></div>
+                        <div className="hidden sm:block absolute left-2.5 top-9 h-8 w-0.5 bg-primary"></div>
                         </div>
                     {/* step */}
                     <div className="flex items-center relative">
-                        <Pencil className="text-3xl text-primary"/>
+                        <Pencil className="min-w-6 text-3xl text-primary"/>
                         <div className="ml-4">
-                            <h3 className="text-lg">Generate desired photos using text prompt</h3>
+                            <Body className="sm:text-nowrap">Generate desired photos using text prompt</Body>
                         </div>
                     </div>
                 </div>
-                <GlowingBlob opacity={0.2} className="top-[-140px] left-[-50px]"/>
+                <GlowingBlob opacity={0.1} className="top-[-140px] left-[-50px]"/>
             </div>
     </section>
     )

@@ -67,8 +67,8 @@ function Button({
       disabled={isLoading || props.disabled}
       {...props}
     >
-      <div ref={parent} className="flex items-center gap-2 flex-nowrap">
-        {isLoading && <LoadingOutlined className="animate-spin text-lg"/>}
+      <div ref={parent} className="flex items-center flex-nowrap">
+        {isLoading && <LoadingOutlined className="animate-spin mr-2 text-lg"/>}
         {children}
       </div>
     </Comp>

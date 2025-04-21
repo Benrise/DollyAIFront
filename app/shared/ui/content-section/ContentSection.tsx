@@ -9,7 +9,7 @@ export function ContentSection({ children, className }: PropsWithChildren<Conten
         <div 
                 className={`
                     py-10
-                  bg-white rounded-none 
+                    bg-background rounded-none 
                     shadow-none sm:shadow-xl sm:shadow-indigo-50
                     sm:h-auto
                     flex flex-col
