@@ -1,6 +1,5 @@
 "use client"
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import NextImage from "next/image"
 import { Download, Pencil, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { Avatar, Image } from "antd";
@@ -69,7 +68,7 @@ export function LandingDemo() {
                     ))}
                 </div>
                 <Textarea className="px-6 py-3 rounded-2xl resize-none h-[96px] max-h-24px" placeholder="Enter prompt"/>
-                <Button size={"lg"} onClick={handleGenerate} isLoading={isGenerating}>
+                <Button size={"lg"} onClick={handleGenerate} isLoading={isGenerating} className="w-full">
                     Generate
                 </Button>
             </div>
@@ -103,6 +102,6 @@ export function LandingDemo() {
                 </div>
                 <GlowingBlob opacity={0.1} className="top-[-140px] left-[-50px]"/>
             </div>
-    </section>
+        </section>
     )
 }

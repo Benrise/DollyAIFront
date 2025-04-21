@@ -17,7 +17,7 @@ export function LandingGallery() {
     <div 
       className="flex flex-col gap-6 md:gap-12 w-full"
     >
-      <div className="flex justify-between gap-3 max-w-full items-center">
+      <div className="flex justify-between gap-3 max-w-full items-center relative">
         <H1>Endless inspiration</H1>
         <Button variant="ghost">
           See all
@@ -27,7 +27,7 @@ export function LandingGallery() {
       <Swiper
         ref={swiperRef}
         slidesPerView={3.5}
-        speed={5*10000}
+        speed={5000}
         modules={[Autoplay, FreeMode, Grid]}
         freeMode={{
           enabled: true,
@@ -39,7 +39,7 @@ export function LandingGallery() {
           fill: 'row',
         }}
         autoplay={{
-          delay: 1,
+          delay: 0,
           disableOnInteraction: false,
         }}
         spaceBetween={12}

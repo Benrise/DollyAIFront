@@ -1,7 +1,17 @@
-export function Body({ children, className }: { children: React.ReactNode, className?: string }) {
+import React from 'react';
+
+export const Body = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<'div'>>(
+  ({ children, className, ...props }, ref) => {
     return (
-        <div className={`text-[0.875rem] md:text-lg xl:text-xl font-medium ${className}`}>
-            {children}
-        </div>
-    )
-}
+      <div
+        ref={ref}
+        className={`text-[1rem] md:text-lg xl:text-xl font-medium ${className}`}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  }
+);
+
+Body.displayName = 'Body';

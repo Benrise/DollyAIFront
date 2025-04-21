@@ -5,7 +5,7 @@ import { ArrowDown } from 'lucide-react';
 
 import { HEAD_IMAGES } from '../constants/head-images';
 import { Button } from '@/app/shared/ui/button';
-import { Body, H0 } from '@/app/shared/ui/typography';
+import { Body } from '@/app/shared/ui/typography';
 
 
 export function LandingHead() {
@@ -47,7 +47,7 @@ export function LandingHead() {
         {isFinished && (
           <div className="flex flex-col gap-6 w-full" >
               <div className="flex flex-col gap-3">
-                  <h1 className='text-center xl:text-start text-[2rem] md:text-[4rem] font-bold'>Create personalized<br/><span className='bg-gradient-to-r from-primary to-foreground bg-clip-text text-transparent'>photos</span> & <span className='text-outline italic'>videos</span><br/>with AI</h1>
+                  <h1 className='text-center xl:text-start text-[3rem] md:text-[4rem] font-bold'>Create personalized<br/><span className='bg-gradient-to-r from-primary to-foreground bg-clip-text text-transparent'>photos</span> & <span className='text-outline italic'>videos</span><br/>with AI</h1>
                   <Body className='text-lg! text-center xl:text-start'>
                       Transform your ideas into stunning, custom visuals in seconds.
                   </Body>
