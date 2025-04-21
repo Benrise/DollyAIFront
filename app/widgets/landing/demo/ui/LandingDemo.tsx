@@ -75,7 +75,7 @@ export function LandingDemo() {
             </div>
             {/* right */}
             <div className="flex flex-col gap-6 md:gap-12 relative w-full sm:w-fit">
-                <H1><HighlightedText>Personalized</HighlightedText><br/>AI-powered generations</H1>
+                <H1 className="lg:text-center xl:text-start"><HighlightedText>Personalized</HighlightedText><br/>AI-powered generations</H1>
                 <div className="flex flex-col gap-6 sm:gap-12 justify-center w-full">
                     {/* step */}
                     <div className="flex items-center relative">
