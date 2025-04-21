@@ -10,25 +10,16 @@ import { LandingGallery } from "@/app/widgets/landing/gallery";
 import { LandingProduct } from "@/app/widgets/landing/product";
 import { LandingExamples } from "@/app/widgets/landing/examples";
 import { LandingFashion } from "@/app/widgets/landing/fashion";
-import { SubscriptionsList, useGetSubscriptionsListMutation } from "@/app/widgets/subscription/list";
-import { useRouter } from "next/navigation";
 import { LandingSocials } from "@/app/widgets/landing/socials";
 import { LandingFaq } from "@/app/widgets/landing/faq";
+import { LandingPricing } from "@/app/widgets/landing/pricing";
 
 
 export default function LandingPage() {
-        const REGISTER_URL = "/pages/auth/register"
         const { disableDrawerWatching } = useUserContext();
-        const { subscriptions, getSubscriptionsListMutation } = useGetSubscriptionsListMutation();
-        const router = useRouter();
-
-        const handleSubscriptionSelect = async () => {
-            router.push(REGISTER_URL)
-        }
 
         useEffect(() => {
             disableDrawerWatching();
-            getSubscriptionsListMutation();
         }, []);
 
         return (
@@ -41,11 +32,7 @@ export default function LandingPage() {
                     <LandingProduct/>
                     <LandingExamples/>
                     <LandingFashion/>
-                    <SubscriptionsList 
-                        subscriptions={subscriptions} 
-                        onSubscriptionSelect={handleSubscriptionSelect}
-                        className='flex md:flex-nowrap flex-wrap gap-4'
-                    />
+                    <LandingPricing/>
                     <LandingSocials/>
                     <LandingFaq/>
                     <LandingFooter/>

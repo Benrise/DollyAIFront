@@ -30,7 +30,7 @@ export function LandingDemo() {
     };
 
     return (
-        <section className="flex p-8 md:p-12 xl:px-24 xl:py-16 gap-6 md:gap-12 border overflow-hidden border-secondary rounded-4xl lg:flex-row flex-col-reverse justify-around w-full items-center">
+        <section className="flex p-8 md:p-12 xl:px-24 xl:py-16 gap-6 md:gap-12 border overflow-hidden border-border rounded-4xl lg:flex-row flex-col-reverse justify-around w-full items-center bg-card">
             {/* left */}
             <div className="w-full flex flex-col gap-4 max-w-[456px]">
                 <div ref={parent} className="relative w-full aspect-square max-w-[456px] overflow-hidden rounded-4xl">

@@ -13,9 +13,9 @@ import { Body, H1 } from "@/app/shared/ui/typography";
 
 export function LandingFaq() {
     return (
-        <div className="flex flex-col p-8 gap-6 relative w-full sm:w-fit">
+        <div className="flex flex-col p-8 xl:p-16 gap-6 relative w-full sm:w-fit">
             <div className="flex flex-col gap-3 md:gap-6 w-full">
-                <H1 className="lg:text-center xl:text-start">
+                <H1 className="text-start">
                     FAQ
                 </H1>
                 <Body>

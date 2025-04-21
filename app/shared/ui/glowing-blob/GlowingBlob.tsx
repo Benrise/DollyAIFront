@@ -19,7 +19,7 @@ export function GlowingBlob({
   return (
     <div
       className={cn(
-        "pointer-events-none absolute -z-10",
+        "pointer-events-none absolute",
         className
       )}
       style={{

@@ -21,7 +21,7 @@ export const SubscriptionCard: React.FC<ISubscriptionCardProps> = ({ subscriptio
         <>
             <div
               className={`${className} ${
-                isActive ? 'border-2 border-primary' : 'border-2 border-secondary'
+                isActive ? 'border-1 border-primary' : 'border-1 border-border'
               } px-8 py-12 bg-card rounded-2xl flex flex-col justify-between gap-14 min-w-[228px] min-h-[500px]`}
             >
                 <div className="flex flex-col gap-6">

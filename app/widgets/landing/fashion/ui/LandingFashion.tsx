@@ -23,7 +23,7 @@ export function LandingFashion() {
                 <div 
                     className="flex flex-col items-center gap-3 md:gap-6 mr-[-100px] relative z-10"
                 >
-                    <div className=" items-center bg-neutral-900 rounded-2xl lg:rounded-4xl relative">
+                    <div className=" items-center bg-card rounded-2xl lg:rounded-4xl relative">
                         <NextImage 
                             src="/images/landing/fashion/cloth.png" 
                             alt="Product" 

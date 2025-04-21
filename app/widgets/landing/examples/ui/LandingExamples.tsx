@@ -17,7 +17,7 @@ export function LandingExamples() {
     const [selectedPrompt, setSelectedPrompt] = useState(prompts[0]);
   
     return (
-      <section className="flex flex-col p-8 xl:p-16 gap-6 md:gap-12 border overflow-hidden border-secondary rounded-4xl justify-around w-full">
+      <section className="flex flex-col p-8 xl:p-16 gap-6 md:gap-12 border overflow-hidden border-border rounded-4xl justify-around w-full bg-card">
         <div className="flex flex-col gap-3 md:gap-6 relative w-full sm:w-fit">
             <H1 className="lg:text-center xl:text-start">
                 Be <HighlightedText>anyone</HighlightedText> with face-swap and AI Avatars

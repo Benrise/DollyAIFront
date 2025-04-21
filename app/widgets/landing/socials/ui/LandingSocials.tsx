@@ -6,17 +6,19 @@ import NextLink from "next/link";
 
 import { Body, H1 } from "@/app/shared/ui/typography";
 import { Button } from "@/app/shared/ui/button";
+import { GlowingBlob } from '@/app/shared/ui/glowing-blob';
 
 export function LandingSocials() {
     return (
-        <section className="flex flex-col-reverse md:flex-row p-8 pb-0 xl:p-16 xl:pb-0 gap-12 border overflow-hidden border-secondary rounded-4xl justify-around items-center w-full">
+        <section className="flex flex-col-reverse md:flex-row p-8 pb-0 xl:p-16 xl:pb-0 gap-12 border overflow-hidden border-border rounded-4xl justify-around items-center w-full bg-card">
             <NextImage src="/images/landing/socials/instagram-feed.jpg" alt="Product" width={426} height={783} className="rounded-4xl rounded-b-none" />
             <div className="flex flex-col gap-6">
-                <div className="flex flex-col gap-3 md:gap-6 w-full">
+                <div className="flex flex-col gap-3 md:gap-6 w-full relative">
                     <H1>
                         See us in action on socials!
                     </H1>
                     <Body>We’re where the AI art revolution happens. Follow for daily inspo, wild photo challenges, and exclusive tools to make your content unstoppable</Body>
+                    <GlowingBlob opacity={0.1} className="top-[-100px] left-[-100px]" />
                 </div>
                 <div className="flex gap-4">
                     <Button size="icon" className='rounded-full' asChild>
