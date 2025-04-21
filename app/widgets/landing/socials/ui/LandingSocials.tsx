@@ -11,11 +11,13 @@ export function LandingSocials() {
     return (
         <section className="flex flex-col-reverse md:flex-row p-8 pb-0 xl:p-16 xl:pb-0 gap-12 border overflow-hidden border-secondary rounded-4xl justify-around items-center w-full">
             <NextImage src="/images/landing/socials/instagram-feed.jpg" alt="Product" width={426} height={783} className="rounded-4xl rounded-b-none" />
-            <div className="flex flex-col gap-3 md:gap-6">
-                <H1>
-                    See Us in Action on Socials!
-                </H1>
-                <Body>We’re where the AI art revolution happens. Follow for daily inspo, wild photo challenges, and exclusive tools to make your content unstoppable</Body>
+            <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-3 md:gap-6 w-full">
+                    <H1>
+                        See Us in Action on Socials!
+                    </H1>
+                    <Body>We’re where the AI art revolution happens. Follow for daily inspo, wild photo challenges, and exclusive tools to make your content unstoppable</Body>
+                </div>
                 <div className="flex gap-4">
                     <Button size="icon" className='rounded-full' asChild>
                         <NextLink href={"https://instagram.com/"} target="_blank" rel="noreferrer noopener">

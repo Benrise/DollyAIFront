@@ -13,11 +13,15 @@ import { Body, H1 } from "@/app/shared/ui/typography";
 
 export function LandingFaq() {
     return (
-        <div className="flex flex-col p-8 gap-3 md:gap-6 relative w-full sm:w-fit">
-            <H1 className="lg:text-center xl:text-start">
-                FAQ
-            </H1>
-            <Body>Our platform let’s you create hyper-realistic photos and videos of people. Whether you’re just getting started or looing to fine-tune you process, this guide walks you through the platform and answers the most common user questions.</Body>
+        <div className="flex flex-col p-8 gap-6 relative w-full sm:w-fit">
+            <div className="flex flex-col gap-3 md:gap-6 w-full">
+                <H1 className="lg:text-center xl:text-start">
+                    FAQ
+                </H1>
+                <Body>
+                    Our platform let’s you create hyper-realistic photos and videos of people. Whether you’re just getting started or looing to fine-tune you process, this guide walks you through the platform and answers the most common user questions.
+                </Body>
+            </div>
             <GlowingBlob opacity={0.1} className="top-[0px] left-[-100px]" />
             <Button asChild>
                 <NextLink href="/pages/auth/login">
