@@ -67,7 +67,6 @@ export function LoginForm() {
                 </FormItem>
               )}
             />
-            
             <FormField
               control={form.control}
               name="password"
@@ -97,7 +96,6 @@ export function LoginForm() {
               )}
             />
           </div>
-
           <div className="flex flex-col gap-6 items-center">
             <div className="flex flex-col w-full items-center">
               <Button 
@@ -121,17 +119,17 @@ export function LoginForm() {
               </span>
               <Separator className="max-w-[45%]"/>
             </div>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="w-full"
-                asChild
-              >
-                <img src="/images/svg/icons/flat-color-icons--google.svg" alt="google"/> 
-                <NextLink href={OAUTH_LINK}>
-                  Sign in with Google
-                </NextLink>
-              </Button>
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="w-full"
+              asChild
+            >
+              <img src="/images/svg/icons/flat-color-icons--google.svg" alt="google"/> 
+              <NextLink href={OAUTH_LINK}>
+                Sign in with Google
+              </NextLink>
+            </Button>
           </div>
           <Terms />
         </form>

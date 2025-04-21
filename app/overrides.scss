@@ -1,3 +1,27 @@
 .ant-form-item .ant-form-item-explain {
     font-size: 14px !important;
   }
+
+.ant-steps-item-title {
+  color: var(--foreground) !important;
+}
+.ant-steps-item-icon {
+  span {
+    color: var(--foreground) !important;
+  }
+}
+.ant-steps .ant-steps-item-wait .ant-steps-item-icon {
+  background-color: var(--muted) !important;
+}
+.ant-steps-item-active {
+  .ant-steps-item-icon {
+    background-color: var(--primary) !important;
+    border-color: var(--ring) !important;
+  }
+  .ant-steps-icon-dot {
+    background-color: var(--ring) !important;
+  }
+}
+.ant-steps-item-tail::after {
+  background-color: var(--ring) !important; 
+}
