@@ -31,7 +31,6 @@ export function SubscriptionsList({subscriptions, onSubscriptionSelect, classNam
                     key={index} 
                     onSelect={handleSelectPlan} 
                     isActive={subscription.nickname === "Premium"}
-                    isPriority={subscription.nickname === "Premium"}
                     className="w-full h-fit"/>
             ))}
         </div>

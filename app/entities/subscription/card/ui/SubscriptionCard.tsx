@@ -1,6 +1,3 @@
-import styles from './styles.module.scss';
-
-import { Tag } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
 import { ArrowUpRight } from "lucide-react"
 
@@ -11,7 +8,6 @@ import { ISubscriptionProduct } from "../model";
 interface ISubscriptionCardProps {
     subscription: ISubscriptionProduct;
     onSelect: (subscription: ISubscriptionProduct) => void;
-    isPriority?: boolean;
     isActive: boolean;
     className?: string
     actionLabel?: string
@@ -20,7 +16,7 @@ interface ISubscriptionCardProps {
 }
 
 
-export const SubscriptionCard: React.FC<ISubscriptionCardProps> = ({ subscription, onSelect, isActive, isPriority, className, actionLabel, isDisabled, isLoading }) => {
+export const SubscriptionCard: React.FC<ISubscriptionCardProps> = ({ subscription, onSelect, isActive, className, actionLabel, isDisabled, isLoading }) => {
     return (
         <>
             <div

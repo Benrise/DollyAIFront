@@ -32,7 +32,7 @@ export function LandingFashion() {
                         />
                         <ShoppingCart className="hidden md:block absolute top-6 right-6"/>
                     </div>
-                    <Button size={"lg"}>Try for me <ArrowRight className="ml-2"/></Button>
+                    <Button>Try for me <ArrowRight className="ml-2"/></Button>
                 </div>
                 <NextImage 
                     src="/images/landing/fashion/model.jpg" 
