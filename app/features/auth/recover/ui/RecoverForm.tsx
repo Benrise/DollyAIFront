@@ -117,7 +117,7 @@ export function RecoverForm() {
             <Form {...sendCodeForm}>
             <form 
                 onSubmit={sendCodeForm.handleSubmit(onSendCode)} 
-                className="flex flex-col gap-8"
+                className="flex flex-col gap-12"
             >
                 <FormField
                 control={sendCodeForm.control}
@@ -149,7 +149,7 @@ export function RecoverForm() {
                     >
                         {isLoadingSendCode ? "Sending..." : "Send Code"}
                     </Button>
-                    <Button variant="link" className="text-foreground" asChild>
+                    <Button variant="link" size={"lg"} className="text-foreground" asChild>
                         <NextLink href={LOGIN_URL}>
                             Back to Login Page
                         </NextLink>
@@ -162,7 +162,7 @@ export function RecoverForm() {
             <Form {...verifyCodeForm}>
             <form
                 onSubmit={verifyCodeForm.handleSubmit(onVerifyCode)}
-                className="flex flex-col gap-8"
+                className="flex flex-col gap-12"
             >
                 <FormField
                 control={verifyCodeForm.control}
@@ -206,7 +206,7 @@ export function RecoverForm() {
             <Form {...changePasswordForm}>
             <form
                 onSubmit={changePasswordForm.handleSubmit(onChangePassword)}
-                className="flex flex-col gap-8"
+                className="flex flex-col gap-12"
             >
                 <FormField
                 control={changePasswordForm.control}

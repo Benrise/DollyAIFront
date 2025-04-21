@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import NextLink from 'next/link'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -45,7 +44,7 @@ export function LoginForm() {
         Sign in
       </H2>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="px-4 sm:px-10 flex flex-col gap-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="px-4 sm:px-10 flex flex-col gap-12">
           <div className="flex flex-col gap-6">
             <FormField
               control={form.control}
@@ -84,7 +83,7 @@ export function LoginForm() {
                           {...field}
                         />
                       </div>
-                      <Button variant="link" size="sm" className="text-foreground" asChild>
+                      <Button variant="link" className="text-foreground p-0" asChild>
                         <NextLink href={RECOVER_URL}>
                           Forgot password?
                         </NextLink>
@@ -106,7 +105,7 @@ export function LoginForm() {
               >
                 {isLoadingLogin ? "Logging in..." : "Login"}
               </Button>
-              <Button variant="link" size="sm" className="text-foreground" asChild>
+              <Button variant="link" size={"lg"} className="text-foreground" asChild>
                 <NextLink href={REGISTER_URL}>
                   No account? Register
                 </NextLink>
@@ -121,7 +120,7 @@ export function LoginForm() {
             </div>
             <Button 
               variant="outline" 
-              size="lg" 
+              size={"lg"}
               className="w-full"
               asChild
             >
