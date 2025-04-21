@@ -6,6 +6,7 @@ import { LandingHeader } from "@/app/widgets/landing/header";
 import { LandingFooter } from "@/app/widgets/landing/footer";
 import { LandingHead } from "@/app/widgets/landing/head";
 import { LandingDemo } from "@/app/widgets/landing/demo";
+import { LandingGallery } from "@/app/widgets/landing/gallery";
 
 export default function LandingPage() {
         const { disableDrawerWatching } = useUserContext();
@@ -20,6 +21,7 @@ export default function LandingPage() {
                     <LandingHeader/>
                     <LandingHead/>
                     <LandingDemo/>
+                    <LandingGallery/>
                     <LandingFooter/>
                 </div>
             </div>

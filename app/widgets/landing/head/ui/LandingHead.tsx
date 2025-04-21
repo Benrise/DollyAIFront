@@ -78,10 +78,11 @@ export function LandingHead() {
             width={'100%'}
           />
         </div>
-        <Button onClick={handleScrollClick} variant="ghost" className='hidden xl:flex absolute bottom-0 left-0'>
-            Scroll to explore
-            <ArrowDown className='ml-2'/>
-        </Button>
+        {isFinished && <Button onClick={handleScrollClick} variant="ghost" className='hidden xl:flex absolute bottom-0 left-0'>
+              Scroll to explore
+              <ArrowDown className='ml-2'/>
+          </Button>
+        }
       </div>
     );
 }
