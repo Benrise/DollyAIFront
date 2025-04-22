@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Mail, Lock } from 'lucide-react'
 
-import { Terms } from '@/app/entities/terms'
 import { type TypeRegisterSchema, RegisterSchema } from '@/app/entities/auth'
 import { useRegisterMutation } from '@/app/features/auth/register'
 import { Button } from '@/app/shared/ui/button'
@@ -143,7 +142,6 @@ export function RegisterForm() {
               </Button>
             </div>
           </div>
-          <Terms />
         </form>
       </Form>
     </div>

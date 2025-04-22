@@ -11,6 +11,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerClose,
+  DrawerFooter
 } from '@/app/shared/ui/drawer'
 import { ProtectedImage } from '@/app/shared/ui/protected-image'
 import {
@@ -63,7 +64,7 @@ export const UpdateModelDrawer: React.FC<UpdateModelDrawerProps> = ({
   return (
     <>
       <Drawer open={open} onOpenChange={onClose}>
-        <DrawerContent className="h-[90vh]">
+        <DrawerContent>
           <DrawerHeader>
             <DrawerTitle>Update Model</DrawerTitle>
           </DrawerHeader>
@@ -109,8 +110,10 @@ export const UpdateModelDrawer: React.FC<UpdateModelDrawerProps> = ({
                   Delete model
                 </Button>
               </div>
-
-              <div className="flex gap-4 py-6">
+            </div>
+          </form>
+          <DrawerFooter>
+            <div className="flex gap-4">
                 <DrawerClose asChild>
                   <Button variant="outline" className="flex-1" size="lg">
                     Cancel
@@ -125,8 +128,7 @@ export const UpdateModelDrawer: React.FC<UpdateModelDrawerProps> = ({
                   Save Model
                 </Button>
               </div>
-            </div>
-          </form>
+          </DrawerFooter>
         </DrawerContent>
       </Drawer>
 

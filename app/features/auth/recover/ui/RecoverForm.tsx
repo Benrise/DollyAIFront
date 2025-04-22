@@ -116,47 +116,46 @@ export function RecoverForm() {
         />
         {currentStep === 0 && (
             <Form {...sendCodeForm}>
-            <form 
-                onSubmit={sendCodeForm.handleSubmit(onSendCode)} 
-                className="flex flex-col gap-12"
-            >
-                <FormField
-                control={sendCodeForm.control}
-                name="email"
-                render={({ field }) => (
-                    <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                        <div className="relative">
-                        <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                        <Input
-                            placeholder="Enter your email"
-                            className="pl-9"
-                            {...field}
-                        />
-                        </div>
-                    </FormControl>
-                    <FormMessage />
-                    </FormItem>
-                )}
-                />
-                
-                <div className="flex flex-col items-center">
-                    <Button
-                        type="submit"
-                        size="lg"
-                        className="w-full"
-                        disabled={isLoadingSendCode}
-                    >
-                        {isLoadingSendCode ? "Sending..." : "Send Code"}
-                    </Button>
-                    <Button variant="link" size={"lg"} className="text-foreground" asChild>
-                        <NextLink href={LOGIN_URL}>
-                            Back to Login Page
-                        </NextLink>
-                    </Button>
-                </div>
-            </form>
+                <form 
+                    onSubmit={sendCodeForm.handleSubmit(onSendCode)} 
+                    className="flex flex-col gap-12"
+                >
+                    <FormField
+                    control={sendCodeForm.control}
+                    name="email"
+                    render={({ field }) => (
+                        <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                            <div className="relative">
+                            <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                            <Input
+                                placeholder="Enter your email"
+                                className="pl-9"
+                                {...field}
+                            />
+                            </div>
+                        </FormControl>
+                        <FormMessage />
+                        </FormItem>
+                    )}
+                    />
+                    <div className="flex flex-col items-center">
+                        <Button
+                            type="submit"
+                            size="lg"
+                            className="w-full"
+                            disabled={isLoadingSendCode}
+                        >
+                            {isLoadingSendCode ? "Sending..." : "Send Code"}
+                        </Button>
+                        <Button variant="link" size={"lg"} className="text-foreground" asChild>
+                            <NextLink href={LOGIN_URL}>
+                                Back to Login Page
+                            </NextLink>
+                        </Button>
+                    </div>
+                </form>
             </Form>
         )}
         {currentStep === 1 && (
@@ -182,23 +181,22 @@ export function RecoverForm() {
                     <FormMessage />
                     </FormItem>
                 )}
-                />
-                
-                <div className="flex flex-col gap-3">
-                <Button
-                    type="submit"
-                    size="lg"
-                    className="w-full"
-                    disabled={isLoadingVerifyCode}
-                >
-                    {isLoadingVerifyCode ? "Verifying..." : "Verify Code"}
-                </Button>
-                
-                <Button variant="link" className="w-full" asChild>
-                    <NextLink href={LOGIN_URL}>
-                    Back to Login Page
-                    </NextLink>
-                </Button>
+                /> 
+                <div className="flex flex-col items-center">
+                    <Button
+                        type="submit"
+                        size="lg"
+                        className="w-full"
+                        disabled={isLoadingVerifyCode}
+                    >
+                        {isLoadingVerifyCode ? "Verifying..." : "Verify Code"}
+                    </Button>
+                    
+                    <Button variant="link" size={"lg"} className="text-foreground" asChild>
+                        <NextLink href={LOGIN_URL}>
+                        Back to Login Page
+                        </NextLink>
+                    </Button>
                 </div>
             </form>
             </Form>
@@ -251,7 +249,7 @@ export function RecoverForm() {
                     </FormItem>
                 )}
                 />
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col items-center">
                     <Button
                         type="submit"
                         size="lg"
@@ -260,7 +258,7 @@ export function RecoverForm() {
                     >
                         {isLoadingChangePassword ? "Updating..." : "Change Password"}
                     </Button>
-                    <Button variant="link" className="w-full" asChild>
+                    <Button variant="link" size={"lg"} className="text-foreground" asChild>
                         <NextLink href={LOGIN_URL}>
                         Back to Login Page
                         </NextLink>
