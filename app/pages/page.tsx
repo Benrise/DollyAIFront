@@ -18,7 +18,7 @@ import { useListenToResultMutation } from '@/app/features/model/create';
 import { useListenToReadinessMutation } from '@/app/features/model/create';
 import { useGenerateModelMutation } from '@/app/features/model/create';
 import { Textarea } from '@/app/shared/ui/textarea';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/app/shared/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/shared/ui/tooltip';
 
 export default function Home() {
   const [parent] = useAutoAnimate();
@@ -86,8 +86,8 @@ export default function Home() {
   }, [activeModel, listenResultMutation, listenReadinessMutation]);
 
   return (
-    <ContentSection className='sm:max-w-lg sm:rounded-4xl sm:min-w-lg max-h-none md:max-h-[80vh] pb-'>
-      <div className="flex flex-col gap-4 lg:gap-8 relative overflow-y-auto w-full">
+    <ContentSection className='sm:max-w-lg sm:rounded-4xl sm:min-w-lg max-h-none md:max-h-[90vh]'>
+      <div className="flex flex-col gap-4 lg:gap-8 relative w-full">
         <UserBadge/>
         <div className='flex flex-col gap-2 '>
             <ModelsList
@@ -126,8 +126,9 @@ export default function Home() {
                 )}
                 {resultUrl && (
                   <Button 
-                    size="lg" 
-                    className='absolute right-[16px] top-[16px] opacity-70 hover:opacity-100' 
+                    size="icon" 
+                    variant={'outline'}
+                    className='absolute rounded-lg right-[16px] top-[16px] opacity-80 hover:opacity-100' 
                     onClick={() => handleDownload(resultUrl)}
                   >
                     <Download className="h-4 w-4" />
@@ -156,26 +157,28 @@ export default function Home() {
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 onClick={handleFocus}
-                disabled={!!activeModel && !activeModel.is_ready || isListeningResult}
+                disabled={!activeModel || !activeModel.is_ready || isSendingGenerationRequest || isListeningResult}
                 placeholder="Imagine me as an astronaut in outer space"
                 className="min-h-[80px]"
               />
             </div>
             {activeModel && !activeModel.is_ready ? (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button size="lg" className='w-full'>
-                    Generate
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Model is training. Please wait. Often it takes a while (up to 3 hours).</p>
-                </TooltipContent>
-              </Tooltip>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Button disabled size="lg" className='w-full'>
+                      Generate
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Model is training. Please wait. Often it takes a while (up to 3 hours).</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             ) : (
               <Button 
                 onClick={handleBlur} 
-                disabled={!activeModel} 
+                disabled={!activeModel || isSendingGenerationRequest || isListeningResult} 
                 isLoading={isSendingGenerationRequest || isListeningResult} 
                 className='w-full' 
                 size="lg"

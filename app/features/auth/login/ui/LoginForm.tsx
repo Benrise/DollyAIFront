@@ -7,7 +7,6 @@ import { Mail, Lock } from 'lucide-react'
 
 import { Separator } from "@/app/shared/ui/separator"
 import { Button } from '@/app/shared/ui/button'
-import { Terms } from '@/app/entities/terms'
 import { type TypeLoginSchema, LoginSchema } from '@/app/entities/auth'
 import { useLoginMutation } from '@/app/features/auth/login'
 import {
@@ -39,10 +38,12 @@ export function LoginForm() {
 
   return (
     <div className="flex flex-col gap-8 h-fit sm:min-h-fit">
-      <Logo type="compact" className="max-h-10"/>
-      <H2 className="w-full text-center">
-        Sign in
-      </H2>
+      <div className="flex flex-col gap-6">
+        <Logo type="compact" className="max-h-10"/>
+        <H2 className="w-full text-center">
+          Sign in
+        </H2>
+      </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="px-4 sm:px-10 flex flex-col gap-12">
           <div className="flex flex-col gap-6">
@@ -95,7 +96,7 @@ export function LoginForm() {
               )}
             />
           </div>
-          <div className="flex flex-col gap-6 items-center">
+          <div className="flex flex-col gap-4 items-center">
             <div className="flex flex-col w-full items-center">
               <Button 
                 type="submit" 
@@ -130,7 +131,6 @@ export function LoginForm() {
               </NextLink>
             </Button>
           </div>
-          <Terms />
         </form>
       </Form>
     </div>

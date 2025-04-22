@@ -24,6 +24,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerClose,
+  DrawerFooter
 } from '@/app/shared/ui/drawer'
 import {
   Tooltip,
@@ -120,7 +121,7 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({
 
   return (
     <Drawer open={open} onOpenChange={onClose}>
-      <DrawerContent className="h-fit max-h-[95vh]!">
+      <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>Create a New Model</DrawerTitle>
         </DrawerHeader>
@@ -187,32 +188,34 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({
               </p>
             </div>
           </div>
-          <div className="flex gap-4 mt-4">
-            <DrawerClose className="w-full">
-              <Button variant="outline" className="w-full" size="lg">
-                Cancel
-              </Button>
-            </DrawerClose>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger className="w-full">
-                  <Button
-                    className="w-full"
-                    size="lg"
-                    onClick={handleSubmit}
-                    disabled={isSubmitDisabled || isCreatingModel}
-                    isLoading={isCreatingModel}
-                  >
-                    Create Model
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  {fileList.length < MIN_FILE_COUNT || fileList.length > MAX_FILE_COUNT ? 'Please upload 10 to 15 photos!' : hasErrorFiles ? 'Uploaded photos have errors!' : 'Model name is required!'}
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
         </div>
+        <DrawerFooter>
+          <div className="flex gap-4">
+              <DrawerClose className="w-full">
+                <Button variant="outline" className="w-full" size="lg">
+                  Cancel
+                </Button>
+              </DrawerClose>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger className="w-full">
+                    <Button
+                      className="w-full"
+                      size="lg"
+                      onClick={handleSubmit}
+                      disabled={isSubmitDisabled || isCreatingModel}
+                      isLoading={isCreatingModel}
+                    >
+                      Create Model
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {fileList.length < MIN_FILE_COUNT || fileList.length > MAX_FILE_COUNT ? 'Please upload 10 to 15 photos!' : hasErrorFiles ? 'Uploaded photos have errors!' : 'Model name is required!'}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+          </div>
+        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   )
