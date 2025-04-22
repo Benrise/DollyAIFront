@@ -2,10 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { Form, Input, Image, Tooltip } from 'antd';
-
-import { ChevronDown } from 'lucide-react'
-import { DownloadOutlined } from '@ant-design/icons';
+import { ChevronDown, Download } from 'lucide-react';
+import { Image } from 'antd';
 
 import { downloadBlob } from '@/app/shared/lib/download';
 import { useMobileDetect } from '@/app/shared/hooks';
@@ -19,15 +17,16 @@ import { ModelsList, useGetModelsListMutation } from '@/app/widgets/model/list';
 import { useListenToResultMutation } from '@/app/features/model/create';
 import { useListenToReadinessMutation } from '@/app/features/model/create';
 import { useGenerateModelMutation } from '@/app/features/model/create';
-
+import { Textarea } from '@/app/shared/ui/textarea';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/app/shared/ui/tooltip';
 
 export default function Home() {
-  const [ parent ] = useAutoAnimate();
-  const [ activeModel, setActiveModel ] = useState<IModel | undefined>(undefined);
-  const [ resultUrl, setResultUrl ] = useState<string | null>(null);
+  const [parent] = useAutoAnimate();
+  const [activeModel, setActiveModel] = useState<IModel | undefined>(undefined);
+  const [resultUrl, setResultUrl] = useState<string | null>(null);
   const { me } = useUserStore();
-  const [ form ] = Form.useForm();
-  const [ isTextAreaFocused, setIsTextAreaFocused ] = useState(false);
+  const [prompt, setPrompt] = useState("");
+  const [isTextAreaFocused, setIsTextAreaFocused] = useState(false);
   const { isMobile } = useMobileDetect();
 
   const { models, getModelsListMutation } = useGetModelsListMutation(setActiveModel);
@@ -38,7 +37,7 @@ export default function Home() {
   });
   const { listenResultMutation, isListeningResult } = useListenToResultMutation((url) => {
     setResultUrl(url)
-    form.resetFields();
+    setPrompt("");
   });
   const { listenReadinessMutation, isListeningReadiness } = useListenToReadinessMutation((model_id) => {
     listenResultMutation(model_id)
@@ -51,10 +50,11 @@ export default function Home() {
       }
     });
   };
-  const handleGenerate = async (values: { prompt: string }) => {
-    if (activeModel) {
+  const handleGenerate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (activeModel && prompt.trim()) {
       setResultUrl(null); 
-      generateModelMutation({ model_id: activeModel.id, prompt: values.prompt }, {
+      generateModelMutation({ model_id: activeModel.id, prompt }, {
         onSuccess: async () => {
           await me();
         }
@@ -75,7 +75,7 @@ export default function Home() {
   useEffect(() => {
     if (activeModel) {
       setResultUrl(null);
-      form.resetFields();
+      setPrompt("");
 
       if (activeModel.is_ready) {
         listenResultMutation(activeModel.id);
@@ -83,7 +83,7 @@ export default function Home() {
         listenReadinessMutation(activeModel.id);
       }
     }
-  }, [activeModel, listenResultMutation, listenReadinessMutation, form]);
+  }, [activeModel, listenResultMutation, listenReadinessMutation]);
 
   return (
     <ContentSection className='sm:max-w-lg sm:rounded-4xl sm:min-w-lg max-h-none md:max-h-[80vh] pb-'>
@@ -99,7 +99,8 @@ export default function Home() {
             <SubscriptionBadge/>
         </div>
         <div ref={parent} className="px-4 sm:px-10 flex flex-col gap-4 lg:gap-8 items-center">
-            { !isTextAreaFocused ? <div ref={parent} className={`flex flex-col rounded-[24px] overflow-hidden max-w-[512px] items-center justify-center relative`}>
+            {!isTextAreaFocused ? (
+              <div ref={parent} className={`flex flex-col rounded-[24px] overflow-hidden max-w-[512px] items-center justify-center relative`}>
                 {!isListeningReadiness && isListeningResult && activeModel?.is_ready ? (
                   <GeneratingAnimation />
                 ) : (
@@ -119,11 +120,19 @@ export default function Home() {
                         : "No generations"
                     }
                     className="select-none aspect-square object-cover object-top relative"
-                    fallback='' 
-                    preview={!!resultUrl} 
+                    fallback=''
+                    preview={!!resultUrl}
                   />
                 )}
-                { resultUrl && <Button size="lg" className='absolute! right-[16px] top-[16px] opacity-70 hover:opacity-100' onClick={() => handleDownload(resultUrl)} disabled={resultUrl === null}><DownloadOutlined/></Button>}
+                {resultUrl && (
+                  <Button 
+                    size="lg" 
+                    className='absolute right-[16px] top-[16px] opacity-70 hover:opacity-100' 
+                    onClick={() => handleDownload(resultUrl)}
+                  >
+                    <Download className="h-4 w-4" />
+                  </Button>
+                )}
                 <div className="flex w-full justify-center">
                   <div className="align-middle w-fit text-sm opacity-50">
                     {isListeningResult
@@ -132,32 +141,50 @@ export default function Home() {
                       ? ""
                       : activeModel && !activeModel.is_ready
                       ? "Model is training, this may take some time"
-                      : "You haven’t generated any photos yet"}
+                      : "You haven't generated any photos yet"}
                   </div>
                 </div>
-            </div> : (
+              </div>
+            ) : (
               <Button onClick={handleBlur} variant='secondary' size='lg' className="w-full">
-                  <ChevronDown/>
+                  <ChevronDown className="h-4 w-4" />
               </Button>
             )}
-          <Form form={form} onFinish={handleGenerate} className="px-4 sm:px-10 flex flex-col gap-4 w-full">
-            <Form.Item className='mb-0!' name="prompt" rules={[{ required: true, message: 'Enter a prompt' }]}>
-              <Input.TextArea onClick={handleFocus} disabled={!!activeModel && !activeModel.is_ready || isListeningResult} placeholder="Imagine me as an astronaut in outer space" style={{ height: 80, resize: "none" }} />
-            </Form.Item>
-            {
-              activeModel && !activeModel.is_ready ? (
-                <Tooltip trigger={"click"} title="Model is training. Please wait. Often it takes a while (up to 3 hours).">
+          <form onSubmit={handleGenerate} className="flex flex-col gap-4 w-full">
+            <div className="grid w-full gap-1.5">
+              <Textarea 
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                onClick={handleFocus}
+                disabled={!!activeModel && !activeModel.is_ready || isListeningResult}
+                placeholder="Imagine me as an astronaut in outer space"
+                className="min-h-[80px]"
+              />
+            </div>
+            {activeModel && !activeModel.is_ready ? (
+              <Tooltip>
+                <TooltipTrigger asChild>
                   <Button size="lg" className='w-full'>
                     Generate
                   </Button>
-                </Tooltip>
-              ) : (
-                <Button onClick={handleBlur} disabled={!activeModel} isLoading={isSendingGenerationRequest || isListeningResult} className='w-full' size="lg">
-                  Generate
-                </Button>
-              )
-            }
-          </Form>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Model is training. Please wait. Often it takes a while (up to 3 hours).</p>
+                </TooltipContent>
+              </Tooltip>
+            ) : (
+              <Button 
+                onClick={handleBlur} 
+                disabled={!activeModel} 
+                isLoading={isSendingGenerationRequest || isListeningResult} 
+                className='w-full' 
+                size="lg"
+                type="submit"
+              >
+                Generate
+              </Button>
+            )}
+          </form>
         </div>
       </div>
     </ContentSection>
