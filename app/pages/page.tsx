@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { Form, Button, Input, Typography, Image, Tooltip } from 'antd';
+import { Form, Input, Image, Tooltip } from 'antd';
 
 import { ChevronDown } from 'lucide-react'
 import { DownloadOutlined } from '@ant-design/icons';
@@ -14,12 +14,12 @@ import { GeneratingAnimation } from '@/app/shared/ui/generation-animation';
 import { SubscriptionBadge } from '@/app/entities/subscription/badge';
 import { UserBadge, useUserStore } from '@/app/entities/user';
 import { type IModel } from '@/app/entities/model';
+import { Button } from '@/app/shared/ui/button';
 import { ModelsList, useGetModelsListMutation } from '@/app/widgets/model/list';
 import { useListenToResultMutation } from '@/app/features/model/create';
 import { useListenToReadinessMutation } from '@/app/features/model/create';
 import { useGenerateModelMutation } from '@/app/features/model/create';
 
-const { Text } = Typography;
 
 export default function Home() {
   const [ parent ] = useAutoAnimate();
@@ -98,7 +98,6 @@ export default function Home() {
             />
             <SubscriptionBadge/>
         </div>
-
         <div ref={parent} className="px-4 sm:px-10 flex flex-col gap-4 lg:gap-8 items-center">
             { !isTextAreaFocused ? <div ref={parent} className={`flex flex-col rounded-[24px] overflow-hidden max-w-[512px] items-center justify-center relative`}>
                 {!isListeningReadiness && isListeningResult && activeModel?.is_ready ? (
@@ -124,9 +123,9 @@ export default function Home() {
                     preview={!!resultUrl} 
                   />
                 )}
-                { resultUrl && <Button type='default' size="large" className='absolute! right-[16px] top-[16px] opacity-70 hover:opacity-100' icon={<DownloadOutlined/>} onClick={() => handleDownload(resultUrl)} disabled={resultUrl === null}/>}
+                { resultUrl && <Button size="lg" className='absolute! right-[16px] top-[16px] opacity-70 hover:opacity-100' onClick={() => handleDownload(resultUrl)} disabled={resultUrl === null}><DownloadOutlined/></Button>}
                 <div className="flex w-full justify-center">
-                  <Text className="align-middle w-fit text-[14px]!" type="secondary">
+                  <div className="align-middle w-fit text-sm opacity-50">
                     {isListeningResult
                       ? "Generating..."
                       : resultUrl
@@ -134,10 +133,10 @@ export default function Home() {
                       : activeModel && !activeModel.is_ready
                       ? "Model is training, this may take some time"
                       : "You haven’t generated any photos yet"}
-                  </Text>
+                  </div>
                 </div>
             </div> : (
-              <Button onClick={handleBlur} type="default" size='large' className="bg-gray-50!" block>
+              <Button onClick={handleBlur} variant='secondary' size='lg' className="w-full">
                   <ChevronDown/>
               </Button>
             )}
@@ -148,12 +147,12 @@ export default function Home() {
             {
               activeModel && !activeModel.is_ready ? (
                 <Tooltip trigger={"click"} title="Model is training. Please wait. Often it takes a while (up to 3 hours).">
-                  <Button type="primary" size="large" htmlType="reset" ghost block>
+                  <Button size="lg" className='w-full'>
                     Generate
                   </Button>
                 </Tooltip>
               ) : (
-                <Button onClick={handleBlur} disabled={!activeModel} loading={isSendingGenerationRequest || isListeningResult} type="primary" size="large" htmlType="submit" block>
+                <Button onClick={handleBlur} disabled={!activeModel} isLoading={isSendingGenerationRequest || isListeningResult} className='w-full' size="lg">
                   Generate
                 </Button>
               )

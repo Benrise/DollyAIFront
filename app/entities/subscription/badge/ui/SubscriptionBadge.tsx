@@ -1,10 +1,8 @@
 import { PlusOutlined } from "@ant-design/icons";
-import { Button, Typography } from "antd"
 import { LoadingOutlined } from "@ant-design/icons";
 
+import { Button } from "@/app/shared/ui/button";
 import { useUserContext } from "@/app/providers";
-
-const { Text } = Typography;
 
 
 export function SubscriptionBadge() {
@@ -12,19 +10,19 @@ export function SubscriptionBadge() {
     
     return (
         <div className="px-4 sm:px-10">
-            <div className="flex gap-2 pl-4 pr-2 py-2 justify-between rounded-full w-full bg-indigo-100">
+            <div className="flex gap-2 pl-4 pr-2 py-2 justify-between rounded-full w-full bg-accent">
             {user ? <div className="flex flex-nowrap gap-4 overflow-hidden">
-                <div className="flex items-center gap-1">
-                    <Text ellipsis className='font-bold text-indigo-500!'>{user?.models_left || 0}</Text>
-                    <Text ellipsis>models</Text>
+                <div className="flex items-center text-sm gap-2">
+                    <div className='font-bold text-primary'>{user?.models_left || 0}</div>
+                    <div>models</div>
                 </div>
-                <div className="flex items-center gap-1">
-                    <Text ellipsis className='font-bold text-indigo-500!'>{user?.generations_left || 0}</Text>
-                    <Text ellipsis>generations</Text>
+                <div className="flex items-center text-sm gap-2">
+                    <div className='font-bold text-primary'>{user?.generations_left || 0}</div>
+                    <div>generations</div>
                 </div>
             </div> : <LoadingOutlined />}
             <div className="flex">
-                <Button type="primary" size="middle" className='rounded-full!' onClick={openPricingDrawer} icon={<PlusOutlined/>}/>
+                <Button size="icon" className='rounded-full!' onClick={openPricingDrawer}><PlusOutlined/></Button>
             </div>
             </div>
         </div> 

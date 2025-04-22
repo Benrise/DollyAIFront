@@ -36,3 +36,35 @@
 .ant-steps-item-tail::after {
   background-color: var(--ring) !important; 
 }
+
+.ant-drawer .ant-drawer-content {
+  background-color: var(--sidebar) !important;
+}
+.ant-drawer-header {
+  color: var(--foreground) !important;
+  
+  .ant-drawer-close {
+    color: var(--foreground) !important;
+  }
+}
+
+.ant-skeleton-title {
+  background-color: var(--muted) !important;
+}
+
+.ant-upload-wrapper .ant-upload-list.ant-upload-list-picture .ant-upload-list-item {
+  color: var(--foreground) !important;
+
+  .ant-btn-icon {
+    span {
+      color: var(--foreground) !important;
+    }
+  }
+}
+.ant-upload-wrapper .ant-upload-list.ant-upload-list-picture .ant-upload-list-item {
+  border: none !important;
+  background-color: var(--popover) !important;
+}
+.ant-upload .ant-upload-btn {
+  background-color: var(--popover) !important;
+}

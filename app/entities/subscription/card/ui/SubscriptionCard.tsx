@@ -22,10 +22,10 @@ export const SubscriptionCard: React.FC<ISubscriptionCardProps> = ({ subscriptio
             <div
               className={`${className} ${
                 isActive ? 'border-1 border-primary' : 'border-1 border-border'
-              } px-8 py-12 bg-card rounded-2xl flex flex-col justify-between gap-14 min-w-[228px] min-h-[500px]`}
+              } px-8 py-12 bg-card rounded-2xl flex flex-col justify-between gap-14 min-w-[228px] min-h-[500px] text-foreground`}
             >
                 <div className="flex flex-col gap-6">
-                    <h2 className='text-3xl font-bold text-start'>{subscription.nickname}</h2>
+                    <h2 className='text-2xl md:text-3xl font-bold text-start'>{subscription.nickname}</h2>
                     <div className="flex items-end gap-2 text-primary">
                         <div className="text-5xl font-semibold">${subscription.unit_amount / 100}</div>
                         <p className='font-bold leading-[28px]'>{subscription.recurring.interval}</p>
