@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { Steps } from 'antd'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { Mail, Lock, ArrowLeft } from 'lucide-react'
+import { Mail, Lock } from 'lucide-react'
 
 import { useRecoverMutation } from '../hooks'
 import { useMobileDetect } from '@/app/shared/hooks'
@@ -30,6 +30,7 @@ import {
 } from '@/app/shared/ui/form'
 import { Input } from '@/app/shared/ui/input'
 import { H2 } from '@/app/shared/ui/typography'
+
 
 export function RecoverForm() {
   const OAUTH_LINK = process.env.NEXT_OAUTH_LINK || "#"
