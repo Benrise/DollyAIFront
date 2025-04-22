@@ -25,6 +25,12 @@ import {
   DrawerTitle,
   DrawerClose,
 } from '@/app/shared/ui/drawer'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/app/shared/ui/tooltip"
 
 const { Dragger } = Upload
 
@@ -66,12 +72,10 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({
       toast.error('You have reached the maximum number of models!')
       return
     }
-
     if (fileList.length < MIN_FILE_COUNT || fileList.length > MAX_FILE_COUNT) {
       toast.error(`Please upload between ${MIN_FILE_COUNT} to ${MAX_FILE_COUNT} photos!`)
       return
     }
-
     const formData = new FormData()
     fileList.forEach((file) => {
       if (file.originFileObj) {
@@ -107,6 +111,7 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({
     }
   }
 
+  const hasErrorFiles = fileList.some((file) => file.status === 'error');
   const isSubmitDisabled = 
     fileList.length < MIN_FILE_COUNT || 
     fileList.length > MAX_FILE_COUNT || 
@@ -183,20 +188,29 @@ export const CreateModelDrawer: React.FC<CreateModelDrawerProps> = ({
             </div>
           </div>
           <div className="flex gap-4 mt-4">
-            <DrawerClose asChild>
-              <Button variant="outline" className="flex-1" size="lg">
+            <DrawerClose className="w-full">
+              <Button variant="outline" className="w-full" size="lg">
                 Cancel
               </Button>
             </DrawerClose>
-            <Button
-              className="flex-1"
-              size="lg"
-              onClick={handleSubmit}
-              disabled={isSubmitDisabled || isCreatingModel}
-              isLoading={isCreatingModel}
-            >
-              Create Model
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger className="w-full">
+                  <Button
+                    className="w-full"
+                    size="lg"
+                    onClick={handleSubmit}
+                    disabled={isSubmitDisabled || isCreatingModel}
+                    isLoading={isCreatingModel}
+                  >
+                    Create Model
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  {fileList.length < MIN_FILE_COUNT || fileList.length > MAX_FILE_COUNT ? 'Please upload 10 to 15 photos!' : hasErrorFiles ? 'Uploaded photos have errors!' : 'Model name is required!'}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
       </DrawerContent>
