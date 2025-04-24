@@ -60,6 +60,6 @@ deploy:prod:
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP -p 228 "
       docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY &&
       docker pull $CI_REGISTRY_IMAGE:latest &&
-      cd /home/super/prod/app &&
+      cd /home/super/prod/app_web &&
       docker compose up -d frontend
       " || { echo 'Deploy failed'; exit 1; }
