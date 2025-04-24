@@ -1,22 +1,20 @@
 import { modelsService } from '@/app/entities/model/model';
-import { FetchError } from '@/app/shared/lib';
+import { FetchError } from '@/app/api';
 
-import { toastErrorHandler } from '@/app/shared/utils';
+import { toastErrorHandler } from '@/app/shared/lib';
 
 import { useMutation } from '@tanstack/react-query';
-import { toast } from 'sonner';
 
 export function useGenerateModelMutation(callback: () => void) {
-    const { mutate: generateModelMtation, isPending: isGenerating } = useMutation({
+    const { mutate: generateModelMutation, isPending: isSendingGenerationRequest } = useMutation({
         mutationKey: ['generate model'],
-        mutationFn: (data: {model_id: number, prompt: string}) => modelsService.generate(data.model_id, data.prompt),
+        mutationFn: async (data: {model_id: number, prompt: string}) => await modelsService.generate(data.model_id, data.prompt),
         onSuccess(data: FetchError | null) {
             if (data && 'detail' in data) {
                 toastErrorHandler(data);
             } 
             else {
                 callback?.()
-                toast.success('Model created successfully!');
             }
         },
         onError(error: FetchError) {
@@ -24,5 +22,5 @@ export function useGenerateModelMutation(callback: () => void) {
         }
     });
 
-    return { generateModelMtation, isGenerating };
+    return { generateModelMutation, isSendingGenerationRequest };
 }

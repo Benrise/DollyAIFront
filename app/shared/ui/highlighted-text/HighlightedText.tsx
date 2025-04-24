@@ -3,5 +3,5 @@ export interface HighlightedTextProps {
   }
   
 export const HighlightedText: React.FC<HighlightedTextProps> = ({ children }) => (
-  <span className="font-semibold text-indigo-500">{children}</span>
+  <span className="font-semibold text-primary">{children}</span>
 );

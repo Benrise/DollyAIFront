@@ -12,7 +12,7 @@ yarn dev
 pnpm dev
 # or
 bun dev
-# with serts
+# with certs
 pnpm dev --experimental-https
 ```
 

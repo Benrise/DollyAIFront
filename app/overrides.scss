@@ -1,0 +1,70 @@
+.ant-form-item .ant-form-item-explain {
+    font-size: 14px !important;
+  }
+
+.ant-steps-item-title {
+  color: var(--foreground) !important;
+
+  &::after {
+    background-color: var(--primary) !important;
+  }
+}
+.ant-steps-item-icon {
+  span {
+    color: var(--foreground) !important;
+  }
+}
+.ant-steps .ant-steps-item-wait .ant-steps-item-icon {
+  background-color: var(--muted) !important;
+}
+.ant-steps .ant-steps-item-finish .ant-steps-item-icon {
+  background-color: var(--accent) !important;
+  border-color: var(--ring) !important;
+}
+.ant-steps-item-active {
+  .ant-steps-item-icon {
+    background-color: var(--primary) !important;
+    border-color: transparent !important;
+    span {
+      color: var(--primary-foreground) !important;
+    }
+  }
+  .ant-steps-icon-dot {
+    background-color: var(--ring) !important;
+  }
+}
+.ant-steps-item-tail::after {
+  background-color: var(--ring) !important; 
+}
+
+.ant-drawer .ant-drawer-content {
+  background-color: var(--sidebar) !important;
+}
+.ant-drawer-header {
+  color: var(--foreground) !important;
+  
+  .ant-drawer-close {
+    color: var(--foreground) !important;
+  }
+}
+
+.ant-skeleton-title {
+  background-color: var(--muted) !important;
+}
+
+.ant-upload-wrapper .ant-upload-list.ant-upload-list-picture .ant-upload-list-item {
+  color: var(--foreground) !important;
+
+  .ant-btn-icon {
+    span {
+      color: var(--foreground) !important;
+    }
+  }
+}
+.ant-upload-wrapper .ant-upload-list.ant-upload-list-picture .ant-upload-list-item {
+  border: none !important;
+  background-color: var(--popover) !important;
+}
+.ant-upload .ant-upload-btn {
+  background-color: var(--popover) !important;
+}

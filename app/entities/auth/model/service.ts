@@ -9,8 +9,7 @@ class AuthService {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         })
-
-        return response
+        return response.data
     }
 
     public async login(body: TypeLoginSchema) {
@@ -19,20 +18,32 @@ class AuthService {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         })
-
-        return response
+        return response.data
     }
 
     public async logout() {
-        const response = await api.post('/auth/sign-out')
-
-        return response;
+        const response = await api.delete<null>('/auth/sign-out')
+        return response.data
     }
 
     public async refresh() {
         const response = await api.post<IRefreshResponse>('/auth/refresh')
+        return response.data
+    }
 
-        return response;
+    public async sendCode(email: string) {
+        const response = await api.post<null>('/auth/forgot-pass', { email })
+        return response.data
+    }
+
+    public async verifyCode(code: string) {
+        const response = await api.post<null>('/auth/verify-code', { code })
+        return response.data
+    }
+
+    public async changePassword(password: string, password_confirm: string) {
+        const response = await api.post<null>('/auth/new-pass', { password, password_confirm })
+        return response.data
     }
 }
 

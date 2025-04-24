@@ -1,12 +1,15 @@
-import { Typography, Button } from "antd"
+import { Button } from "@/app/shared/ui/button";
+import Link from "next/link";
 
-const { Paragraph } = Typography;
+interface TermsProps {
+    className?: string;
+}
 
-export function Terms() {
+export function Terms({ className }: TermsProps) {
 
-    const terms_link = process.env.NEXT_TERMS_LINK
+    const terms_link = process.env.NEXT_TERMS_LINK || "#";
 
     return (
-        <Paragraph type='secondary' className='text-[12px]! mb-0! text-center!'>By continuing, you agree to the <Button type='link' className="text-[12px]! h-fit!" href={terms_link}>AI Love Photo Terms</Button> of Use and Privacy Policy</Paragraph>
+        <p className={`text-[12px] text-neutral-500 leading-1 text-center max-w-[90%] self-center ${className || ""}`.trim()}>By continuing, you agree to the <Link href={terms_link}><Button variant="link" className="text-[12px] p-0"> Snuppy Terms </Button></Link> of Use and Privacy Policy</p>
     )
 }
