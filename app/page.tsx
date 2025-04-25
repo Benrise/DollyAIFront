@@ -9,7 +9,7 @@ import { LandingDemo } from "@/app/widgets/landing/demo";
 import { LandingGallery } from "@/app/widgets/landing/gallery";
 import { LandingProduct } from "@/app/widgets/landing/product";
 import { LandingExamples } from "@/app/widgets/landing/examples";
-import { LandingFashion } from "@/app/widgets/landing/fashion";
+// import { LandingFashion } from "@/app/widgets/landing/fashion";
 import { LandingSocials } from "@/app/widgets/landing/socials";
 import { LandingFaq } from "@/app/widgets/landing/faq";
 import { LandingPricing } from "@/app/widgets/landing/pricing";
