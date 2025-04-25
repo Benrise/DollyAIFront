@@ -11,7 +11,23 @@ import { GlowingBlob } from '@/app/shared/ui/glowing-blob';
 export function LandingSocials() {
     return (
         <section className="flex flex-col-reverse md:flex-row p-8 pb-0 xl:p-16 xl:pb-0 gap-12 border overflow-hidden border-border rounded-4xl justify-around items-center w-full bg-card">
-            <NextImage src="/images/landing/socials/instagram-feed.webp" alt="Product" width={426} height={783} className="rounded-4xl rounded-b-none" />
+            <div className="relative rounded-4xl p-4 bg-white rounded-b-none overflow-hidden">
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                >
+                    <source src="/videos/landing/socials/instagram-feed.mp4" type="video/mp4"/>
+                    <NextImage 
+                        src="/images/landing/socials/instagram-feed.jpeg" 
+                        alt="Product fallback" 
+                        width={426} 
+                        height={783}
+                        className="object-cover"
+                    />
+                </video>
+            </div>
             <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-3 md:gap-6 w-full relative">
                     <H1>

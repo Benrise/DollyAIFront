@@ -1,6 +1,6 @@
 export const CONTACTS = [{
-    label: "biovitalabinc@gmail.com",
-    url: "mailto:biovitalabinc@gmail.com"
+    label: "snuppy.ai.official@gmail.com",
+    url: "mailto:snuppy.ai.official@gmail.com"
 }, {
     label: "+1-424-2985059",
     url: "tel:+14242985059"

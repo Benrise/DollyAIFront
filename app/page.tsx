@@ -31,7 +31,7 @@ export default function LandingPage() {
                     <LandingGallery/>
                     <LandingProduct/>
                     <LandingExamples/>
-                    <LandingFashion/>
+                    {/* <LandingFashion/> */}
                     <LandingPricing/>
                     <LandingSocials/>
                     <LandingFaq/>
