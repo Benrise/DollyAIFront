@@ -24,7 +24,7 @@ export default function LandingPage() {
 
         return (
             <div className="h-full w-full flex flex-col items-center">
-                <div className="flex flex-col max-w-[1408px] w-full justify-center items-center gap-24 px-8 p-8">
+                <div className="flex flex-col max-w-[1408px] w-full justify-center items-center gap-16 xl:gap-24  px-8 p-8">
                     <LandingHeader/>
                     <LandingHead/>
                     <LandingDemo/>
