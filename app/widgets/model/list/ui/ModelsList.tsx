@@ -12,6 +12,7 @@ import { CreateModelDrawer } from '@/app/features/model/create';
 import { type IModel } from '@/app/entities/model';
 import { UpdateModelDrawer } from '@/app/features/model/update/ui/UpdateModelDrawer';
 import { useUserContext } from '@/app/providers';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/shared/ui/tooltip';
 
 interface ModelsListProps {
     models: IModel[];
@@ -46,10 +47,19 @@ return (
     <div className='flex gap-2 w-max-[80%] overflow-x-auto pb-2 sm:pl-10 pl-4'>
         <CreateModelDrawer open={isCreateDrawerOpen} onClose={onCloseCreateDrawer} onModelCreated={onModelCreated}/>
         {activeModel && <UpdateModelDrawer open={isUpdateDrawerOpen} onClose={onCloseUpdateDrawer} onAfterAction={onModelCreated} model={activeModel}/>}
-        <div className="flex flex-col gap-1 items-center">
-            <Button onClick={isCreatingAvailable ? openCreateDrawer : openPricingDrawer} size="icon" className='rounded-full' style={{width: 64, height: 64, minWidth: 64}}><Plus/></Button>
-            <p className='align-middle w-fit text-sm'>Create</p>
-        </div>
+        <TooltipProvider>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <div className="flex flex-col gap-1 items-center">
+                        <Button onClick={isCreatingAvailable ? openCreateDrawer : openPricingDrawer} size="icon" className='rounded-full' style={{width: 64, height: 64, minWidth: 64}}><Plus/></Button>
+                        <p className='align-middle w-fit text-sm'>Create</p>
+                    </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                    <p>Here you can create new model, after that enter prompt and get photo</p>
+                </TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
         {models.map((model) => (
             <div
                 key={model.id}
