@@ -1,6 +1,7 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { LoadingOutlined } from "@ant-design/icons";
 
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/app/shared/ui/tooltip";
 import { Button } from "@/app/shared/ui/button";
 import { useUserContext } from "@/app/providers";
 
@@ -22,8 +23,23 @@ export function SubscriptionBadge() {
                 </div>
             </div> : <LoadingOutlined />}
             <div className="flex">
-                <Button size="icon" className='rounded-full!' onClick={openPricingDrawer}><PlusOutlined/></Button>
-            </div>
+                <TooltipProvider>
+                    <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Button 
+                        size="icon" 
+                        className='rounded-full!' 
+                        onClick={openPricingDrawer}
+                        >
+                        <PlusOutlined/>
+                        </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        <p>Pay here for subscription</p>
+                    </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+                </div>
             </div>
         </div> 
     )

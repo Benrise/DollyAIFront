@@ -4,29 +4,23 @@ import { Download, Pencil, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { Avatar, Image } from "antd";
 
-import { MODELS, RESULT_IMAGE_DEFAULT, RESULT_IMAGE_MOCK } from "../constants";
+import { MODELS, RESULT_IMAGE_DEFAULT } from "../constants";
 import { Textarea } from "@/app/shared/ui/textarea"
-import { GeneratingAnimation } from "@/app/shared/ui/generation-animation";
 import { Button } from "@/app/shared/ui/button";
 import { HighlightedText } from "@/app/shared/ui/highlighted-text";
 import { GlowingBlob } from "@/app/shared/ui/glowing-blob";
 import { Body, H1 } from "@/app/shared/ui/typography";
+import { useRouter } from "next/navigation";
 
 
 export function LandingDemo() {
+    const REGISTER_URL = "/pages/auth/register";
     const [parent] = useAutoAnimate();
+    const router = useRouter();
     const [selectedAvatar, setSelectedAvatar] = useState(MODELS[1].id);
-    const [isGenerating, setIsGenerating] = useState(false);
-    const [generatedImage, setGeneratedImage] = useState<string | null>(null);
 
     const handleGenerate = () => {
-        setIsGenerating(true);
-        
-        setTimeout(() => {
-            const result = RESULT_IMAGE_MOCK;
-            setGeneratedImage(result);
-            setIsGenerating(false);
-        }, 4000);
+        router.push(REGISTER_URL);
     };
 
     return (
@@ -34,25 +28,12 @@ export function LandingDemo() {
             {/* left */}
             <div className="w-full flex flex-col gap-4 max-w-[456px]">
                 <div ref={parent} className="relative w-full aspect-square max-w-[456px] overflow-hidden rounded-4xl">
-                    {isGenerating ? (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <GeneratingAnimation/>
-                        </div>
-                    ) : generatedImage ? (
-                        <Image
-                            alt="Generated photo"
-                            preview={false}
-                            src={generatedImage}
-                            className="object-cover"
-                        />
-                    ) : (
-                        <Image
-                            alt="Example photo"
-                            preview={false}
-                            src={RESULT_IMAGE_DEFAULT}
-                            className="object-cover"
-                        />
-                    )}
+                    <Image
+                        alt="Example photo"
+                        preview={false}
+                        src={RESULT_IMAGE_DEFAULT}
+                        className="object-cover"
+                    />
                 </div>
                 <div className="flex gap-4 justify-center">
                     {MODELS.map(model => (
@@ -68,7 +49,7 @@ export function LandingDemo() {
                     ))}
                 </div>
                 <Textarea className="px-6 py-3 rounded-2xl resize-none h-[96px] max-h-24px" placeholder="Enter prompt"/>
-                <Button size={"lg"} onClick={handleGenerate} isLoading={isGenerating} className="w-full">
+                <Button size={"lg"} onClick={handleGenerate} className="w-full">
                     Generate
                 </Button>
             </div>

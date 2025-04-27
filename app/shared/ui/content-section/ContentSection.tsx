@@ -8,7 +8,7 @@ export function ContentSection({ children, className }: PropsWithChildren<Conten
     return (
         <div 
                 className={`
-                    py-10
+                    py-6 md:py-10
                     bg-popover rounded-none 
                     shadow-none sm:shadow-xl border-border border-1
                     sm:h-auto

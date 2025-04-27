@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { ChevronDown, Download } from 'lucide-react';
+import { ChevronDown, Download, Lightbulb  } from 'lucide-react';
 import { Image } from 'antd';
 
 import { downloadBlob } from '@/app/shared/lib/download';
@@ -100,7 +100,7 @@ export default function Home() {
         </div>
         <div ref={parent} className="px-4 sm:px-10 flex flex-col gap-4 lg:gap-8 items-center">
             {!isTextAreaFocused ? (
-              <div ref={parent} className={`flex flex-col rounded-[24px] overflow-hidden max-w-[512px] items-center justify-center relative`}>
+              <div ref={parent} className={`flex flex-col gap-4 rounded-3xl overflow-hidden max-w-[512px] items-center justify-center relative`}>
                 {!isListeningReadiness && isListeningResult && activeModel?.is_ready ? (
                   <GeneratingAnimation />
                 ) : (
@@ -110,7 +110,7 @@ export default function Home() {
                         ? resultUrl 
                         : activeModel && !activeModel.is_ready
                         ? '/images/etc/silky-waves.png' 
-                        : '/images/etc/magnify.png'
+                        : '/images/landing/demo/default.jpg'
                     }
                     alt={
                       resultUrl 
@@ -119,7 +119,7 @@ export default function Home() {
                         ? "Model is training" 
                         : "No generations"
                     }
-                    className="select-none aspect-square object-cover object-top relative"
+                    className="select-none aspect-square object-cover object-top relative rounded-3xl"
                     fallback=''
                     preview={!!resultUrl}
                   />
@@ -152,15 +152,30 @@ export default function Home() {
               </Button>
             )}
           <form onSubmit={handleGenerate} className="flex flex-col gap-4 w-full">
-            <div className="grid w-full gap-1.5">
+          <div className="grid w-full gap-1.5 relative">
               <Textarea 
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 onClick={handleFocus}
                 disabled={!activeModel || !activeModel.is_ready || isSendingGenerationRequest || isListeningResult}
-                placeholder="Imagine me as an astronaut in outer space"
-                className="min-h-[80px]"
+                placeholder="Imagine me in Paris with the Eiffel Tower in the background"
+                className="min-h-[80px] pr-10"
               />
+              
+              <div className="absolute right-3 top-3">
+                <TooltipProvider delayDuration={300}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:text-primary">
+                        <Lightbulb className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="left" align="end" className="max-w-[300px]">
+                      <p>The more detailed your description, the better the result will be</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
             </div>
             {activeModel && !activeModel.is_ready ? (
               <TooltipProvider>
