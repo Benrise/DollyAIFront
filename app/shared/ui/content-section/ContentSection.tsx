@@ -11,9 +11,7 @@ export function ContentSection({ children, className }: PropsWithChildren<Conten
                     py-6 md:py-10
                     bg-popover rounded-none 
                     shadow-none sm:shadow-xl border-border border-1
-                    sm:h-auto
                     overflow-y-auto
-                    h-full
                     flex flex-col
                     ${className}
                 `}
