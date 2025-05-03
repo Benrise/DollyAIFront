@@ -13,6 +13,7 @@ import { GenerationResult } from '@/app/features/model/result';
 import { GenerationForm } from '@/app/features/model/generate';
 import { ModelsList, useGetModelsListMutation } from '@/app/widgets/model/list';
 import { Sidebar } from '../widgets/sidebar';
+import { on } from 'events';
 
 
 export default function Home() {
@@ -35,14 +36,14 @@ export default function Home() {
     listenResultMutation(model_id)
   });
 
-  const handleModelCreated = () => {
+  const onModelCreated = () => {
     getModelsListMutation(undefined, {
       onSuccess: async () => {
         await me();
       }
     });
   };
-  const handleGenerate = async (e: React.FormEvent) => {
+  const onGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (activeModel && prompt.trim()) {
       setResultUrl(null); 
@@ -72,8 +73,32 @@ export default function Home() {
 
   return (
     <div className="w-full h-full flex items-center justify-center p-6">
-      <ContentSection className='w-full h-full sm:rounded-4xl gap-4 lg:gap-8 relative'>
+      <ContentSection className='w-full h-full sm:rounded-4xl gap-4 lg:gap-8 relative flex-row'>
         <Sidebar />
+        <div className="flex flex-col w-full h-full gap-12 justify-center items-center">
+          <GenerationResult 
+              resultUrl={resultUrl}
+              activeModel={activeModel}
+              isListeningReadiness={isListeningReadiness}
+              isListeningResult={isListeningResult}
+          />
+          <div className="flex flex-col gap-4 w-fit bg-background p-4 rounded-2xl">
+            <ModelsList
+              models={models}
+              setActiveModel={setActiveModel}
+              activeModel={activeModel}
+              onModelCreated={onModelCreated}
+            />
+            <GenerationForm
+              prompt={prompt}
+              isSendingGenerationRequest={isSendingGenerationRequest}
+              isListeningResult={isListeningReadiness}
+              onPromptChange={(value) => setPrompt(value)}
+              onSubmit={onGenerate}
+            />
+          </div>
+        </div>
+        <SubscriptionBadge className='absolute top-6 right-6'/>
       </ContentSection>
     </div>
   );

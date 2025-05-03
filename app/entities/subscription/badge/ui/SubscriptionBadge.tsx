@@ -5,13 +5,16 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/app/
 import { Button } from "@/app/shared/ui/button";
 import { useUserContext } from "@/app/providers";
 
+interface SubscriptionBadgeProps {
+    className?: string;
+}
 
-export function SubscriptionBadge() {
+
+export const SubscriptionBadge: React.FC<SubscriptionBadgeProps> = ({className}) => {
     const { user, openPricingDrawer } = useUserContext();
     
     return (
-        <div className="px-4 sm:px-10">
-            <div className="flex gap-2 pl-4 pr-2 py-2 justify-between rounded-full w-full bg-accent">
+        <div className={`flex gap-4 justify-between rounded-full ${className}`}>
             {user ? <div className="flex flex-nowrap gap-4 overflow-hidden">
                 <div className="flex items-center text-sm gap-2">
                     <div className='font-bold text-primary'>{user?.models_left || 0}</div>
@@ -39,8 +42,7 @@ export function SubscriptionBadge() {
                     </TooltipContent>
                     </Tooltip>
                 </TooltipProvider>
-                </div>
             </div>
-        </div> 
+        </div>
     )
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Lightbulb } from 'lucide-react';
+import { Lightbulb, Sparkles } from 'lucide-react';
 import { Button } from '@/app/shared/ui/button';
 import { Textarea } from '@/app/shared/ui/textarea';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/shared/ui/tooltip';
@@ -25,16 +25,17 @@ export const GenerationForm = ({
   onSubmit,
 }: GenerationFormProps) => {
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-4 w-full">
+    <form onSubmit={onSubmit} className="flex gap-2 h-fit w-full">
       <div className="grid w-full gap-1.5 relative">
         <Textarea 
           value={prompt}
           onChange={(e) => onPromptChange(e.target.value)}
           disabled={!activeModel || !activeModel.is_ready || isSendingGenerationRequest || isListeningResult}
           placeholder="Imagine me in Paris with the Eiffel Tower in the background"
-          className="min-h-[80px] pr-10"
+          className="pr-10 resize-none"
+          rows={2}
         />      
-        <div className="absolute right-3 top-3">
+        <div className="absolute right-2 top-2">
           <TooltipProvider delayDuration={300}>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -53,8 +54,8 @@ export const GenerationForm = ({
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <Button disabled size="lg" className='w-full'>
-                Generate
+              <Button disabled size="icon" className='h-full'>
+                <Sparkles/>
               </Button>
             </TooltipTrigger>
             <TooltipContent>
@@ -66,11 +67,10 @@ export const GenerationForm = ({
         <Button 
           disabled={!activeModel || isSendingGenerationRequest || isListeningResult} 
           isLoading={isSendingGenerationRequest || isListeningResult} 
-          className='w-full' 
-          size="lg"
-          type="submit"
+          size="icon"
+          className='h-full'
         >
-          Generate
+          <Sparkles/>
         </Button>
       )}
     </form>

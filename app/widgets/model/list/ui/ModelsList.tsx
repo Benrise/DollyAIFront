@@ -44,7 +44,7 @@ const handleModelClick = (model: IModel) => {
 };
 
 return (
-    <div className='flex gap-2 w-max-[80%] overflow-x-auto pb-2 sm:pl-10 pl-4'>
+    <div className='flex gap-2 w-max-[80%] overflow-x-auto'>
         <CreateModelDrawer open={isCreateDrawerOpen} onClose={onCloseCreateDrawer} onModelCreated={onModelCreated}/>
         {activeModel && <UpdateModelDrawer open={isUpdateDrawerOpen} onClose={onCloseUpdateDrawer} onAfterAction={onModelCreated} model={activeModel}/>}
         <TooltipProvider>
