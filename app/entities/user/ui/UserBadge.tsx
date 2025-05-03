@@ -22,7 +22,7 @@ export const UserBadge = () => {
 
   return (
     <div className="flex justify-between items-center gap-2">
-      <div className="flex gap-2 items-center min-w-0">
+      <div className="flex items-center min-w-0">
         <Button variant={'ghost'} size="icon" className="flex-shrink-0">
           <User/>
         </Button>

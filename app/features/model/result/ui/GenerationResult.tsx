@@ -31,7 +31,7 @@ export const GenerationResult = ({
     }
 
     return (
-        <div className={`flex flex-col gap-4 rounded-3xl max-w-[512px] items-center justify-center relative`}>
+        <div className={`flex flex-col gap-4 rounded-3xl max-w-[512px] h-full sm:h-fit items-center justify-center relative`}>
             {isListeningReadiness && isListeningResult && activeModel?.is_ready ? (
                 <GeneratingAnimation />
             ) : resultUrl ? (
@@ -55,7 +55,7 @@ export const GenerationResult = ({
             ) : (
                 <div className="flex flex-col items-center justify-center gap-6 p-8 text-center">
                     <div className="text-2xl font-bold">
-                        <Logo className='max-h-12'/>
+                        <Logo className='max-h-8 sm:max-h-12'/>
                     </div>
                     <p className="text-lg opacity-50">
                         What are we creating today?

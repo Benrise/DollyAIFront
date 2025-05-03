@@ -15,6 +15,7 @@ import { useUserContext } from '@/app/providers';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/app/shared/ui/tooltip';
 
 interface ModelsListProps {
+    className?: string;
     models: IModel[];
     setActiveModel: (model: IModel) => void; 
     activeModel: IModel | undefined;
@@ -22,7 +23,7 @@ interface ModelsListProps {
   }
 
 
-export function ModelsList({ models, setActiveModel, activeModel, onModelCreated }: ModelsListProps) {
+export function ModelsList({ models, setActiveModel, activeModel, onModelCreated, className }: ModelsListProps) {
 const [isCreateDrawerOpen, setIsCreateDrawerOpen] = useState(false);
 const [isUpdateDrawerOpen, setIsUpdateDrawerOpen] = useState(false);
 
@@ -44,13 +45,13 @@ const handleModelClick = (model: IModel) => {
 };
 
 return (
-    <div className='flex gap-2 w-max-[80%] overflow-x-auto'>
+    <div className={`flex gap-2 w-max-[80%] overflow-x-auto ${className}`}>
         <CreateModelDrawer open={isCreateDrawerOpen} onClose={onCloseCreateDrawer} onModelCreated={onModelCreated}/>
         {activeModel && <UpdateModelDrawer open={isUpdateDrawerOpen} onClose={onCloseUpdateDrawer} onAfterAction={onModelCreated} model={activeModel}/>}
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <div className="flex flex-col gap-1 items-center">
+                    <div className="flex flex-col gap-2 items-center">
                         <Button onClick={isCreatingAvailable ? openCreateDrawer : openPricingDrawer} size="icon" className='rounded-full' style={{width: 64, height: 64, minWidth: 64}}><Plus/></Button>
                         <p className='align-middle w-fit text-sm'>Create</p>
                     </div>
@@ -63,7 +64,7 @@ return (
         {models.map((model) => (
             <div
                 key={model.id}
-                className="flex flex-col gap-1 items-center"
+                className="flex flex-col gap-2 items-center"
                 onClick={() => handleModelClick(model)}
             >
                 <div className="relative flex hover:cursor-pointer">
