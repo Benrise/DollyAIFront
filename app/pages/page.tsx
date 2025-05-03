@@ -17,18 +17,6 @@ import { ModelsList, useGetModelsListMutation } from '@/app/widgets/model/list';
 import { Sidebar } from '@/app/widgets/sidebar';
 import { Menu, User } from 'lucide-react';
 
-export const ImageGrid = () => (
-  <div className="flex-1 overflow-y-auto">
-    <div className="grid grid-cols-2 gap-2">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((item) => (
-            <div key={item} className="aspect-square bg-muted rounded-lg flex items-center justify-center">
-                <span className="text-xs text-muted-foreground">Изображение {item}</span>
-            </div>
-        ))}
-    </div>
-  </div>
-)
-
 
 export default function Home() {
   const [activeModel, setActiveModel] = useState<IModel | undefined>(undefined);
@@ -96,7 +84,17 @@ export default function Home() {
           className='sm:hidden'
         />
         {/* Desktop */}
-        <Sidebar className='hidden sm:flex' contentComponent={<ImageGrid />} bottomComponent={<UserBadge />} bottomCollapsedComponent={<Button size={'icon'} variant={'ghost'}><User/></Button>}/>
+        <Sidebar className='hidden sm:flex' contentComponent={
+          <div className="flex-1 overflow-y-auto">
+            <div className="grid grid-cols-2 gap-2">
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((item) => (
+                    <div key={item} className="aspect-square bg-muted rounded-lg flex items-center justify-center">
+                        <span className="text-xs text-muted-foreground">Изображение {item}</span>
+                    </div>
+                ))}
+            </div>
+        </div>
+        } bottomComponent={<UserBadge />} bottomCollapsedComponent={<Button size={'icon'} variant={'ghost'}><User/></Button>}/>
         <div className="flex flex-col w-full h-full gap-12 justify-center items-center">
           <div className="flex flex-col w-full">
             {/* Mobile */}
