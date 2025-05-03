@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { ContentSection } from '@/app/shared/ui/content-section';
 import { SubscriptionBadge } from '@/app/entities/subscription/badge';
-import { UserBadge, useUserStore } from '@/app/entities/user';
+import { useUserStore } from '@/app/entities/user';
 import { type IModel } from '@/app/entities/model';
 import { useListenToResultMutation } from '@/app/features/model/create';
 import { useListenToReadinessMutation } from '@/app/features/model/create';
@@ -12,8 +12,7 @@ import { useGenerateModelMutation } from '@/app/features/model/create';
 import { GenerationResult } from '@/app/features/model/result';
 import { GenerationForm } from '@/app/features/model/generate';
 import { ModelsList, useGetModelsListMutation } from '@/app/widgets/model/list';
-import { Sidebar } from '../widgets/sidebar';
-import { on } from 'events';
+import { Sidebar } from '@/app/widgets/sidebar';
 
 
 export default function Home() {

@@ -21,14 +21,21 @@ export const UserBadge = () => {
   }
 
   return (
-    <div className="flex justify-between items-center">
-      <div className="flex gap-2 items-center">
-        <Button variant={'ghost'} size="icon">
+    <div className="flex justify-between items-center gap-2">
+      <div className="flex gap-2 items-center min-w-0">
+        <Button variant={'ghost'} size="icon" className="flex-shrink-0">
           <User/>
         </Button>
-        <span>{user.email}</span>
+        <span className="truncate min-w-0">
+          {user.email}
+        </span>
       </div>
-      <Button onClick={() => signOut()} variant={"link"} size="icon" className='text-foreground'>
+      <Button 
+        onClick={() => signOut()} 
+        variant={"link"} 
+        size="icon" 
+        className='text-foreground flex-shrink-0'
+      >
         <LogOut size={18} />
       </Button>
     </div>
