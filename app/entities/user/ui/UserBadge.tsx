@@ -1,5 +1,5 @@
 import { Skeleton } from 'antd';
-import { LogOut } from 'lucide-react'
+import { LogOut, User } from 'lucide-react'
 
 import { Button } from "@/app/shared/ui/button";
 import { useAuthStore } from "@/app/entities/auth";
@@ -11,7 +11,7 @@ export const UserBadge = () => {
 
   if (user === null) {
     return (
-      <div className="px-4! sm:px-10! flex justify-between items-center">
+      <div className="flex justify-between items-center">
         <Skeleton title={{ width: "30%" }} paragraph={false} active />
         <Button onClick={() => signOut()} variant={"link"} size="icon" className='text-foreground'>
           <LogOut size={18} />
@@ -21,8 +21,13 @@ export const UserBadge = () => {
   }
 
   return (
-    <div className="px-4! sm:px-10! flex justify-between items-center">
-      <span>{user.email}</span>
+    <div className="flex justify-between items-center">
+      <div className="flex gap-2 items-center">
+        <Button variant={'ghost'} size="icon">
+          <User/>
+        </Button>
+        <span>{user.email}</span>
+      </div>
       <Button onClick={() => signOut()} variant={"link"} size="icon" className='text-foreground'>
         <LogOut size={18} />
       </Button>
