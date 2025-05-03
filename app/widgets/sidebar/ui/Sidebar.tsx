@@ -1,5 +1,5 @@
 import { Button } from "@/app/shared/ui/button"
-import { PanelLeft, PanelLeftClose, User } from "lucide-react"
+import { PanelLeft, PanelLeftClose } from "lucide-react"
 import { useState } from "react"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 
