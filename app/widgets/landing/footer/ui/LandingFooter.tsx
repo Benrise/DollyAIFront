@@ -26,7 +26,7 @@ export function LandingFooter() {
             </Button>
         </div>
         <div className="flex flex-col gap-3">
-          <h3 className="text-white font-semibold">Use Cases</h3>
+          <h3 className="text-foreground font-semibold">Use Cases</h3>
           <div className="flex gap-16">
           <ul className="space-y-2">
             {USE_CASES.slice(0, 15).map((item, index) => (
@@ -49,7 +49,7 @@ export function LandingFooter() {
           </div>
         </div>
         <div className="flex flex-col gap-3">
-          <h3 className="text-white font-semibold">Socials</h3>
+          <h3 className="text-foreground font-semibold">Socials</h3>
           <ul className="space-y-2">
             {SOCIALS.map((item, index) => (
               <li key={index}>
@@ -61,7 +61,7 @@ export function LandingFooter() {
           </ul>
         </div>
         <div className="flex flex-col gap-3">
-          <h3 className="text-white font-semibold">Resources</h3>
+          <h3 className="text-foreground font-semibold">Resources</h3>
           <ul className="space-y-2">
             {RESOURCES.map((item, index) => (
               <li key={index}>
@@ -73,7 +73,7 @@ export function LandingFooter() {
           </ul>
         </div>
         <div className="flex flex-col gap-3">
-          <h3 className="text-white font-semibold">Contacts</h3>
+          <h3 className="text-foreground font-semibold">Contacts</h3>
           <ul className="space-y-2">
             {CONTACTS.map((item, index) => (
               <li key={index}>
@@ -86,7 +86,7 @@ export function LandingFooter() {
         </div>
       </div>
       <Separator className="my-4" />
-      <div className="text-center text-sm opacity-50">
+      <div className="text-center text-sm opacity-50 font-medium">
         © 2025 BioVita Lab Inc. All Rights Reserved.
       </div>
     </footer>

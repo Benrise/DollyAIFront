@@ -23,12 +23,12 @@ export function LandingExamples() {
                 Be <HighlightedText>anyone</HighlightedText> with face-swap and AI Avatars
             </H1>
             <GlowingBlob opacity={0.1} className="top-[-120px] left-[-10px]" />
+            <Button asChild>
+                <NextLink href={"/pages/auth/register"} className="w-fit flex font-semibold items-center hover:cursor-pointer">
+                    Start creating now <ArrowRight className="ml-2 w-fit" />
+                </NextLink>
+            </Button>
         </div>
-        <Button asChild>
-            <NextLink href={"/pages/auth/login"} className="w-fit flex font-semibold items-center hover:cursor-pointer">
-                Start creating now <ArrowRight className="ml-2 w-fit" />
-            </NextLink>
-        </Button>
         <div className="flex flex-col md:flex-row w-full justify-between gap-6 xl:gap-32 items-center">
             <div className="flex flex-col gap-6 w-fit max-w-none xl:max-w-[392px]">
                 {prompts.map((prompt) => (

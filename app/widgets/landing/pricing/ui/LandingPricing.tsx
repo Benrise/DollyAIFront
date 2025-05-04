@@ -8,7 +8,7 @@ import { H1 } from "@/app/shared/ui/typography";
 export function LandingPricing() {
     const REGISTER_URL = "/pages/auth/register"
 
-    const { subscriptions, getSubscriptionsListMutation } = useGetSubscriptionsListMutation();
+    const { subscriptions, getSubscriptionsListMutation, isGettingSubscriptions } = useGetSubscriptionsListMutation();
     const router = useRouter();
 
     const handleSubscriptionSelect = async () => {
@@ -20,7 +20,7 @@ export function LandingPricing() {
     }, [])
 
     return (
-        <div className="flex flex-col gap-6 w-full">
+        isGettingSubscriptions && <div className="flex flex-col gap-6 w-full">
             <H1>Pricing</H1>
             <SubscriptionsList 
                 subscriptions={subscriptions} 

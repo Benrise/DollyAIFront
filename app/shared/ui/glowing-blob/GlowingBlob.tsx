@@ -1,5 +1,6 @@
 import React from "react"
 import { cn } from "@/app/shared/lib/utils"
+import { useTheme } from "next-themes"
 
 interface GlowingBlobProps {
   size?: number 
@@ -16,7 +17,12 @@ export function GlowingBlob({
   opacity = 0.5,
   className = "",
 }: GlowingBlobProps) {
+  const { theme } = useTheme()
+  
+  const isDarkTheme = theme === 'dark';
+  
   return (
+    isDarkTheme &&
     <div
       className={cn(
         "pointer-events-none absolute",

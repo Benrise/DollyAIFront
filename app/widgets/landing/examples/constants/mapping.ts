@@ -3,27 +3,27 @@ type PromptMapping = {
   };
 
 export const MAPPING: PromptMapping = {
-    "Superhero avatar transformation with a flowing cape": [
+    "Superhero avatar transformation": [
       "/images/landing/examples/1.jpg",
       "/images/landing/examples/2.jpg",
       "/images/landing/examples/3.jpg",
     ],
-    "Fantasy scene with warrior wielding a glowing sword": [
+    "Fantasy scene with warrior": [
         "/images/landing/examples/1.jpg",
         "/images/landing/examples/2.jpg",
         "/images/landing/examples/3.jpg",
     ],
-    "Perfect dating profile image with golden lighting": [
+    "Perfect dating profile image": [
         "/images/landing/examples/1.jpg",
         "/images/landing/examples/2.jpg",
         "/images/landing/examples/3.jpg",
     ],
-    "Anime-style high-quality portrait with vivid colors": [
+    "Anime-style high-quality portrait": [
         "/images/landing/examples/1.jpg",
         "/images/landing/examples/2.jpg",
         "/images/landing/examples/3.jpg",
     ],
-    "Executive headshot portrait in a modern office setting": [
+    "Executive headshot portrait": [
         "/images/landing/examples/1.jpg",
         "/images/landing/examples/2.jpg",
         "/images/landing/examples/3.jpg",
