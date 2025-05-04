@@ -52,8 +52,8 @@ return (
             <Tooltip>
                 <TooltipTrigger asChild>
                     <div className="flex flex-col gap-2 items-center">
-                        <Button onClick={isCreatingAvailable ? openCreateDrawer : openPricingDrawer} size="icon" className='rounded-full' style={{width: 64, height: 64, minWidth: 64}}><Plus/></Button>
-                        <p className='align-middle w-fit text-sm'>Create</p>
+                        <Button onClick={isCreatingAvailable ? openCreateDrawer : openPricingDrawer} disabled={!user} size="icon" className='rounded-full' style={{width: 64, height: 64, minWidth: 64}}><Plus/></Button>
+                        <p className='align-middle w-fit text-[0.875rem]'>Create</p>
                     </div>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -79,7 +79,7 @@ return (
                         </div>
                     )}
                 </div>
-                <div className="flex items-center text-sm gap-0.5">
+                <div className="flex items-center text-[0.875rem] gap-0.5">
                     <div className={`align-middle w-fit whitespace-nowrap overflow-hidden text-ellipsis max-w-[64px] ${model.is_train_failed && 'text-red-500'}`}>
                         {model.name}
                     </div>

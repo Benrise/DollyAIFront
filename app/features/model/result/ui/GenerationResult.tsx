@@ -9,6 +9,7 @@ import { GeneratingAnimation } from '@/app/shared/ui/generation-animation';
 import { Button } from '@/app/shared/ui/button';
 import { IModel } from '@/app/entities/model';
 import { Logo } from '@/app/shared/ui/logo';
+import { Body } from '@/app/shared/ui/typography';
 
 interface GenerationResultProps {
     className?: string
@@ -57,9 +58,7 @@ export const GenerationResult = ({
                     <div className="text-2xl font-bold">
                         <Logo className='max-h-8 sm:max-h-12'/>
                     </div>
-                    <p className="text-lg opacity-50">
-                        What are we creating today?
-                    </p>
+                    <Body className='opacity-50'>What are we creating today?</Body>
                     <GlowingBlob opacity={1} size={50}/>
                 </div>
             )}

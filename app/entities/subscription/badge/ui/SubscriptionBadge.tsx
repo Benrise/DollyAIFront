@@ -14,7 +14,7 @@ export const SubscriptionBadge: React.FC<SubscriptionBadgeProps> = ({className})
     const { user, openPricingDrawer } = useUserContext();
     
     return (
-        <div className={`flex gap-4 justify-between rounded-full ${className}`}>
+        <div className={`flex gap-4 justify-between rounded-full bg-accent sm:bg-popover ${className}`}>
             {user ? <div className="flex flex-nowrap gap-4 overflow-hidden">
                 <div className="flex items-center text-sm gap-2">
                     <div className='font-bold text-primary'>{user?.models_left || 0}</div>
@@ -33,6 +33,7 @@ export const SubscriptionBadge: React.FC<SubscriptionBadgeProps> = ({className})
                         size="icon" 
                         className='rounded-full!' 
                         onClick={openPricingDrawer}
+                        disabled={!user}
                         >
                         <PlusOutlined/>
                         </Button>

@@ -9,6 +9,8 @@ interface SideBarProps {
     bottomComponent: React.ReactNode
     bottomCollapsedComponent: React.ReactNode
     title?: string
+    isOpen?: boolean
+    onOpenChange?: (isOpen: boolean) => void
 }
 
 export const Sidebar: React.FC<SideBarProps> = ({
@@ -16,13 +18,21 @@ export const Sidebar: React.FC<SideBarProps> = ({
     contentComponent,
     bottomComponent,
     bottomCollapsedComponent,
-    title = "History"
+    title = "History",
+    isOpen: controlledIsOpen,
+    onOpenChange
 }) => {
-    const [isOpen, setIsOpen] = useState(false)
+    const [internalIsOpen, setInternalIsOpen] = useState(false)
+    const isOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen
     const [parent] = useAutoAnimate()
 
     const toggleSidebar = () => {
-        setIsOpen(!isOpen)
+        const newState = !isOpen
+        if (onOpenChange) {
+            onOpenChange(newState)
+        } else {
+            setInternalIsOpen(newState)
+        }
     }
 
     return (

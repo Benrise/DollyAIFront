@@ -31,7 +31,7 @@ export const MobileHeader = ({
   );
 
   return (
-    <div className={`flex w-full justify-between items-center p-3 ${className}`}>
+    <div className={`flex w-full justify-between items-center p-4 ${className}`}>
       {leftComponent ? (
         typeof leftComponent === "string" ? (
           defaultLeft

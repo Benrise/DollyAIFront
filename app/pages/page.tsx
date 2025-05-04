@@ -1,7 +1,16 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import { useMediaQuery } from "@uidotdev/usehooks";
 
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetFooter
+} from "@/app/shared/ui/sheet"
 import { Button } from '@/app/shared/ui/button';
 import { MobileHeader } from '@/app/shared/ui/mobile-header';
 import { ContentSection } from '@/app/shared/ui/content-section';
@@ -23,6 +32,8 @@ export default function Home() {
   const [resultUrl, setResultUrl] = useState<string | null>(null);
   const { me } = useUserStore();
   const [prompt, setPrompt] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
 
   const { models, getModelsListMutation } = useGetModelsListMutation(setActiveModel);
   const { generateModelMutation, isSendingGenerationRequest } = useGenerateModelMutation(() => {
@@ -56,6 +67,9 @@ export default function Home() {
       });
     }
   };
+  const toggleSidebar = (open: boolean) => {
+    setIsSidebarOpen(open);
+  };
 
   useEffect(() => {
     getModelsListMutation();
@@ -77,14 +91,38 @@ export default function Home() {
     <div className="w-full h-full flex items-center justify-center sm:p-6">
       <ContentSection className='w-full h-full sm:rounded-4xl gap-4 lg:gap-8 relative flex-col sm:flex-row'>
         {/* Mobile */}
-        <MobileHeader 
-          title="Create photo" 
-          leftComponent={<Menu />} 
+        {isSmallDevice && <MobileHeader title="Create photo" className='sm:hidden'
+          leftComponent={
+            <Sheet open={isSidebarOpen} onOpenChange={toggleSidebar}>
+                <SheetTrigger asChild><Menu/></SheetTrigger>
+                <SheetContent side='left' className='w-full p-2'>
+                  <SheetHeader>
+                    <SheetTitle>History</SheetTitle>
+                  </SheetHeader>
+                  <div className="flex-1 overflow-y-auto">
+                    <div className="grid grid-cols-2 gap-2">
+                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((item) => (
+                            <div key={item} className="aspect-square bg-muted rounded-lg flex items-center justify-center">
+                                <span className="text-xs text-muted-foreground">Изображение {item}</span>
+                            </div>
+                        ))}
+                    </div>
+                  </div>
+                  <SheetFooter>
+                    <UserBadge />
+                  </SheetFooter>
+                </SheetContent>
+            </Sheet>
+          } 
           rightComponent={<User />}
-          className='sm:hidden'
-        />
+        />}
         {/* Desktop */}
-        <Sidebar className='hidden sm:flex' contentComponent={
+        { !isSmallDevice && <Sidebar 
+          title='History' 
+          isOpen={isSidebarOpen} 
+          onOpenChange={toggleSidebar} 
+          className='hidden sm:flex' 
+          contentComponent={
           <div className="flex-1 overflow-y-auto">
             <div className="grid grid-cols-2 gap-2">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((item) => (
@@ -93,11 +131,17 @@ export default function Home() {
                     </div>
                 ))}
             </div>
-        </div>
-        } bottomComponent={<UserBadge />} bottomCollapsedComponent={<Button size={'icon'} variant={'ghost'}><User/></Button>}/>
-        <div className="flex flex-col w-full h-full gap-12 justify-center items-center">
-          <div className="flex flex-col w-full">
-            {/* Mobile */}
+          </div>
+          }
+          bottomComponent={
+            <UserBadge />
+          } 
+          bottomCollapsedComponent={
+            <Button size={'icon'} variant={'ghost'}>
+              <User/>
+            </Button>
+          }
+        />}
             <ModelsList
               className='flex sm:hidden'
               models={models}
@@ -106,8 +150,8 @@ export default function Home() {
               onModelCreated={onModelCreated}
             />
             {/* Mobile */}
-            <SubscriptionBadge className='sm:hidden flex py-3 w-full'/>
-          </div>
+            <SubscriptionBadge className='sm:hidden flex py-2 pl-4 pr-2 w-full'/>
+        <div className="flex flex-col w-full h-full gap-12 justify-center items-center">
           <GenerationResult 
               resultUrl={resultUrl}
               activeModel={activeModel}
